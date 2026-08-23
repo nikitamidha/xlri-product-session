@@ -36,7 +36,7 @@ forty-year-old market finally unlocking.
 | **J1** | **When** I need a model's help with something that requires real context before it can be useful, **I want to** hand over everything in my head without pruning it to what I'm willing to type, **so I can** get a usable answer on the first attempt instead of the fourth. | **No such circumstance.** The only machine you addressed at any length was a search box — and it *punished* extra words. Forty years of training to strip language out. | A machine that gives a better result the more you tell it. Typing is now the only thing standing between the context in your head and the context in the prompt. | **The machine's appetite for language inverted** — from keyword-minimising to context-maximising. The circumstance is manufactured entirely by the LLM. |
 | **J2** | **When** a model's answer is close but wrong in a specific way, **I want to** say what's off in the way I'd say it to a colleague, **so I can** converge in three turns instead of giving up and accepting something worse. | **No such circumstance.** Software was right or it was broken. Nothing was ever 80% right *and* improvable by talking to it. | Output is probabilistic and negotiable. Correction became a first-class, repeated activity. | **Software stopped being binary.** A partially-correct-but-improvable artifact is new — and conversation is its repair mechanism. |
 | **J3** | **When** I'm setting an agent off on a multi-step task I won't be watching, **I want to** specify the constraints, the edge cases and what *not* to do, **so I can** avoid babysitting it or cleaning up after it. | **No such circumstance.** Machines took parameters. You briefed *people* — and you did that by talking. | Machines take briefs. A bad brief is expensive, so briefs get long and careful. | **The machine became something you delegate to rather than operate.** Delegation has always been verbal; typing it is the anomaly. |
-| **J12** | **When** I'm in an open-plan office, a café or a shared home, **I want to** dictate without disturbing anyone or being overheard, **so I can** use this everywhere rather than only when I'm alone. | **Couldn't have the problem** — you weren't dictating. | You dictate all day, so the *room* becomes the binding constraint on where you can work. | **Created by adoption.** A second-order circumstance the product's own success produced. → Canto. |
+| **J12** | **When** I'm in an open-plan office, a café or a shared home, **I want to** dictate quietly enough that the person two feet away can't hear me, **so I can** use this through the whole working day rather than only when I'm alone. | **Couldn't have the problem** — you weren't dictating. | You dictate all day, so the *room* becomes the binding constraint on where you can work. | **The ambient shift.** Typing was silent; speech isn't. → **Whisper Mode**, hold-to-talk, published mic guidance. |
 | **J13** | **When** the text contains client, patient or commercially sensitive material, **I want to** know it isn't retained or trained on, **so I can** use this for the work that actually matters rather than only the trivial parts. | **Couldn't have the problem** — nothing was being sent anywhere. | The low-stakes uses converted, so now you want the high-stakes ones — and those carry obligations. | **Created by adoption.** Second-order. → the Enterprise tier. |
 
 ---
@@ -346,13 +346,26 @@ segment where the emotional job dominates the functional one.
 | | |
 | --- | --- |
 | **Existed before?** | **No.** You can't have this problem until you've adopted the thing. |
-| **What created it** | Adoption. The product works, so now you want it in places you can't easily talk. |
-| **Product response** | Hold-to-talk (not always-listening), and **Canto** — their own speech model for noisy environments, cutting word error in noise from >30% to 5–10% |
+| **What created it** | The ambient shift. Typing was silent and private; speech is neither. |
+| **Product response** | **Whisper Mode** — transcribes whisper-level speech as accurately as normal speech; hold-to-talk rather than always-listening; noise-robust modelling; and a **published microphone guide** |
 | **Binding force** | **Anxiety — social** |
 
-**Canto is not a capability upgrade. It is this job, productised.** The
-constraint on the total addressable market was never accuracy in a quiet room.
-It was that most work does not happen in a quiet room.
+**Wispr treats this as a first-class job, not an edge case.** There is a
+dedicated Whisper Mode, a "whispering in an open office" workflow page, and
+guidance that with a close mic you can speak under your breath and someone two
+feet away won't hear you.
+
+**The detail worth a slide: they publish hardware advice.** Recommended mic
+distance is around a centimetre; AirPods struggle with whispers; headsets,
+lavs and gooseneck mics enable them.
+
+> **A software company telling you which microphone to buy is an admission that
+> the physical layer has become the binding constraint.**
+
+That is what a company looks like when it has exhausted the software levers on a
+problem — and there's a neat arc in it, given they began as a hardware company,
+pivoted to software, and have now been pushed back to the edge of hardware by
+their own frontier constraint.
 
 ---
 
@@ -371,6 +384,119 @@ It was that most work does not happen in a quiet room.
 | **Binding force** | **Anxiety in use** |
 
 ---
+---
+
+# Why speech accuracy matters — and why it matters *more* after cleanup
+
+## The apparent contradiction
+
+This analysis has argued throughout that **accuracy was never the barrier**.
+Word error rates were good enough years before adoption happened; the missing
+piece was cleanup.
+
+So why would a company at a $2B valuation, whose whole insight was that ASR is a
+commodity input, go and build its own speech model?
+
+## The resolution: accuracy changed role
+
+Accuracy went from **sufficient** to **binding**. Same variable, different job in
+the system, at different times.
+
+| | Constraint | Why |
+| --- | --- | --- |
+| **Pre-2024** | **Cleanup** | Accuracy was fine in a quiet room with a good mic. What came out was still unusable. |
+| **Post-2024** | **Accuracy under adverse conditions** | Cleanup is solved. Every job still unserved — whispering, noise, accents, jargon — is gated by recognition, not by phrasing. |
+
+That alone would justify Canto. But there's a second and much sharper reason.
+
+## Cleanup made errors *more* dangerous, not less
+
+Two failure modes get routinely confused, and the distinction is the whole
+argument:
+
+| | What it is | Can cleanup fix it? |
+| --- | --- | --- |
+| **Disfluency** | "um", false starts, self-corrections, rambling | **Yes.** This is signal you *want* removed — it's what the layer exists for. |
+| **Misrecognition** | The system heard a different word than you said | **No.** And worse than no. |
+
+Cleanup cannot repair a misrecognition because **the language model has no way to
+know the transcript is wrong.** It assumes the transcript is what you said. So
+faced with a misheard word, it does the thing it is built to do: it makes the
+sentence read well. It **rationalises the error into fluent, grammatical,
+confident prose.**
+
+> **Pre-LLM dictation errors were obvious.** Garbled, ungrammatical, visibly
+> broken. You caught them because they looked wrong.
+>
+> **Post-LLM dictation errors are plausible.** Grammatical, fluent, and wrong.
+> You don't catch them, because nothing looks wrong.
+
+**And this collides directly with the value proposition.** The entire promise is
+*sendable unedited*. If users trust it enough to stop proofreading — which is the
+point, and which the 70% retention suggests they do — then a plausible error is
+sent. A fluent wrong sentence that ships is worse than a garbled one that gets
+caught.
+
+> **The better the cleanup, the higher the accuracy requirement.** They are not
+> substitutes. Cleanup raises the accuracy bar rather than lowering it.
+>
+> **Canto exists not despite the cleanup layer working, but because it does.**
+
+## Where accuracy is hard — and which job each condition gates
+
+| Condition | Gates | Why cleanup can't rescue it |
+| --- | --- | --- |
+| **Whispering, low volume** | **J12** | Weak acoustic signal — less information to work from |
+| **Background noise** | J12, J6 | Competing signal |
+| **Proper nouns, names, jargon, acronyms** | J4, J9 | **No linguistic prior** |
+| **Accented / non-native English** | **J9, J10** | Training distribution |
+| **Code-switching mid-sentence** | J10 | The model must detect the switch |
+
+### The proper-noun row is the one to teach
+
+Cleanup works by holding a **prior over what a fluent sentence looks like**. That
+prior lets it fix "recieve" → "receive" and turn a ramble into a paragraph.
+
+**Proper nouns have no prior.** Your colleague's surname, your product codename,
+your client's company, an internal acronym — the model has nothing to reason
+from, and these are exactly the words that carry the meaning in professional
+text.
+
+This is why **passive vocabulary learning is not a convenience feature.** It is
+the only mechanism that can address a whole class of error that cleanup is
+structurally incapable of touching.
+
+### The accent row is both a market and an equity point
+
+**J9 — write as fluently as I speak — is very likely the largest under-discussed
+segment in the category, and it is populated overwhelmingly by non-native
+English speakers.**
+
+If recognition is weaker on Indian, Nigerian, or Filipino English, then the
+product fails hardest **exactly where the job is biggest**. Accuracy on accented
+speech is not a fairness nice-to-have bolted onto a working product — it is the
+gate on the single largest expansion opportunity the company has.
+
+Worth putting to the room directly: *if your best-served users and your
+largest unserved market have different accents, what does your eval set look
+like?*
+
+### And a real tension: latency versus accuracy
+
+Dictation is realtime. You cannot run an arbitrarily large model between someone
+finishing a sentence and the text appearing. **Every accuracy gain has to be paid
+for inside a latency budget the user experiences directly** — which is a genuine
+product constraint, and another reason an off-the-shelf model eventually stops
+being enough.
+
+## The summary for the slide
+
+> Accuracy was never what blocked adoption. **It is what now blocks expansion.**
+>
+> And the cleanup layer that unlocked the product is precisely what made
+> accuracy matter more — because it converts a visible error into an invisible
+> one.
+
 ---
 
 # What the portfolio tells you

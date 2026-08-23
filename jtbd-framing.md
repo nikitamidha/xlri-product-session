@@ -276,46 +276,103 @@ Midjourney, Lovable)*
 
 # PART 2 — What changed with LLMs
 
-## 2.1 Start with what LLMs actually introduced
+## 2.1 Three distinct drivers, not one
 
-Not "AI got good." Something narrower and stranger: **for the first time,
-machines understand instruction in ordinary human language.**
+Not "AI got good." Three separate things moved, and they are genuinely
+independent — each could in principle have happened without the others.
 
-Everything downstream follows from that one fact, in a chain:
+> **Driver 1 made voice possible. Driver 2 made voice urgent. Driver 3 is the
+> bill that came due.**
 
-**① Natural-language instruction.**
-You tell the machine what you want in the words you'd use with a person. No
-syntax, no menu path, no keyword incantation, no schema.
+---
 
-**② Which makes the interaction conversational.**
-Not one-shot. You give an instruction, see the result, correct it, add context,
-try again. The unit of interaction stopped being a *command* and became a
-**turn**.
+### Driver 1 — The register shift: syntax → natural language
 
-**③ Which explodes input volume — and the machine rewards verbosity.**
-A good prompt is long. Context helps. Constraints help. Examples help. Saying
-what you *don't* want helps. For the first time in the history of
-human–computer interaction, **the machine gives you a better result for saying
-more.**
+**What changed:** the *form* of instruction. The rudimentary layer of
+human–machine interaction had always been syntactic — command lines, query
+operators, form fields, menu paths, keyboard shortcuts, boolean logic. You
+learned the machine's language. Now the machine takes yours.
 
-**④ Which reverses forty years of interface evolution.**
+**Why this is the enabling driver, and the one people skip:**
 
-| Era | Direction of language a human had to produce |
+> **Before natural language, voice input wasn't merely inconvenient — it was
+> incoherent.**
+
+You cannot *say* `grep -rn "foo" .` You cannot say a menu path, a keyboard
+shortcut, a URL, or `site:x.com filetype:pdf`. Most of what humans put into
+machines for forty years **was not speech-shaped**, so there was nothing for
+voice to transcribe even if the microphone had been perfect.
+
+The register shift is what made speech a candidate modality at all. It is a
+precondition, not an improvement.
+
+---
+
+### Driver 2 — The throughput shift: keywords → paragraphs, one-shot → trade
+
+**What changed:** the *volume* of language a human directs at a machine, on two
+axes at once.
+
+**Axis one — utterance length.** Context helps. Constraints help. Examples help.
+Saying what you *don't* want helps. For the first time in the history of
+human–computer interaction, **the machine gives a better result for saying
+more.** This reverses forty years:
+
+| Era | Language the human had to produce |
 | --- | --- |
 | Command line | Terse, exact, memorised |
 | GUI | **Less** — point instead of type |
-| Search engines | **Less** — we were trained to strip queries to keywords |
+| Search engines | **Less** — trained to strip queries to keywords |
 | Forms and dropdowns | **Less** — prose replaced by fields |
-| **LLMs** | **More. Much more.** Paragraphs where we typed three words. |
+| **LLMs** | **More. Much more.** |
 
-Every generation of interface until now made the human type *less*. LLMs
-reversed it.
+**Axis two — the number of exchanges.** It isn't one input, it's a **trade**.
+Prompt, read, correct, add context, retry. Each turn carries its own friction
+cost, and the *marginal* turn is where that cost decides the outcome — because
+turn four has uncertain payoff, high friction makes people stop early and accept
+a worse answer.
 
-**⑤ Which makes speech the native modality.**
-Conversation is a *spoken* form. We typed our half of it only because machines
-couldn't hear. Once they can, **the keyboard is a vestigial translation layer** —
-you don't type at a person, and you're now talking to the machine the way you'd
-talk to a person.
+**Why this is the urgency driver:** volume × cost-per-word = pain. And critically,
+**the volume scales with how useful the models get.** Better models → more
+prompting → more typing. The pain grows in direct proportion to the technology's
+value. No prior interface generation had a push that fed on its own success.
+
+---
+
+### Driver 3 — The ambient shift: the room became a product constraint
+
+**What changed:** typing is silent and private. Speaking is neither.
+
+The moment Drivers 1 and 2 push the modality toward voice, **where you physically
+are** starts determining whether you can work at all. An open-plan office, a
+café, a shared flat, a train, a client site — none of these mattered when input
+was silent.
+
+**Why it's a distinct driver and not a footnote:** it has nothing to do with the
+machine. It is a wholly new constraint *dimension* — social and acoustic —
+introduced by the modality shift, and it gates adoption independently of how good
+the software is. A product can win on Drivers 1 and 2 and still be unusable for
+most of a user's working day.
+
+This is the driver that produces **J12**, and it is the one Wispr has spent the
+most engineering on: Whisper Mode, hold-to-talk, noise-robust modelling, and —
+tellingly — published microphone guidance.
+
+---
+
+### How they compose
+
+| Driver | Without it | What it produces |
+| --- | --- | --- |
+| **1. Register** | Nothing to say — input isn't speech-shaped | Voice becomes *possible* |
+| **2. Throughput** | Voice is a nice-to-have; typing three words is fine | Voice becomes *urgent* |
+| **3. Ambient** | — | The constraint that decides *where* it's adoptable |
+
+Driver 1 without Driver 2 gives you Siri: natural language, but such low volume
+that nobody needed a better input method. **That's the control case, and it's
+worth naming in class** — natural-language voice interfaces shipped to a billion
+phones in 2011 and did not change how anyone works, because the throughput
+wasn't there.
 
 ## 2.2 So the circumstance changed — and that is the correction
 
