@@ -219,13 +219,16 @@ to avoid.
 
 | Force | Strength | What was in the user's head |
 | --- | --- | --- |
-| **Push** | **Strong** | I think faster than I type. My hands hurt. The whole day is typing. |
+| **Push** | *Moderate* | I think faster than I type; my hands hurt. **But note what I was typing: email, documents, chat — text aimed at other humans. Bounded by how much I had to communicate.** |
 | **Pull** | *Moderate* | Speech is ~3× faster. True — but theoretical, and I've heard it before. |
 | **Anxiety — in choice** | **Very strong** | Voice enrollment. A custom dictionary. Do I have to *train* it? |
 | **Anxiety — in use** | **Very strong** | If the output is garbage I've now lost the time twice. And I'd be talking at my laptop in an open-plan office. |
 | **Habit** | **Very strong** | Twenty-five years of typing. It costs me no conscious thought at all. |
 
 **Push + Pull < Anxiety + Habit → no switch. For forty years.**
+
+Hold the Push row lightly. In Part 2 it turns out to be the force that moved
+most — and the one that moved *first*.
 
 That inequality is the most valuable thing on the slide: a genuine job, real
 demand, a working solution, free distribution — and no hires, because the forces
@@ -271,84 +274,154 @@ Midjourney, Lovable)*
 ---
 ---
 
-# PART 2 — What changed, before and after generative AI
+# PART 2 — What changed with LLMs
 
-## 2.1 Which element of the job statement moved
+## 2.1 Start with what LLMs actually introduced
 
-Go back to the three elements from 1.2 and ask of each: did it move?
+Not "AI got good." Something narrower and stranger: **for the first time,
+machines understand instruction in ordinary human language.**
 
-| Element | Moved? | |
+Everything downstream follows from that one fact, in a chain:
+
+**① Natural-language instruction.**
+You tell the machine what you want in the words you'd use with a person. No
+syntax, no menu path, no keyword incantation, no schema.
+
+**② Which makes the interaction conversational.**
+Not one-shot. You give an instruction, see the result, correct it, add context,
+try again. The unit of interaction stopped being a *command* and became a
+**turn**.
+
+**③ Which explodes input volume — and the machine rewards verbosity.**
+A good prompt is long. Context helps. Constraints help. Examples help. Saying
+what you *don't* want helps. For the first time in the history of
+human–computer interaction, **the machine gives you a better result for saying
+more.**
+
+**④ Which reverses forty years of interface evolution.**
+
+| Era | Direction of language a human had to produce |
+| --- | --- |
+| Command line | Terse, exact, memorised |
+| GUI | **Less** — point instead of type |
+| Search engines | **Less** — we were trained to strip queries to keywords |
+| Forms and dropdowns | **Less** — prose replaced by fields |
+| **LLMs** | **More. Much more.** Paragraphs where we typed three words. |
+
+Every generation of interface until now made the human type *less*. LLMs
+reversed it.
+
+**⑤ Which makes speech the native modality.**
+Conversation is a *spoken* form. We typed our half of it only because machines
+couldn't hear. Once they can, **the keyboard is a vestigial translation layer** —
+you don't type at a person, and you're now talking to the machine the way you'd
+talk to a person.
+
+## 2.2 So the circumstance changed — and that is the correction
+
+Go back to the job story. Earlier drafts of this analysis claimed the
+circumstance was stable and only the *outcome* moved. **That is wrong**, and the
+error matters.
+
+| | Pre-LLM | Post-LLM |
 | --- | --- | --- |
-| **Motivation** — *"I want to…"* | **No** | The job proper. As old as the work. Christensen holds. |
-| **Circumstance** — *"When…"* | **Mostly no** | Stable for first-order jobs — though AI manufactures *new* circumstances (see 2.4) |
-| **Expected outcome** — *"so I can…"* | **Yes** | **This is where the shift lives.** |
+| **Circumstance** | *When I have a thought and an empty text field* — arising a handful of times a day, for email and documents | *When I'm mid-conversation with a machine and need to hand it a paragraph of context* — **arising dozens of times a day, and a circumstance that did not exist in 2021** |
+| **Who the text is aimed at** | **Other humans.** Bounded by how much I had to communicate. | **The machine itself.** Unbounded, and growing with how much I use it. |
+| **What "more words" gets me** | Nothing. Wasted effort. | **A better result.** |
 
-> **The job didn't change. The acceptable outcome did.**
+> **This is the real context shift: the arrival of machine-directed prose at
+> volume.**
 >
-> "A transcript I can edit" was success in 2019 and is failure in 2026.
-> Identical motivation. Higher threshold.
+> Humans have never before had to produce large quantities of natural language
+> aimed at a machine. That is a genuinely new circumstance, generative AI
+> created it, and it is still growing.
 
-## 2.2 The forces, before and after
+## 2.3 Which means Push is new — not constant
 
-Wispr, same table as 1.7, now with the second column filled in:
+Here is the corrected reading, and it inverts the earlier one:
 
-| Force | Pre-gen-AI | Post-gen-AI | What actually changed |
+> **Generative AI created the push before it removed the anxiety.**
+
+The keyboard began hurting in a way it never had. Not because typing got slower,
+but because the *volume* of typing exploded — and, critically, **the new volume
+scales with how much value you get from AI.** The better the models get, the
+more you prompt. The more you prompt, the more you type. **The pain grows in
+direct proportion to the technology's usefulness.**
+
+That is a self-reinforcing push, and no prior interface generation had one.
+
+## 2.4 All four forces moved
+
+| Force | Pre-LLM | Post-LLM | What moved |
 | --- | --- | --- | --- |
-| **Push** | Strong | Strong | **Nothing.** The pain was always there. |
-| **Pull** | Moderate | **Very strong** | Not merely *faster* — *finished*. Often better than I'd have typed. |
-| **Anxiety in choice** | Very strong | **Collapsed** | No training, no enrollment, free tier, works in the app I'm already in |
-| **Anxiety in use** | Very strong | **Collapsed** | Output is sendable; a failure costs one retype; hold-to-talk means no ambient mic |
-| **Habit** | Very strong | Strong, but confronted | Weakened by social proof, not by the product |
+| **Push** | *Moderate* — typing bounded by human-directed communication | **Very strong, and structurally new** | **Machine-directed prose at volume.** Grows with AI usefulness. |
+| **Pull** | *Moderate* — "3× faster", theoretical | **Very strong** | Not just faster — *finished*. And conversation **wants** to be spoken. |
+| **Anxiety** | **Very strong** — training, enrollment, garbage output, looking foolish | **Collapsed** | The same technology that understands your instruction can clean up your speech |
+| **Habit** | **Very strong** — 25 years of typing | **Weak in the new circumstance** | **There is no 25-year habit of typing prompts at an AI. That habit is two years old.** |
 
-**Push + Pull > Anxiety + Habit → switch.**
+### The Habit row is the one people miss
 
-### The lesson, and it falls out of the framework rather than being asserted
+The typing habit is only entrenched for the *old* circumstance — email,
+documents, chat. In the **new** circumstance — prompting — there is no incumbent
+muscle memory to displace, because the circumstance itself is two years old.
 
-Every competitor spent forty years pushing on **Pull** — more accuracy, more
-languages, more commands. Wispr won by demolishing **Anxiety**.
+> **New circumstances have no incumbent habit. That makes them a land grab.**
 
-Look at the roadmap through that lens and it stops being a feature list:
+It is very likely why voice-input adoption skews so heavily toward heavy AI
+users: they are forming the habit fresh, and voice can take the slot before
+typing claims it. *(Stated as a hypothesis — the public data doesn't break
+Wispr's 60 billion words down by destination. Worth flagging to the class as a
+claim to test rather than a measured fact.)*
 
-| Feature | What it actually is |
-| --- | --- |
-| Hold-to-talk, not always-listening | Anxiety-in-use reduction |
-| Zero setup, no voice enrollment | Anxiety-in-choice reduction |
-| Free tier metered in words | Anxiety-in-choice reduction |
-| Lives in every text field | Habit accommodation — no new place to go |
-| Passive vocabulary learning | Anxiety-in-choice reduction |
-| Destination-aware formatting | Anxiety-in-use reduction |
+## 2.5 This is what explains the timing
 
-**Every single one is an anxiety instrument, not a capability increase.**
+**The puzzle:** GPT-3 shipped in 2020. LLM-based transcript cleanup was
+technically achievable by 2021. Wispr could have built Flow two years earlier
+than they did. So why did mid-2024 work?
 
-### And the same reading across the portfolio
+**An "anxiety collapsed" story cannot answer that** — the anxiety-collapsing
+technology existed well before the product landed.
 
-| Product | What generative AI did to the binding force |
-| --- | --- |
-| Wispr Flow | Collapsed both anxieties; setup went to zero and output became sendable |
-| Granola | Removed the bot from the room and kept your notes primary — anxiety in use |
-| Cursor | Diffs and checkpoints made a wrong answer cheap — anxiety in use |
-| NotebookLM | Grounding and citations made the answer checkable — anxiety in use |
-| Duolingo | Removed the judge — pure emotional anxiety |
-| Khanmigo | Removed the face cost of asking, and refuses to give the answer |
-| Descript | Reused a skill you already had, so no new skill to learn |
-| Midjourney | Made Pull *visible* — you see the output in thirty seconds |
-| Lovable | Preview created the Pull; rollback killed the anxiety |
+**The circumstance story can.** ChatGPT (Nov 2022) normalised sustained
+prompting. Through 2023–24 machine-directed typing volume exploded across the
+knowledge-work population. *Then* the keyboard started hurting in a new way.
+Wispr pivoted mid-2024 and hit a push that had not existed when they founded the
+company in 2021.
 
-**Read the column.** Almost every entry is anxiety reduction, and the two that
-aren't are Pattern B — creating a candidate where none existed.
+> **Wispr's real timing insight was not "LLMs can clean up speech."**
+> **It was "LLMs have created a large and growing new volume of typing."**
+>
+> The first is a capability observation. The second is a market observation.
+> Note which one is the product-thinking move — and note that they had spent
+> two years building hardware for the version of the job that existed *before*
+> LLMs created the new push.
 
-> **The single most transferable finding in the session:**
-> **Generative AI's main product effect is not that it increased Pull. It is
-> that it collapsed Anxiety.**
+## 2.6 The outcome changed too — and it split in two
 
-## 2.3 Four more things that changed
+The expected outcome didn't just rise. It **forked by destination**, and the same
+utterance is now judged against two different bars:
 
-**Products climb the job map.** Pre-AI, a product served one or two steps of a
-job. Post-AI it absorbs the steps either side. For Wispr:
-
-| Job step | Pre: who does it | Post: who does it |
+| Destination | Outcome standard | Social job |
 | --- | --- | --- |
-| Define — decide what to say | User | **User — always, and this never moves** |
+| **A prompt to a model** | Intent must be captured. Grammar, register and polish are **irrelevant** — the model will cope. | **None.** Nobody sees it. |
+| **An email, a Slack message, a document** | Must be sendable unedited. | **Strict** — nobody may be able to tell it was dictated. |
+
+**This is why destination-awareness is the product and not a formatting nicety.**
+Wispr is not adapting the *style* of output to the app you're in. It is choosing
+between **two different definitions of success** from a single spoken input.
+
+And it explains the adoption path: users start in the low-stakes destination —
+prompting, where a mistake costs nothing — and graduate to the high-stakes one.
+**The prompt box is the onboarding surface, whether or not anyone designed it
+that way.**
+
+## 2.7 The rest of the delta
+
+**Products climb the job map.** Four of seven steps moved from user to product:
+
+| Job step | Pre: who | Post: who |
+| --- | --- | --- |
+| Define — decide what to say | User | **User — always, never moves** |
 | Prepare — structure it into sentences | **User, in their head, while speaking** | **Product** |
 | Confirm — check it's ready | User | User |
 | Execute — produce the text | User, typing | Product |
@@ -356,75 +429,45 @@ job. Post-AI it absorbs the steps either side. For Wispr:
 | Modify — fix what's wrong | **User, heavily** | **Product first, user lightly** |
 | Conclude — format and place it | **User** | **Product, destination-aware** |
 
-**Four of seven steps moved from the user to the product.** That is the shift as
-something you can audit rather than assert. Run this table for any product: the
-steps that moved are the value; the steps that didn't are the roadmap.
+**You take share from non-consumption.** Not Dragon — *typing*, and *not writing
+it down at all*.
 
-**You're taking share from non-consumption, not from a competitor.** Wispr isn't
-taking Dragon's share; it's taking *typing* and *not writing it down*.
-NotebookLM takes *not reading the pile*. Midjourney takes *not commissioning
-anything*. Category market maps understate these markets by an order of
-magnitude.
+**Outcomes shift from speed to trust.** Speed outcomes saturate: two seconds to
+one second wins nothing. Trust outcomes don't.
 
-**Outcome statements change family.** Pre-AI outcomes were dominated by **speed
-and effort** — and those **saturate**: once something takes two seconds, getting
-to one second wins nothing. Post-AI, **trust and fidelity** outcomes dominate,
-and those don't saturate:
+**The job executor changes**, so re-derive the outcomes rather than inheriting
+them.
 
-- Minimize the likelihood the output is wrong *in a way I can't detect*
-- Minimize the time it takes to verify it
-- Minimize the likelihood it doesn't sound like me
+**AI manufactures second-order jobs** — *verify what I didn't produce, choose
+among forty, undo what it did, make sure it sounds like me.* Note where these
+land: **every one is an anxiety-in-use job.** Citations, diffs, checkpoints,
+"sounds like me" — the product craft of the next decade is anxiety management
+for output the user didn't write.
 
-A 2026 roadmap made only of speed outcomes is a roadmap into a wall.
+## 2.8 The contrast slide
 
-**The job executor changes.** Research-assistant work moves to the principal,
-associate work to the partner, illustration to the person with the idea. The
-value isn't labour saving — it's that **context stops leaking at the handoff.**
-And because the executor changed, the outcome statements must be re-derived
-rather than inherited. Inheriting them is the most common error here.
-
-## 2.4 The honest amendment: AI manufactures second-order jobs
-
-Jobs are stable — **first-order** jobs. But serving one so well that production
-becomes free creates **circumstances that did not previously exist**, and new
-circumstances generate new jobs.
-
-| First-order job now served | Second-order job created |
-| --- | --- |
-| Generate the text, code, image | *"Help me verify output I didn't produce"* |
-| Produce forty options instantly | *"Help me choose"* — never a job when options were scarce |
-| Let the system act for me | *"Help me undo what it did"* |
-| Answer from my documents | *"Let me check that came from my sources"* |
-| Draft in my name | *"Make sure it still sounds like me"* |
-
-Note where these land in the framework: **every second-order job is an
-anxiety-in-use job.** Citations, diffs, checkpoints, "sounds like me" — the
-product craft of the next decade is anxiety management for output the user
-didn't produce.
-
-## 2.5 The contrast slide
-
-| | **Pre-gen-AI** | **AI-native** |
+| | **Pre-LLM** | **Post-LLM** |
 | --- | --- | --- |
-| The job | Stable | **Still stable** |
-| What moved | — | **The acceptable outcome** |
-| Force you compete on | **Pull** — capability, accuracy, features | **Anxiety** — cost of trying, cost of being wrong |
-| Job-map coverage | One or two steps | **Steps on both sides** — Prepare and Conclude |
-| Taking share from | The category incumbent | **Non-consumption** |
-| Dominant outcomes | Speed and effort — *these saturate* | **Trust and fidelity — these don't** |
-| Job executor | A specialist | **Whoever holds the context** |
-| Second-order jobs | Few | **Many — and they're the product craft** |
-| "Good" means | Output I can work with | **Output I can use unedited** |
-| The product asks the user to | **Adapt to the machine** — learn it, train it, format for it | **Nothing. The machine adapts.** |
+| **Who you type at** | Other humans | **The machine itself** |
+| **Volume of machine-directed language** | Keywords and commands | **Paragraphs, and growing** |
+| **Does saying more help?** | No | **Yes — verbosity is rewarded** |
+| **Direction of interface evolution** | Type *less* each generation | **Type more — the reversal** |
+| **Natural modality for the interaction** | Typing | **Speech — conversation is a spoken form** |
+| **Push** | Moderate, stable | **Strong, new, and self-reinforcing** |
+| **Habit in the new circumstance** | — | **None yet. Land grab.** |
+| **The job** | Stable | **Still stable** |
+| **The acceptable outcome** | Output I can work with | **Output I can send unedited — and forked by destination** |
+| **What the product asks of the user** | Adapt to the machine | **Nothing. The machine adapts.** |
 
-### The one-line version
+### The two sentences
 
-> **Pre-gen-AI, the user met the machine's standard.**
-> **Post-gen-AI, the machine meets the user's standard.**
->
-> In JTBD terms: the motivation held constant, the expected outcome rose, and
-> the work of closing the gap moved from the user's side of the job map to the
-> product's — mostly by collapsing anxiety rather than by adding capability.
+> **LLMs made machines understand us, which made the interaction conversational,
+> which made us produce far more language than we ever have — and conversation
+> is a spoken form. The keyboard became the bottleneck in a job it had never
+> been the bottleneck in before.**
+
+> Generative AI **created the push and then removed the anxiety.** Most analyses
+> only see the second, which is why they can't explain the timing.
 
 ---
 
@@ -432,19 +475,23 @@ didn't produce.
 
 | Min | Segment |
 | --- | --- |
-| 0–2 | Snapshot. Wispr: founded 2021, pivoted mid-2024, $2B Aug 2026. |
-| 2–4 | Live demo — a messy sentence with a self-correction, into Slack, then email. |
-| 4–7 | **Form the job.** All three layers. Establish that it's forty years old. |
-| 7–9 | **The four forces**, defined. Leave the equation on the board. |
-| 9–13 | **Score them pre-gen-AI.** Land the inequality — real job, working solution, free, and no hires for forty years. Then score post. |
-| 13–16 | **The reading.** Everyone competed on Pull; Wispr won on Anxiety. Walk the feature-to-force table. |
-| 16–18 | **Second-order jobs** — and note they're all anxiety-in-use. |
-| 18–20 | Contrast slide, then the closing question. |
+| 0–2 | Snapshot. Wispr: founded 2021 on hardware, pivoted mid-2024, $2B Aug 2026. |
+| 2–4 | Live demo — a messy sentence with a self-correction, into a prompt box, then into an email. Two destinations, two standards. |
+| 4–7 | **Form the job.** Three layers. Establish it's forty years old. |
+| 7–9 | **The four forces**, defined. Equation on the board. |
+| 9–11 | **Score them pre-LLM.** Land the inequality: real job, working solution, free distribution, forty years, no hires. |
+| 11–15 | **What LLMs introduced.** The five-step chain — instruction → conversation → verbosity → new circumstance → speech. The forty-year reversal table. |
+| 15–17 | **Re-score the forces.** All four moved. Push is new. Habit is absent. Then the timing puzzle: why not 2021? |
+| 17–20 | Contrast slide and the closing question. |
 
 ### The closing question
 
-> Take a job in your own domain that everyone agrees is real, where a solution
-> already exists, and that nobody hires.
+> Generative AI created a new circumstance — sustained natural-language
+> instruction of a machine — and that circumstance generated a push nobody had
+> before.
 >
-> **Which of the four forces has been blocking it — and has generative AI just
-> moved that one?**
+> **What *other* pushes has it created that nobody is serving yet?**
+
+*(Hint for the room: if humans are now producing far more machine-directed
+language than ever, they are also now **reading** far more machine-generated
+output than ever. Where is the Wispr Flow for that side of the exchange?)*

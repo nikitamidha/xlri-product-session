@@ -12,11 +12,13 @@ A **20-minute deep dive** on one product, structured around three questions:
 
 The framing is strict JTBD throughout. The short version of the argument:
 
-> **The job didn't change. The acceptable outcome did.**
+> LLMs made machines understand us, which made the interaction conversational,
+> which made us produce far more language than we ever have — and conversation
+> is a spoken form. **The keyboard became the bottleneck in a job it had never
+> been the bottleneck in before.**
 >
-> Christensen holds — the motivation is as old as the work. What moved is the
-> threshold for what counts as success, and the work of closing that gap moved
-> from the user's side of the job map to the product's.
+> Generative AI **created the push and then removed the anxiety.** Most analyses
+> only see the second, which is why they can't explain the timing.
 
 **Spine case: Wispr Flow.** Chosen over Cursor and NotebookLM because it is
 demoable live in thirty seconds, accessible to a non-developer audience, and
