@@ -2,6 +2,14 @@
 
 Fourteen features, each taken down to the job it actually serves.
 
+> **Scope note.** This is the *complete* feature map, buyer-side features included.
+> For the session itself, use [`wispr-consumer-ladder.md`](wispr-consumer-ladder.md) —
+> one consumer, eleven jobs, no Teams or Enterprise. **F13 and F14 below are out of
+> scope for a consumer audience**; they are kept here because the two buyer jobs are
+> where the revenue is, and because the gap they expose in the job portfolio is
+> worth knowing about. The consumer-relevant pricing job (the word-metered free
+> tier, F12) appears in both documents.
+
 **The method, and why it's this one.** A feature list describes the product. A
 job describes the user. The way you get from one to the other is to refuse the
 first answer — the first "why" always restates the spec — and keep asking until
