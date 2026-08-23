@@ -39,7 +39,7 @@
 body{
   margin:0; background:var(--paper); color:var(--ink);
   font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
-  font-size:clamp(15px,1.05vw + 9px,19px); line-height:1.55;
+  font-size:clamp(14px,.9vw + 8px,17px); line-height:1.5;
   -webkit-font-smoothing:antialiased;
 }
 
@@ -47,7 +47,7 @@ body{
 .deck{min-height:100svh}
 .slide{
   min-height:100svh; display:flex; flex-direction:column; justify-content:center;
-  padding:clamp(28px,4.2vw,72px) clamp(20px,5vw,88px) clamp(56px,6vw,84px);
+  padding:clamp(20px,3vw,44px) clamp(18px,4.4vw,76px) clamp(52px,5vw,64px);
   border-bottom:1px solid var(--rule-soft);
   position:relative;
 }
@@ -55,16 +55,16 @@ body{
 .deck.ready .slide.on{display:flex; animation:rise .34s cubic-bezier(.2,.7,.3,1) both}
 @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
 @media (prefers-reduced-motion:reduce){ .deck.ready .slide.on{animation:none} }
-.wrap{width:100%; max-width:1180px; margin:0 auto; max-height:calc(100svh - 120px); overflow-y:auto; overflow-x:hidden; padding-right:4px}
+.wrap{width:100%; max-width:1180px; margin:0 auto; max-height:calc(100svh - 96px); overflow-y:auto; overflow-x:hidden; padding-right:4px}
 .wrap::-webkit-scrollbar{width:8px} .wrap::-webkit-scrollbar-thumb{background:var(--rule); border-radius:8px}
 
 /* ---------- type ---------- */
 h1,h2,h3,.eyebrow,.chip,.num,.mono,th,.tag{font-family:Archivo,"Helvetica Neue",Arial,sans-serif}
 h1{font-size:clamp(38px,6.2vw,86px); font-weight:700; letter-spacing:-.028em; line-height:.98; margin:0; text-wrap:balance}
-h2{font-size:clamp(26px,3.3vw,44px); font-weight:700; letter-spacing:-.022em; line-height:1.06; margin:0 0 .5em; text-wrap:balance}
+h2{font-size:clamp(24px,2.8vw,38px); font-weight:700; letter-spacing:-.022em; line-height:1.06; margin:0 0 .42em; text-wrap:balance}
 h3{font-size:clamp(16px,1.3vw,21px); font-weight:600; letter-spacing:-.008em; margin:0 0 .35em}
 p{margin:0 0 .85em; max-width:70ch}
-.lede{font-size:clamp(17px,1.5vw,23px); color:var(--ink-2); max-width:60ch}
+.lede{font-size:clamp(16px,1.25vw,20px); color:var(--ink-2); max-width:60ch}
 .eyebrow,.mono,.tag,.chip{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
 .eyebrow{font-size:12px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-3); margin:0 0 clamp(10px,1.4vw,20px); display:flex; gap:.85em; align-items:center}
 .eyebrow::after{content:""; flex:1; height:1px; background:var(--rule); max-width:220px}
@@ -79,7 +79,7 @@ strong{font-weight:600}
 .rule{border:0; height:1px; background:var(--rule); margin:clamp(16px,2vw,28px) 0}
 .claim{
   border-left:3px solid var(--brass); background:var(--brass-wash);
-  padding:.7em 1.1em; margin:clamp(14px,1.8vw,24px) 0; max-width:74ch;
+  padding:.6em 1em; margin:clamp(10px,1.2vw,17px) 0; max-width:74ch;
   font-size:1.05em;
 }
 .claim p:last-child{margin:0}
@@ -87,15 +87,15 @@ strong{font-weight:600}
 .note{color:var(--ink-3); font-size:.9em; max-width:72ch}
 
 /* ---------- layout helpers ---------- */
-.two{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:clamp(18px,2.6vw,42px); align-items:start}
-.three{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:clamp(14px,1.8vw,24px)}
-.cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(255px,1fr)); gap:clamp(12px,1.5vw,20px)}
-.card{background:var(--surface); border:1px solid var(--rule-soft); border-radius:3px; padding:clamp(14px,1.5vw,20px); box-shadow:var(--shadow)}
+.two{display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:clamp(16px,2vw,34px); align-items:start}
+.three{display:grid; grid-template-columns:repeat(auto-fit,minmax(225px,1fr)); gap:clamp(10px,1.2vw,17px)}
+.cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:clamp(10px,1.15vw,15px)}
+.card{background:var(--surface); border:1px solid var(--rule-soft); border-radius:3px; padding:clamp(11px,1.15vw,16px); box-shadow:var(--shadow)}
 .card p:last-child{margin:0}
 .cards.g3{grid-template-columns:repeat(3,1fr)}
 @media (max-width:920px){ .cards.g3{grid-template-columns:repeat(auto-fit,minmax(255px,1fr))} }
 .card .num{display:block; font-size:11px; font-weight:600; letter-spacing:.14em; color:var(--ink-3); margin-bottom:.5em}
-.stack{display:flex; flex-direction:column; gap:clamp(10px,1.3vw,18px)}
+.stack{display:flex; flex-direction:column; gap:clamp(8px,.95vw,13px)}
 
 /* ---------- tables ---------- */
 .tblwrap{overflow-x:auto; margin:clamp(10px,1.4vw,18px) 0}
@@ -104,7 +104,7 @@ th{
   font-size:11px; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:var(--ink-3);
   text-align:left; padding:0 1em .55em 0; border-bottom:1px solid var(--rule); white-space:nowrap;
 }
-td{padding:.72em 1em .72em 0; border-bottom:1px solid var(--rule-soft); vertical-align:top}
+td{padding:.55em 1em .55em 0; border-bottom:1px solid var(--rule-soft); vertical-align:top}
 tr:last-child td{border-bottom:0}
 td:first-child,th:first-child{padding-left:0}
 .numcol{font-variant-numeric:tabular-nums}
@@ -128,16 +128,32 @@ figcaption{font-family:"IBM Plex Mono",monospace; font-size:11.5px; line-height:
 /* ---------- the equation ---------- */
 .eq{
   font-family:Archivo,sans-serif; font-weight:700; letter-spacing:-.02em;
-  font-size:clamp(20px,3.1vw,42px); line-height:1.15; display:flex; flex-wrap:wrap; align-items:baseline; gap:.35em;
+  font-size:clamp(19px,2.5vw,34px); line-height:1.12; display:flex; flex-wrap:wrap; align-items:baseline; gap:.35em;
   margin:clamp(10px,1.6vw,22px) 0;
 }
 .eq .gt{color:var(--brass)}
+.eq{margin:clamp(8px,1vw,14px) 0}
 
 /* ---------- job statement anatomy ---------- */
-.anat{display:flex; flex-wrap:wrap; gap:.5em; align-items:stretch; font-size:clamp(15px,1.5vw,22px); line-height:1.35}
+.anat{display:flex; flex-wrap:wrap; gap:.5em; align-items:stretch; font-size:clamp(14px,1.2vw,18px); line-height:1.33}
 .anat .part{border:1px solid var(--rule); border-top:3px solid var(--pc,var(--rule)); background:var(--surface); padding:.6em .8em; flex:1 1 240px}
 .anat .part .lbl{display:block; font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.13em; text-transform:uppercase; color:var(--pc,var(--ink-3)); margin-bottom:.4em}
 .anat .part .q{display:block; font-size:12.5px; font-family:"IBM Plex Mono",monospace; color:var(--ink-3); margin-top:.5em; line-height:1.45}
+
+
+/* ---------- worked instances strip ---------- */
+.wild{
+  display:grid; grid-template-columns:minmax(0,132px) 1fr; gap:clamp(12px,1.6vw,26px);
+  border-top:1px solid var(--rule); padding-top:clamp(9px,1.05vw,14px); margin-top:clamp(11px,1.3vw,18px);
+}
+@media (max-width:760px){ .wild{grid-template-columns:1fr; gap:10px} }
+.wlabel{
+  font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:500; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--brass); line-height:1.5; padding-top:2px;
+}
+.witems{display:grid; grid-template-columns:repeat(auto-fit,minmax(215px,1fr)); gap:clamp(11px,1.4vw,22px)}
+.witems p{margin:0; font-size:.9em; line-height:1.5; max-width:none}
+.witems p strong:first-child{display:block; font-family:Archivo,sans-serif; font-size:.92em; letter-spacing:-.005em}
 
 /* ---------- chrome ---------- */
 .bar{
@@ -200,7 +216,7 @@ figcaption{font-family:"IBM Plex Mono",monospace; font-size:11.5px; line-height:
     <div class="marks">
       <span class="mk">Christensen &middot; the theory</span>
       <span class="mk">Moesta &amp; Spiek &middot; the method</span>
-      <span class="mk">Running case &middot; UPI</span>
+      <span class="mk">Every claim worked on a real switch</span>
     </div>
     <p class="note" style="margin-top:2em">&larr; &rarr; or space to move &middot; press <strong>C</strong> for contents</p>
   </div>
@@ -224,6 +240,14 @@ figcaption{font-family:"IBM Plex Mono",monospace; font-size:11.5px; line-height:
           <div class="card"><span class="num">CONSEQUENCE 02</span><p><strong>Your unit of analysis changes.</strong> Not a customer &mdash; a <em>circumstance</em>. The same person hires different things at 7am and at 4pm.</p></div>
           <div class="card"><span class="num">CONSEQUENCE 03</span><p><strong>Every hire is a fire.</strong> Something got displaced. If you cannot name what, you have not found a job.</p></div>
         </div>
+      </div>
+    </div>
+    <div class="wild">
+      <span class="wlabel">In the wild</span>
+      <div class="witems">
+        <p><strong>Snickers vs Milky Way</strong>Same shelf, same company, different jobs. Snickers is hired to shut hunger up until dinner, so it competes with a banana and a samosa. Milky Way is hired to reward you, so it competes with ice cream.</p>
+        <p><strong>Zerodha</strong>The competitor was never another broker. For most Indian households the incumbent was a fixed deposit, gold, or not investing at all &mdash; <em>non-consumption</em>, which appears on no market map.</p>
+        <p><strong>Netflix by post</strong>What got fired was not the video store&rsquo;s catalogue. It was the drive back to return the disc, and the late fee waiting if you didn&rsquo;t.</p>
       </div>
     </div>
   </div>
@@ -251,12 +275,20 @@ figcaption{font-family:"IBM Plex Mono",monospace; font-size:11.5px; line-height:
         <span class="q">The standard <em>they</em> judge success by. Not your metric.</span>
       </div>
     </div>
-    <div class="three" style="margin-top:1.4em">
+    <div class="three" style="margin-top:1.2em">
       <div class="card"><span class="num">LAYER 01 &middot; FUNCTIONAL</span><p>Move the exact amount from me to them.</p></div>
-      <div class="card"><span class="num">LAYER 02 &middot; EMOTIONAL</span><p>Not feel cheated over &#8377;7, and not feel like the person making a fuss over &#8377;7.</p></div>
-      <div class="card" style="border-color:var(--brass)"><span class="num" style="color:var(--brass)">LAYER 03 &middot; SOCIAL</span><p><strong>Not be the customer who holds up the queue.</strong> And on the vendor&rsquo;s side: not be the shop that turns people away for want of change.</p></div>
+      <div class="card"><span class="num">LAYER 02 &middot; EMOTIONAL</span><p>Not feel cheated over &#8377;7 &mdash; and not feel like the person making a fuss over &#8377;7.</p></div>
+      <div class="card" style="border-color:var(--brass)"><span class="num" style="color:var(--brass)">LAYER 03 &middot; SOCIAL</span><p><strong>Not be the customer holding up the queue.</strong> On the vendor&rsquo;s side: not be the shop that turns people away for want of change.</p></div>
     </div>
-    <p class="note" style="margin-top:1em">Strike every product name and it still holds &mdash; and would have held in 1985. That is the <strong>strike test</strong> and the <strong>age test</strong> passing together. Jobs are old; solutions are new. If your &ldquo;job&rdquo; could not have existed before 2023, you have found a capability, not a job.</p>
+    <p class="note" style="margin-top:.9em">Strike every product name and it still holds &mdash; and would have held in 1985. That is the <strong>strike test</strong> and the <strong>age test</strong> passing together. Jobs are old; solutions are new.</p>
+    <div class="wild">
+      <span class="wlabel">The social layer, elsewhere</span>
+      <div class="witems">
+        <p><strong>LinkedIn Premium</strong>Functionally it is InMail and who-viewed-your-profile. Socially it is looking like someone in demand rather than someone looking &mdash; which is why the badge is public and the search history is not.</p>
+        <p><strong>CRED</strong>The functional job &mdash; paying a credit card bill &mdash; was already free and boring. What was sold was membership: visible proof you belong to the set that pays in full.</p>
+        <p><strong>The wedding photographer</strong>Functionally, photographs. Socially, evidence for a specific set of relatives that the thing was done properly. Nobody prices it as a camera rental.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -266,17 +298,17 @@ figcaption{font-family:"IBM Plex Mono",monospace; font-size:11.5px; line-height:
     <p class="eyebrow">03 &middot; Quality control</p>
     <h2>Good and bad jobs to be done</h2>
     <div class="two">
-      <div style="flex:2">
+      <div>
         <div class="tblwrap">
           <table>
-            <thead><tr><th style="width:52%">Statement</th><th>Verdict</th></tr></thead>
+            <thead><tr><th style="width:50%">Statement</th><th>Verdict</th></tr></thead>
             <tbody>
               <tr><td>&ldquo;Our users want a better fitness app.&rdquo;</td><td><span class="tag no">Solution</span> <span class="note">Names a category. Strike it and nothing remains.</span></td></tr>
               <tr><td>&ldquo;Gen Z wants instant gratification.&rdquo;</td><td><span class="tag no">Demographic</span> <span class="note">A segment is not a circumstance.</span></td></tr>
               <tr><td>&ldquo;I want to manage my money better.&rdquo;</td><td><span class="tag no">Unfalsifiable</span> <span class="note">Rules nothing out, so it cannot prioritise.</span></td></tr>
               <tr><td>&ldquo;I want to finish KYC in the app.&rdquo;</td><td><span class="tag no">Our goal</span> <span class="note">A compliance step of ours, endured by them.</span></td></tr>
-              <tr><td>&ldquo;When I&rsquo;m splitting a dinner bill six ways and everyone&rsquo;s doing mental arithmetic, I want to settle before we leave the table, so nobody has to chase anyone next week.&rdquo;</td><td><span class="tag ok">Job</span> <span class="note">Filmable, solution-free, checkable &mdash; and it <strong>rules out</strong> a shared-expense ledger.</span></td></tr>
-              <tr><td>&ldquo;When my parents ask what I&rsquo;m doing with my life, I want an answer that sounds like a plan, so I can stop feeling behind my batchmates.&rdquo;</td><td><span class="tag ok">Job</span> <span class="note">The real job of hiring an MBA. No brochure writes it down.</span></td></tr>
+              <tr><td>&ldquo;When I&rsquo;m splitting a dinner bill six ways and everyone&rsquo;s doing mental arithmetic, I want to settle before we leave the table, so nobody has to chase anyone next week.&rdquo;</td><td><span class="tag ok">Job</span> <span class="note">What Splitwise and UPI are both hired for &mdash; and it <strong>rules out</strong> a shared-expense ledger nobody settles.</span></td></tr>
+              <tr><td>&ldquo;When my parents ask what I&rsquo;m doing with my life, I want an answer that sounds like a plan, so I can stop feeling behind my batchmates.&rdquo;</td><td><span class="tag ok">Job</span> <span class="note">The real job of hiring an MBA. No brochure writes it down; every applicant feels it.</span></td></tr>
             </tbody>
           </table>
         </div>
@@ -284,9 +316,17 @@ figcaption{font-family:"IBM Plex Mono",monospace; font-size:11.5px; line-height:
       <div>
         <h3>The test that matters</h3>
         <div class="claim"><p><strong>Does the statement kill anything on your roadmap?</strong> A job statement that rules nothing out is doing no work.</p></div>
-        <p><strong>Weak:</strong> <span class="said">&ldquo;Field sales want a better CRM.&rdquo;</span> Kills nothing &mdash; the dashboard, the redesign, the reports module all survive.</p>
+        <p><strong>Weak:</strong> <span class="said">&ldquo;Field sales want a better CRM.&rdquo;</span> Kills nothing &mdash; the dashboard, the redesign and the reports module all survive.</p>
         <p><strong>Strong:</strong> <span class="said">&ldquo;When I&rsquo;m walking out of one client meeting to the next, I want what just happened recorded before I forget it, so I&rsquo;m not reconstructing my week on Friday night.&rdquo;</span></p>
-        <p class="note">Kills the desktop-first redesign, the analytics module, and mandatory-field validation. Funds two-tap capture, offline queue, and pre-filling from the calendar entry. <strong>The constraints in the circumstance do the killing</strong> &mdash; not sharper wording.</p>
+        <p class="note">Kills the desktop-first redesign, the analytics module and mandatory-field validation. Funds two-tap capture, an offline queue, and pre-filling from the calendar entry. <strong>The constraints in the circumstance do the killing</strong> &mdash; not sharper wording.</p>
+      </div>
+    </div>
+    <div class="wild">
+      <span class="wlabel">Statements that killed something</span>
+      <div class="witems">
+        <p><strong>Netflix</strong>&ldquo;When I&rsquo;m on a commute with no data&rdquo; kills the always-streaming assumption the whole product was built on. Downloads shipped in 2016, and the markets that needed them most were not the US.</p>
+        <p><strong>Zoom</strong>&ldquo;When someone outside my company needs to join in ten seconds&rdquo; kills the mandatory account signup every competitor required. One link, no login &mdash; that single constraint is most of the product.</p>
+        <p><strong>UPI</strong>&ldquo;When the bill is &#8377;143 at a cart&rdquo; kills the card machine: a terminal, a minimum ticket size, a fee and a connection. A printed QR code survives all four constraints.</p>
       </div>
     </div>
   </div>
@@ -329,6 +369,14 @@ figcaption{font-family:"IBM Plex Mono",monospace; font-size:11.5px; line-height:
         <p class="note"><strong>Unserved rows are the roadmap. The &ldquo;made worse&rdquo; row is the business.</strong> NPS, DAU and MRR are <em>your</em> outcomes; the user has never heard of them.</p>
       </div>
     </div>
+    <div class="wild">
+      <span class="wlabel">In the wild</span>
+      <div class="witems">
+        <p><strong>Tatkal on IRCTC</strong>The context is a forty-second window against lakhs of people at 10am. That kills &ldquo;make the booking form nicer&rdquo; and funds saved passenger lists and a payment method already loaded before the window opens.</p>
+        <p><strong>A delivery rider&rsquo;s app</strong>Helmet on, one hand, sun on the screen, engine running. Constraints that kill dense dashboards and fund enormous tap targets, audio callouts, and a screen readable at a glance.</p>
+        <p><strong>Amazon returns</strong>&ldquo;Minimise the likelihood I&rsquo;m stuck with something that doesn&rsquo;t fit&rdquo; is an outcome, not a feature request. Free returns is one answer to it; so is a better size chart. The outcome names the bar, not the build.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -339,7 +387,7 @@ figcaption{font-family:"IBM Plex Mono",monospace; font-size:11.5px; line-height:
     <h2>Four forces act on every switch. Two forward, two back.</h2>
     <figure>
       <div style="overflow-x:auto">
-      <svg viewBox="0 0 980 450" role="img" aria-label="Free-body diagram of the four forces of progress. Push of the situation and pull of the new way are arrows pointing right, from today's way toward the new way. Anxiety about the new way and habit of the present are arrows pointing left, back toward today's way. A switch happens only when push plus pull exceeds anxiety plus habit." style="min-width:680px; max-height:42vh">
+      <svg viewBox="0 0 980 450" role="img" aria-label="Free-body diagram of the four forces of progress. Push of the situation and pull of the new way are arrows pointing right, from today's way toward the new way. Anxiety about the new way and habit of the present are arrows pointing left, back toward today's way. A switch happens only when push plus pull exceeds anxiety plus habit." style="min-width:680px; max-height:36vh">
         <defs>
           <pattern id="gp" width="28" height="28" patternUnits="userSpaceOnUse">
             <path d="M28 0H0V28" fill="none" stroke="currentColor" stroke-width="1" style="opacity:.08"/>
@@ -386,10 +434,17 @@ figcaption{font-family:"IBM Plex Mono",monospace; font-size:11.5px; line-height:
         <text x="200" y="437" font-family="IBM Plex Mono, monospace" font-size="12.5" style="fill:currentColor; opacity:.62">&ldquo;It&rsquo;s fine. I&rsquo;m used to it.&rdquo;   &mdash; automatic, and already sunk.</text>
       </svg>
       </div>
-      <figcaption>The forces of progress, after Bob Moesta and Chris Spiek. Direction encodes role: rightward promotes the switch, leftward blocks it. All four act on the same person at the same moment.</figcaption>
+      <figcaption>The forces of progress, after Bob Moesta and Chris Spiek. Rightward arrows promote the switch, leftward arrows block it. All four act on the same person at the same moment &mdash; read it as a vector sum, not a scorecard.</figcaption>
     </figure>
     <div class="eq"><span class="adv">PUSH + PULL</span> <span class="gt">&gt;</span> <span class="res">ANXIETY + HABIT</span></div>
-    <p class="note">A vector sum, not a scorecard. You do not have to win all four &mdash; you have to win the total, and the total is read one person at a time.</p>
+    <div class="wild">
+      <span class="wlabel">The binding force</span>
+      <div class="witems">
+        <p><strong>Zoom &mdash; push</strong>The product shipped in 2013 and was already good. Nothing changed about it in March 2020. The <em>situation</em> changed, and nobody at Zoom manufactured that.</p>
+        <p><strong>Warby Parker &mdash; anxiety</strong>Buying spectacles you have never worn. Home Try-On sent five frames for five days, free both ways. They retired it in 2025 &mdash; once stores and virtual try-on carried the same load, the scaffolding came down.</p>
+        <p><strong>WhatsApp &mdash; habit</strong>Your phone number was the account and your address book was the contact list. Nothing to learn, nothing to rebuild. It did not beat the habit; it moved into it.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -402,24 +457,31 @@ figcaption{font-family:"IBM Plex Mono",monospace; font-size:11.5px; line-height:
     <div class="cards">
       <div class="card" style="border-top:3px solid var(--advance)">
         <span class="num" style="color:var(--advance)">PUSH &middot; THEIR SITUATION</span>
-        <p>You cannot create it. You can only <strong>find people who already have it</strong> and name it back in their words. If push is the binding force, <strong>do not build &mdash; re-target.</strong></p>
+        <p>You cannot create it &mdash; only <strong>find people who already have it</strong>. If push is binding, <strong>do not build. Re-target.</strong></p>
+        <p class="note" style="margin-top:.6em"><strong>Airbnb</strong> did not create demand for a stranger&rsquo;s spare room. A design conference in San Francisco sold out every hotel in the city, and the founders rented air mattresses to the overflow.</p>
       </div>
       <div class="card" style="border-top:3px solid var(--advance)">
         <span class="num" style="color:var(--advance)">PULL &middot; YOUR SOLUTION</span>
-        <p>The only force you own outright. <strong>Show, don&rsquo;t claim</strong> &mdash; thirty seconds with their own data beats any list of benefits. But pull has sharply diminishing returns against an entrenched habit: being 30% better than something automatic and free is worth nothing.</p>
+        <p>The only force you own outright. <strong>Show, don&rsquo;t claim.</strong> But pull has sharply diminishing returns against habit: being 30% better than something automatic and free is worth nothing.</p>
+        <p class="note" style="margin-top:.6em"><strong>Dropbox</strong> answered &ldquo;what is it?&rdquo; with a screencast rather than a paragraph, because file sync was not describable &mdash; only demonstrable.</p>
       </div>
       <div class="card" style="border-top:3px solid var(--resist)">
         <span class="num" style="color:var(--resist)">ANXIETY &middot; THEIR IMAGINATION</span>
-        <p>It does not have to be true to block the sale. <strong>Benefits do not answer fear.</strong> Evidence, reversibility and a small first step do: no card required, undo, a preview before it commits, someone like them saying it worked.</p>
+        <p>It does not have to be true to block the sale. <strong>Benefits do not answer fear.</strong> Evidence, reversibility and a small first step do.</p>
+        <p class="note" style="margin-top:.6em"><strong>Ola and Uber</strong> put the driver&rsquo;s name, photo, number plate and a shareable live trip on the screen. None of it makes the ride better. All of it makes getting into a stranger&rsquo;s car survivable.</p>
       </div>
       <div class="card" style="border-top:3px solid var(--resist)">
         <span class="num" style="color:var(--resist)">HABIT &middot; THEIR PAST</span>
-        <p>Not loyalty &mdash; people are held by habits they dislike. Two moves: <strong>fit the old groove</strong> (same gesture, same file, import everything), or <strong>catch a broken habit</strong> &mdash; new job, new city, new phone, new baby.</p>
+        <p>Not loyalty &mdash; people are held by habits they dislike. Two moves: <strong>fit the old groove</strong>, or <strong>catch a habit already broken</strong> &mdash; new job, new city, new phone, new baby.</p>
+        <p class="note" style="margin-top:.6em"><strong>Google Sheets</strong> opens and saves .xlsx. <strong>Apple</strong> ships Migration Assistant. Neither asks you to change; both remove the cost of arriving.</p>
       </div>
     </div>
-    <div class="two" style="margin-top:1.1em">
-      <div><div class="claim"><p><strong>Anxiety and habit are the two levers actually available to a product team. Almost nobody works on them.</strong></p></div></div>
-      <div><p class="note"><strong>And anxiety splits in two.</strong> <em>Anxiety in choice</em> &mdash; &ldquo;will this work for me?&rdquo; &mdash; blocks the purchase, so it is a conversion problem. <em>Anxiety in use</em> &mdash; &ldquo;will it let me down at a bad moment?&rdquo; &mdash; blocks the <em>second</em> purchase. That one is your churn.</p></div>
+    <div class="wild">
+      <span class="wlabel">Two consequences</span>
+      <div class="witems">
+        <p><strong>Anxiety and habit are the only two levers you actually hold</strong>Push belongs to their situation and pull runs out of road. Almost every roadmap works on pull anyway, because it is the one the team controls.</p>
+        <p><strong>Anxiety splits in two, and the split is the useful part</strong><em>In choice</em> &mdash; &ldquo;will this work for me?&rdquo; &mdash; blocks the purchase, so it is a conversion problem. <em>In use</em> &mdash; &ldquo;will it let me down at a bad moment?&rdquo; &mdash; blocks the second purchase. That one is your churn.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -431,7 +493,7 @@ figcaption{font-family:"IBM Plex Mono",monospace; font-size:11.5px; line-height:
     <h2>UPI: the same product, three readings.</h2>
     <figure>
       <div style="overflow-x:auto">
-      <svg viewBox="0 0 1000 320" role="img" aria-label="Three force readings of UPI adoption. In October 2016, six months after launch, push and pull are very short and anxiety and habit are long, so the net vector points backward and there is no switch. In December 2016, after the note ban, push is very long and habit is short because cash was removed, so the net points forward. From 2017 to 2019, pull is long and anxiety and habit are both short, giving the largest forward net." style="min-width:820px; max-height:36vh">
+      <svg viewBox="0 0 1000 320" role="img" aria-label="Three force readings of UPI adoption. In October 2016, six months after launch, push and pull are very short and anxiety and habit are long, so the net vector points backward and there is no switch. In December 2016, after the note ban, push is very long and habit is short because cash was removed, so the net points forward. From 2017 to 2019, pull is long and anxiety and habit are both short, giving the largest forward net." style="min-width:820px; max-height:30vh">
         <defs>
           <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--advance)"/></marker>
           <marker id="r2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--resist)"/></marker>
@@ -481,16 +543,23 @@ figcaption{font-family:"IBM Plex Mono",monospace; font-size:11.5px; line-height:
         <text x="880" y="302" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" style="fill:currentColor; opacity:.7">1 billion a month by Oct 2019</text>
       </svg>
       </div>
-      <figcaption>Arrow length encodes strength; direction encodes role. The same four forces, read at three moments. Volumes from NPCI.</figcaption>
+      <figcaption>Arrow length encodes strength, direction encodes role. The same four forces read at three moments. Volumes from NPCI.</figcaption>
     </figure>
     <div class="two">
       <div>
-        <p><strong>UPI launched in April 2016</strong> with RBI backing, twenty-one banks, and no fee. By the end of October it had done about a lakh of transactions in total. A working solution, free distribution, real demand &mdash; and <span class="res">anxiety and habit won</span>.</p>
-        <p><strong>On 8 November the incumbent was removed.</strong> Not by a campaign. By a policy nobody at NPCI could have manufactured &mdash; which is the cleanest demonstration you will ever see that <strong>push belongs to the situation, not to you</strong>.</p>
+        <p><strong>UPI launched in April 2016</strong> with RBI backing, twenty-one banks and no fee. By the end of October it had done about a lakh of transactions in total. A working solution, free distribution, real demand &mdash; and <span class="res">anxiety and habit won</span>.</p>
+        <p><strong>On 8 November the incumbent was removed.</strong> Not by a campaign &mdash; by a policy nobody at NPCI could have manufactured.</p>
       </div>
       <div>
         <div class="claim"><p><strong>And the note ban did not hand the win to UPI.</strong> The first beneficiary was the wallet already sitting on people&rsquo;s phones. In a panic, demand goes to whatever has the <em>lowest anxiety and lowest habit cost at that moment</em> &mdash; not to the better architecture.</p></div>
-        <p class="note">UPI won over the next three years by removing what was left: money stays in your bank, no top-up, any app to any bank, a QR code at every cart, and still no fee. <strong>That is the little hire &mdash; being chosen again on Tuesday morning.</strong></p>
+        <p class="note">UPI won over the next three years by removing what was left: money stays in your bank, no top-up, any app to any bank, a QR code at every cart, still no fee. <strong>That is the little hire &mdash; being chosen again on Tuesday morning.</strong></p>
+      </div>
+    </div>
+    <div class="wild">
+      <span class="wlabel">The same shape elsewhere</span>
+      <div class="witems">
+        <p><strong>Zoom, 2020</strong>Identical structure. A good product with weak push for seven years; an event nobody manufactured removed the incumbent &mdash; the office &mdash; overnight. And the winner was not the best conferencing tool. It was the one you could join without making an account.</p>
+        <p><strong>Netflix vs Blockbuster</strong>Push: the trip back and the late fee. Anxiety: &ldquo;what if I want to watch something tonight?&rdquo; Netflix removed the trip first and the waiting only later &mdash; in that order, because that was the order the forces bound in.</p>
       </div>
     </div>
   </div>
@@ -500,48 +569,33 @@ figcaption{font-family:"IBM Plex Mono",monospace; font-size:11.5px; line-height:
 <section class="slide" data-toc="Six gotchas">
   <div class="wrap">
     <p class="eyebrow">08 &middot; Gotchas</p>
-    <h2>Six ways to run this and learn nothing.</h2>
+    <h2 style="margin-bottom:.28em">Six ways to run this and learn nothing.</h2>
     <div class="cards g3">
       <div class="card"><span class="num">GOTCHA 01</span><h3>The job is a solution</h3>
-        <p><strong>Tell:</strong> strike the product noun and the sentence dies.<br><strong>Fix:</strong> ask &ldquo;so they can <em>what</em>?&rdquo; until you reach progress.</p></div>
+        <p><strong>Tell:</strong> strike the product noun and the sentence dies.<br><strong>Fix:</strong> ask &ldquo;so they can <em>what</em>?&rdquo; until you reach progress.</p>
+        <p class="note" style="margin-top:.5em">Levitt: nobody wants a quarter-inch drill, they want a quarter-inch hole. Push again: they want the shelf up before the in-laws arrive.</p></div>
       <div class="card"><span class="num">GOTCHA 02</span><h3>A persona in the &ldquo;when&rdquo;</h3>
-        <p><strong>Tell:</strong> &ldquo;When a busy mid-market sales manager&hellip;&rdquo;<br><strong>Fix:</strong> replace the <em>person</em> with a <em>moment</em>. Circumstances buy things; demographics do not.</p></div>
+        <p><strong>Tell:</strong> &ldquo;When a busy mid-market sales manager&hellip;&rdquo;<br><strong>Fix:</strong> replace the <em>person</em> with a <em>moment</em>.</p>
+        <p class="note" style="margin-top:.5em">King Charles III and Ozzy Osbourne: both born in Britain in 1948, both married twice, both wealthy, both famous, both lived in castles. Identical on every field on your persona slide. They never hired the same thing.</p></div>
       <div class="card"><span class="num">GOTCHA 03</span><h3>Altitude sickness</h3>
-        <p><strong>Tell:</strong> it rules nothing out.<br><strong>Fix:</strong> run it against your real roadmap. If it kills less than a third, it is decoration.</p></div>
+        <p><strong>Tell:</strong> it rules nothing out.<br><strong>Fix:</strong> run it against your real roadmap. If it kills less than a third, it is decoration.</p>
+        <p class="note" style="margin-top:.5em">&ldquo;Improve the customer experience&rdquo; has been a quarterly objective almost everywhere, and has never once killed a feature.</p></div>
       <div class="card"><span class="num">GOTCHA 04</span><h3>Functional only</h3>
-        <p><strong>Tell:</strong> the roadmap is entirely speed and cost.<br><strong>Fix:</strong> write the emotional and social layers down. They are where the durable advantage sits, precisely because they are hard to measure.</p></div>
+        <p><strong>Tell:</strong> the roadmap is entirely speed and cost.<br><strong>Fix:</strong> write the emotional and social layers down.</p>
+        <p class="note" style="margin-top:.5em">Google Glass worked &mdash; photographs, directions, answers. It died on the social layer, and there is no functional fix for being the person wearing it.</p></div>
       <div class="card"><span class="num">GOTCHA 05</span><h3>Asking, not reconstructing</h3>
-        <p><strong>Tell:</strong> your research is in the future tense &mdash; &ldquo;would you&hellip;&rdquo;, &ldquo;how likely are you to&hellip;&rdquo;.<br><strong>Fix:</strong> past tense, one real event, one real date. People are good witnesses and bad designers.</p></div>
+        <p><strong>Tell:</strong> your research is in the future tense.<br><strong>Fix:</strong> past tense, one real event, one real date.</p>
+        <p class="note" style="margin-top:.5em">Roughly 200,000 people preferred New Coke in blind tests. It launched on 23 April 1985 and was withdrawn 79 days later. The tests asked about a sip. Nobody asked what Coke was hired for.</p></div>
       <div class="card"><span class="num">GOTCHA 06</span><h3>Answering anxiety with pull</h3>
-        <p><strong>Tell:</strong> the reply to &ldquo;what if it doesn&rsquo;t work for me?&rdquo; is another benefit, louder.<br><strong>Fix:</strong> evidence, reversibility, a small first step. Fear is not a shortage of reasons.</p></div>
+        <p><strong>Tell:</strong> the reply to &ldquo;what if it doesn&rsquo;t work for me?&rdquo; is another benefit, louder.<br><strong>Fix:</strong> evidence, reversibility, a small first step.</p>
+        <p class="note" style="margin-top:.5em">Electric cars answered range anxiety with acceleration figures for a decade. What moved it was charger maps, battery warranties and an honest range readout.</p></div>
     </div>
-    <p class="note" style="margin-top:1.1em"><strong>Two more worth naming:</strong> a market map with only logos on it has forgotten <strong>non-consumption</strong> &mdash; usually the largest competitor. And counting the <strong>big hire</strong> (the signup) while ignoring the <strong>little hire</strong> (choosing it again on Tuesday) is how a product with healthy activation and dead week-four retention gets called a success.</p>
-  </div>
-</section>
-
-<!-- 10 -->
-<section class="slide" data-toc="Do this next">
-  <div class="wrap">
-    <p class="eyebrow">09 &middot; Twenty minutes, with the person next to you</p>
-    <h2>Why did you hire an MBA?</h2>
-    <div class="two">
-      <div>
-        <p class="lede">It is the one switch everyone in this room has genuinely made, recently, at real cost. Interview each other and bring back five things &mdash; and obey one rule.</p>
-        <div class="three" style="margin-top:1em">
-          <div class="card"><span class="num">01</span><p>The <strong>timeline</strong> &mdash; first thought, and the two events that moved it.</p></div>
-          <div class="card"><span class="num">02</span><p>Three <strong>energy spikes</strong>: where did they spend effort out of proportion?</p></div>
-          <div class="card"><span class="num">03</span><p>The <strong>job</strong>, all three layers &mdash; honestly on the social one.</p></div>
-          <div class="card"><span class="num">04</span><p>All four <strong>forces</strong>, with a verbatim quote each. Name the binding one.</p></div>
-          <div class="card"><span class="num">05</span><p>What they <strong>fired</strong> &mdash; the job turned down, the city left.</p></div>
-          <div class="card"><span class="num">06</span><p>Never ask <strong>why</strong>. Ask <em>when</em>, <em>where were you</em>, <em>what happened just before</em>.</p></div>
-        </div>
-      </div>
-      <div>
-        <p>The functional job on every application form is <em>&ldquo;acquire skills and a network to change track&rdquo;</em>. True, and almost never the binding force. The binding force is usually <strong>anxiety</strong> &mdash; two years of forgone salary and the fear of arriving no more employable &mdash; or <strong>habit</strong>: a survivable job, a known city, a salary that arrived every month.</p>
-        <div class="claim"><p><strong>The push almost always has a date on it.</strong> A promotion that went to someone else. A batchmate&rsquo;s post. A restructuring. Find the date and you have found the push.</p></div>
-        <hr class="rule">
-        <p class="note"><strong>The whole framework in one sentence:</strong> find someone who already has a push you did not create, in a circumstance you can film, and remove enough anxiety and habit that they can afford to try.</p>
-        <p class="note" style="margin-top:1em">Christensen, <em>Competing Against Luck</em> (2016) &mdash; the theory. Moesta &amp; Spiek, <em>The Jobs-to-be-Done Handbook</em> (2014) and Moesta, <em>Demand-Side Sales 101</em> (2020) &mdash; the forces and the switch interview. Ulwick, <em>Theory to Practice</em> (2016) &mdash; outcome statements. UPI volumes: NPCI.</p>
+    <div class="wild">
+      <span class="wlabel">And finally</span>
+      <div class="witems">
+        <p><strong>Two more worth naming</strong>A market map with only logos on it has forgotten <em>non-consumption</em>, usually the largest competitor. And counting the <em>big hire</em> while ignoring the <em>little hire</em> is how gym memberships get sold in January and a product with healthy signups and dead week-four retention gets called a success.</p>
+        <p><strong>The whole framework in one sentence</strong>Find someone who already has a push you did not create, in a circumstance you can film, and remove enough anxiety and habit that they can afford to try.</p>
+        <p><strong>Sources</strong>Christensen, <em>Competing Against Luck</em> (2016) &mdash; the theory. Moesta &amp; Spiek, <em>The Jobs-to-be-Done Handbook</em> (2014) and Moesta, <em>Demand-Side Sales 101</em> (2020) &mdash; the forces and the switch interview. Ulwick, <em>Theory to Practice</em> (2016) &mdash; outcome statements. UPI volumes: NPCI.</p>
       </div>
     </div>
   </div>
@@ -553,7 +607,7 @@ figcaption{font-family:"IBM Plex Mono",monospace; font-size:11.5px; line-height:
   <span class="who">Jobs to Be Done &middot; XLRI &middot; 20 min</span>
   <button class="btn" id="tocBtn" aria-haspopup="dialog">Contents</button>
   <button class="btn" id="prevBtn" aria-label="Previous slide">&larr;</button>
-  <span class="count"><span id="cur">1</span>&thinsp;/&thinsp;<span id="tot">10</span></span>
+  <span class="count"><span id="cur">1</span>&thinsp;/&thinsp;<span id="tot">9</span></span>
   <button class="btn" id="nextBtn" aria-label="Next slide">&rarr;</button>
 </div>
 
