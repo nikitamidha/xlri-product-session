@@ -1,0 +1,720 @@
+<title>Many Agents, One Job</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,500;0,600;1,6..72,400&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --paper:#EDF0EC; --surface:#F7F9F6; --surface-2:#E3E8E2;
+  --ink:#0E1A19; --ink-2:#4B5C56; --ink-3:#6E807A;
+  --rule:#CBD5CE; --rule-strong:#A9B8B1;
+  --brass:#8A6414; --brass-bright:#B4882A;
+  --teal:#14625A; --brick:#94402F;
+  --shadow:0 1px 0 rgba(14,26,25,.04), 0 18px 40px -28px rgba(14,26,25,.35);
+  font-size:clamp(12.5px, 0.60vw + 0.60vh, 20px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0A1211; --surface:#101B19; --surface-2:#16231F;
+    --ink:#E7EDE8; --ink-2:#9BADA6; --ink-3:#7C8F88;
+    --rule:#22332E; --rule-strong:#33463F;
+    --brass:#D9A93F; --brass-bright:#EAC069;
+    --teal:#57BCAA; --brick:#DE7C64;
+    --shadow:0 1px 0 rgba(0,0,0,.3), 0 18px 40px -28px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0A1211; --surface:#101B19; --surface-2:#16231F;
+  --ink:#E7EDE8; --ink-2:#9BADA6; --ink-3:#7C8F88;
+  --rule:#22332E; --rule-strong:#33463F;
+  --brass:#D9A93F; --brass-bright:#EAC069;
+  --teal:#57BCAA; --brick:#DE7C64;
+  --shadow:0 1px 0 rgba(0,0,0,.3), 0 18px 40px -28px rgba(0,0,0,.8);
+}
+*{box-sizing:border-box}
+body{margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Archivo","Helvetica Neue",Arial,sans-serif; font-size:1rem; line-height:1.45;
+  -webkit-font-smoothing:antialiased}
+
+.stage{position:relative; height:100vh; height:100svh; display:flex; flex-direction:column; overflow:hidden}
+.deck{flex:1; position:relative; min-height:0}
+.slide{position:absolute; inset:0; display:none; flex-direction:column; gap:1.05rem;
+  padding:2.5rem clamp(1.6rem,4.5vw,5.5rem) 1.1rem; overflow-y:auto; overflow-x:hidden}
+.slide.is-live{display:flex}
+@media (prefers-reduced-motion: no-preference){
+  .slide.is-live{animation:rise .3s ease-out both}
+  @keyframes rise{from{opacity:0; transform:translateY(6px)}to{opacity:1; transform:none}}
+}
+.head{display:flex; align-items:baseline; justify-content:space-between; gap:1rem; flex-wrap:wrap}
+.eyebrow{font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:.72rem; font-weight:500;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--brass)}
+.clock{font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:.7rem; letter-spacing:.1em;
+  color:var(--ink-3); font-variant-numeric:tabular-nums}
+h1,h2{font-family:"Newsreader",Georgia,serif; font-weight:500; text-wrap:balance; margin:0; line-height:1.08}
+h2{font-size:2.5rem; letter-spacing:-.012em}
+.slide h2 em{font-style:italic; color:var(--brass)}
+.lede{margin:0; max-width:66ch; color:var(--ink-2); font-size:1.02rem}
+.lede strong{color:var(--ink); font-weight:600}
+.body{display:flex; flex-direction:column; gap:.95rem; flex:1; min-height:0}
+.cols{display:grid; grid-template-columns:repeat(auto-fit,minmax(15rem,1fr)); gap:.9rem}
+.cols.two{grid-template-columns:repeat(auto-fit,minmax(19rem,1fr))}
+
+.defs{display:flex; flex-direction:column; border-top:1px solid var(--rule)}
+.def{display:grid; grid-template-columns:minmax(8.5rem,13rem) 1fr; gap:1.2rem;
+  padding:.6rem 0; border-bottom:1px solid var(--rule); align-items:baseline}
+.def dt{font-family:"Newsreader",Georgia,serif; font-size:1.28rem; color:var(--ink)}
+.def dd{margin:0; color:var(--ink-2); font-size:.94rem; max-width:72ch}
+.def dd b{color:var(--ink); font-weight:600}
+.def.next dt,.def.next dd{opacity:.5}
+
+.tablewrap{overflow-x:auto}
+table.data{border-collapse:collapse; width:100%; font-size:.92rem}
+table.data th,table.data td{text-align:left; vertical-align:top; padding:.52rem .9rem .52rem 0; border-bottom:1px solid var(--rule)}
+table.data thead th{font-family:"IBM Plex Mono",ui-monospace,monospace; font-weight:500; font-size:.68rem;
+  letter-spacing:.13em; text-transform:uppercase; color:var(--ink-3);
+  border-bottom:1px solid var(--rule-strong); padding-bottom:.38rem; white-space:nowrap}
+table.data tbody th{font-weight:600; color:var(--ink); padding-right:1.4rem}
+table.data td{color:var(--ink-2)}
+table.data td b,table.data tbody th b{color:var(--ink); font-weight:600}
+table.data td em{font-style:normal; color:var(--brick); font-weight:500}
+table.data td code,table.data th code{font-family:"IBM Plex Mono",monospace; font-size:.84em; color:var(--teal)}
+tr.now th,tr.now td{background:color-mix(in srgb,var(--brass) 11%,transparent)}
+
+.thesis{margin:0; padding:.8rem 0 .1rem; border-top:2px solid var(--brass);
+  font-family:"Newsreader",Georgia,serif; font-size:1.4rem; line-height:1.25;
+  color:var(--ink); max-width:70ch; text-wrap:balance}
+.thesis b{font-weight:600; color:var(--brass)}
+.thesis.warn{border-top-color:var(--brick)}
+.thesis.warn b{color:var(--brick)}
+
+.panel{background:var(--surface); border:1px solid var(--rule); border-radius:2px; padding:.9rem 1.05rem; box-shadow:var(--shadow)}
+.panel h3{margin:0 0 .42rem; font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:.68rem;
+  letter-spacing:.13em; text-transform:uppercase; color:var(--ink-3); font-weight:500}
+.panel p{margin:0; color:var(--ink-2); font-size:.93rem}
+.panel p+p{margin-top:.45rem}
+.panel b{color:var(--ink)}
+.panel p em,.cell p em{font-style:italic; color:var(--ink-3)}
+.panel.flag{border-left:2px solid var(--brick)}
+.panel.mark{border-left:2px solid var(--brass)}
+.panel.good{border-left:2px solid var(--teal)}
+
+ol.steps{margin:0; padding-left:1.3rem; color:var(--ink-2); font-size:.95rem; display:flex; flex-direction:column; gap:.4rem}
+ol.steps b{color:var(--ink)}
+ol.steps::marker{color:var(--brass)}
+ul.plain{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:.4rem; color:var(--ink-2); font-size:.95rem}
+ul.plain li{padding-left:1.15rem; position:relative}
+ul.plain li::before{content:"—"; position:absolute; left:0; color:var(--brass); font-family:"IBM Plex Mono",monospace}
+ul.plain b{color:var(--ink)}
+ul.plain.yes li::before{content:"✓"; color:var(--teal)}
+ul.plain.no li::before{content:"✕"; color:var(--brick)}
+
+.ladder{display:flex; flex-direction:column; border-top:1px solid var(--rule)}
+.rung{display:grid; grid-template-columns:2.4rem minmax(7rem,10rem) 1fr minmax(9rem,15rem);
+  gap:.9rem; align-items:baseline; padding:.48rem 0; border-bottom:1px solid var(--rule)}
+.rung .r{font-family:"IBM Plex Mono",monospace; font-size:.82rem; color:var(--brass); font-variant-numeric:tabular-nums}
+.rung .n{font-weight:600; font-size:.95rem}
+.rung .d,.rung .e{color:var(--ink-2); font-size:.9rem}
+.rung .e{color:var(--ink-3); font-family:"IBM Plex Mono",monospace; font-size:.76rem}
+.rung.hi{background:linear-gradient(90deg,color-mix(in srgb,var(--brass) 12%,transparent),transparent 70%)}
+
+.matrix{display:grid; grid-template-columns:auto 1fr 1fr; gap:.5rem; align-items:stretch}
+.matrix .lbl{font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--ink-3); display:flex; align-items:center}
+.matrix .lbl.v{writing-mode:vertical-rl; transform:rotate(180deg); justify-content:center}
+.cell{background:var(--surface); border:1px solid var(--rule); border-radius:2px; padding:.75rem .85rem}
+.cell h4{margin:0 0 .28rem; font-size:.95rem; font-weight:600}
+.cell p{margin:0; font-size:.87rem; color:var(--ink-2)}
+.cell p+p{margin-top:.3rem}
+.cell .eg{font-family:"IBM Plex Mono",monospace; font-size:.74rem; color:var(--ink-3)}
+.cell.danger{border-color:var(--brick); border-width:1px 1px 1px 2px}
+.cell.calm{border-left:2px solid var(--teal)}
+
+.trace{font-family:"IBM Plex Mono",monospace; font-size:.8rem; line-height:1.75; background:var(--surface);
+  border:1px solid var(--rule); border-left:2px solid var(--teal); border-radius:2px;
+  padding:.8rem 1rem; overflow-x:auto; color:var(--ink-2)}
+.trace b{color:var(--ink); font-weight:500}
+.trace .t{color:var(--ink-3)}
+.trace .out{color:var(--teal)}
+.trace .sum{color:var(--brass)}
+
+.harness{border:1px dashed var(--brass); border-radius:3px; padding:.9rem; display:flex; flex-direction:column; gap:.6rem;
+  background:color-mix(in srgb,var(--brass) 5%,transparent)}
+.harness .cap{font-family:"IBM Plex Mono",monospace; font-size:.66rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--brass)}
+.harness .row{display:flex; gap:.45rem; flex-wrap:wrap; align-items:center}
+.chip{font-family:"IBM Plex Mono",monospace; font-size:.74rem; padding:.28rem .55rem; border:1px solid var(--rule);
+  border-radius:2px; background:var(--surface); color:var(--ink-2); white-space:nowrap}
+.chip.core{border-color:var(--ink); color:var(--ink); font-weight:600; background:var(--surface-2)}
+.chip .k{color:var(--brass)}
+
+svg.fig{width:100%; max-width:38rem; height:auto}
+svg.fig .stroke{stroke:var(--rule-strong); fill:none; stroke-width:1.5}
+svg.fig .node{fill:var(--surface); stroke:var(--ink); stroke-width:1.2}
+svg.fig .soft{fill:var(--surface); stroke:var(--rule-strong); stroke-width:1.2}
+svg.fig .exit{stroke:var(--brick); stroke-dasharray:4 3}
+svg.fig text{font-family:"IBM Plex Mono",monospace; font-size:12px; fill:var(--ink)}
+svg.fig text.small{font-size:10px; fill:var(--ink-3)}
+svg.fig text.warn{fill:var(--brick)}
+svg.fig .arrow{fill:var(--rule-strong)}
+svg.fig .arrowr{fill:var(--brick)}
+svg.fig .band{fill:color-mix(in srgb,var(--teal) 18%,transparent); stroke:var(--teal); stroke-width:1}
+svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(--brass); stroke-width:1}
+
+.slide.dense h2{font-size:2.05rem}
+.slide.dense table.data{font-size:.85rem}
+.slide.dense .panel p,.slide.dense ol.steps,.slide.dense ul.plain{font-size:.86rem}
+.slide.dense .lede{font-size:.94rem}
+.slide.dense .thesis{font-size:1.22rem}
+
+.title-slide{justify-content:center; gap:1.3rem}
+.title-slide h1{font-size:clamp(2.6rem,5.8vw,4.9rem); letter-spacing:-.022em}
+.title-slide h1 em{font-style:italic; color:var(--brass)}
+.kicker{font-family:"IBM Plex Mono",monospace; font-size:.75rem; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--brass)}
+.rule{height:1px; background:var(--rule-strong); width:100%; max-width:52rem}
+.meta{display:flex; gap:2.1rem; flex-wrap:wrap; font-family:"IBM Plex Mono",monospace;
+  font-size:.76rem; color:var(--ink-3); letter-spacing:.04em}
+.meta b{display:block; color:var(--ink); font-weight:500; font-size:.86rem; margin-top:.2rem;
+  font-family:"Archivo",sans-serif; letter-spacing:0}
+
+.rail{display:flex; gap:2px; padding:0 clamp(1.6rem,4.5vw,5.5rem) .45rem; align-items:flex-end}
+.seg{position:relative; height:2.15rem; display:flex; flex-direction:column; justify-content:flex-end; gap:.26rem;
+  background:none; border:0; padding:0; cursor:pointer; font:inherit; color:inherit; text-align:left}
+.seg .bar{height:3px; background:var(--rule); border-radius:1px; transition:background .2s}
+.seg .tag{font-family:"IBM Plex Mono",monospace; font-size:.6rem; letter-spacing:.09em;
+  text-transform:uppercase; color:var(--ink-3); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.seg.done .bar{background:var(--rule-strong)}
+.seg.active .bar{background:var(--brass)}
+.seg.active .tag{color:var(--brass)}
+.seg:hover .bar{background:var(--brass-bright)}
+.seg:focus-visible{outline:2px solid var(--brass); outline-offset:3px}
+
+.foot{display:flex; align-items:center; justify-content:space-between; gap:1rem;
+  padding:.3rem clamp(1.6rem,4.5vw,5.5rem) .75rem;
+  font-family:"IBM Plex Mono",monospace; font-size:.68rem; color:var(--ink-3); letter-spacing:.08em}
+.foot .keys{display:flex; gap:.9rem; flex-wrap:wrap}
+.foot kbd{font:inherit; color:var(--ink-2); border:1px solid var(--rule); border-radius:2px; padding:0 .3rem}
+.nav{display:flex; gap:.4rem; align-items:center}
+.nav button{font:inherit; font-size:.9rem; line-height:1; color:var(--ink-2); background:var(--surface);
+  border:1px solid var(--rule); border-radius:2px; padding:.3rem .6rem; cursor:pointer}
+.nav button:hover{border-color:var(--brass); color:var(--brass)}
+.nav button:focus-visible{outline:2px solid var(--brass); outline-offset:2px}
+.count{font-variant-numeric:tabular-nums; color:var(--ink-2)}
+.pace{font-variant-numeric:tabular-nums}
+.pace.late{color:var(--brick)}
+.pace.off{display:none}
+
+.notes{display:none; border-top:1px solid var(--brass); background:var(--surface-2);
+  padding:.65rem clamp(1.6rem,4.5vw,5.5rem); font-size:.86rem; color:var(--ink-2)}
+.notes.open{display:block}
+.notes b{font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.13em;
+  text-transform:uppercase; display:block; margin-bottom:.22rem; color:var(--brass)}
+
+.overview{position:fixed; inset:0; background:var(--paper); z-index:20; overflow:auto;
+  padding:2rem clamp(1.6rem,4.5vw,5.5rem); display:none}
+.overview.open{display:block}
+.overview h3{font-family:"IBM Plex Mono",monospace; font-size:.7rem; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--brass); margin:0 0 1.1rem; font-weight:500}
+.ovgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(13rem,1fr)); gap:.55rem}
+.ovcard{text-align:left; background:var(--surface); border:1px solid var(--rule); border-radius:2px;
+  padding:.6rem .7rem; cursor:pointer; font:inherit; color:var(--ink); display:flex; flex-direction:column; gap:.26rem}
+.ovcard:hover{border-color:var(--brass)}
+.ovcard:focus-visible{outline:2px solid var(--brass); outline-offset:2px}
+.ovcard .n{font-family:"IBM Plex Mono",monospace; font-size:.62rem; letter-spacing:.1em; color:var(--brass)}
+.ovcard .t{font-family:"Newsreader",Georgia,serif; font-size:1rem; line-height:1.2}
+.ovcard.current{border-color:var(--brass); background:color-mix(in srgb,var(--brass) 9%,var(--surface))}
+
+@media (max-width:760px){
+  h2{font-size:1.9rem}
+  .rung{grid-template-columns:2rem 1fr}
+  .rung .d,.rung .e{grid-column:2}
+  .matrix{grid-template-columns:1fr}
+  .matrix .lbl.v{writing-mode:horizontal-tb; transform:none}
+  .def{grid-template-columns:1fr; gap:.12rem}
+  .foot .keys{display:none}
+}
+</style>
+
+<script type="application/json" id="segments">[
+ {"name":"Recap","min":1},{"name":"§1 Many agents","min":3.5},{"name":"§2 Harness","min":3.5},
+ {"name":"§3 One or many","min":3},{"name":"§4 Seeing it","min":3.5},{"name":"§5 Workforce","min":2.5},
+ {"name":"Close","min":3}]</script>
+
+<div class="stage">
+<div class="deck" id="deck">
+
+<article class="slide title-slide" data-seg="0" data-title="Title" data-notes="Class two. Last time was one agent and one user. Today is many agents and an organisation — which is a different problem, and mostly a harder one.">
+  <span class="kicker">XLRI · Product management in the AI-native world · Class 2 of 2</span>
+  <h1>Many agents,<br><em>one job</em></h1>
+  <p class="lede" style="font-size:1.15rem;max-width:58ch">What runs an agent, what happens when there are several, how you see what they did, and what any of it does to how an organisation is staffed.</p>
+  <div class="rule"></div>
+  <div class="meta">
+    <span>01 <b>Multi-agent systems</b></span>
+    <span>02 <b>The harness and the orchestrator</b></span>
+    <span>03 <b>One agent or many</b></span>
+    <span>04 <b>Observability</b></span>
+    <span>05 <b>The hybrid workforce</b></span>
+  </div>
+</article>
+
+<article class="slide" data-seg="0" data-title="Recap" data-notes="Sixty seconds. You only need the last line to land — the trade we made in class one is what everything today is dealing with the consequences of.">
+  <div class="head"><span class="eyebrow">From last time</span><span class="clock">0:00 — 1:00</span></div>
+  <h2>Where we got to</h2>
+  <div class="body">
+    <dl class="defs">
+      <div class="def"><dt>LLM</dt><dd>Turns text into text. It can <b>advise</b>; it cannot <b>act</b>.</dd></div>
+      <div class="def"><dt>Agent</dt><dd>An LLM in a loop with tools and a goal, choosing its own next step.</dd></div>
+      <div class="def"><dt>The trade</dt><dd>We gave up certainty and bought <b>coverage</b> — the cases nobody could write rules for.</dd></div>
+      <div class="def"><dt>Human in the loop</dt><dd>Where a person has to say yes. Placed by <b>what it costs to be wrong</b>, not by model confidence.</dd></div>
+      <div class="def"><dt>Evals</dt><dd>A question paper you keep, and re-take on every change.</dd></div>
+    </dl>
+  </div>
+  <p class="thesis">The job of an AI product is not to be right. <b>It is to make being wrong cheap.</b> Today is what that costs once there is more than one agent and a whole company involved.</p>
+</article>
+
+<article class="slide dense" data-seg="1" data-title="§1 One job, two ways" data-notes="Do not present the multi version as the upgrade. It trades one kind of blindness for another — that is the honest framing and it sets up the whole section.">
+  <div class="head"><span class="eyebrow">§1 · Many agents</span><span class="clock">1:00 — 4:30</span></div>
+  <h2>Several agents, different jobs, one objective</h2>
+  <p class="lede">Same task both ways: <strong>"review this 60-page vendor contract against our policy."</strong></p>
+  <div class="body">
+    <div class="cols two">
+      <div class="panel"><h3>One agent</h3>
+        <p>Reads the contract and the policy, works through it, writes the findings.</p>
+        <p><b>Good:</b> it has seen everything, so it catches clause 4 contradicting clause 31. One trace. Cheap.</p>
+        <p><em>Bad: sixty pages plus the policy fills its head; quality sags by page fifty; one point of view, and it marks its own work.</em></p></div>
+      <div class="panel"><h3>Several agents</h3>
+        <p>An <b>orchestrator</b> splits the contract into four sections → four readers, each holding the policy and one section → a <b>critic</b> tries to knock down every finding → the orchestrator merges what survives.</p>
+        <p><b>Good:</b> nothing gets skimmed, and the findings were attacked by something with no stake in them.</p>
+        <p><em>Bad: roughly six times the cost, and nobody has read the whole contract — so clause 4 versus clause 31 is exactly what this version misses.</em></p></div>
+    </div>
+  </div>
+  <p class="thesis">The second is not the upgrade. <b>It trades one kind of blindness for another</b> — and which blindness you can live with is the actual product decision.</p>
+</article>
+
+<article class="slide" data-seg="1" data-title="§1 The four shapes" data-notes="Four arrangements. Generator-critic is the one worth their attention: it is the cheapest large gain in reliability available, and almost nobody does it.">
+  <div class="head"><span class="eyebrow">§1 · Many agents</span><span class="clock">1:00 — 4:30</span></div>
+  <h2>Four shapes, and what each is for</h2>
+  <div class="body">
+    <div class="tablewrap"><table class="data">
+      <thead><tr><th>Shape</th><th>How it runs</th><th>Use it for</th></tr></thead>
+      <tbody>
+        <tr><th>Manager and workers</th><td>One splits the job, hands out pieces, merges the results</td><td>Breadth — searching, reviewing, auditing many things at once</td></tr>
+        <tr><th>Assembly line</th><td>Specialists in a fixed order, each passing on its output</td><td>Work you understand well and repeat often</td></tr>
+        <tr class="now"><th>Maker and critic</th><td>One produces, another attacks it, loop until it survives</td><td><b>Anything consequential. The cheapest big win in reliability, and almost nobody does it</b></td></tr>
+        <tr><th>Shared workspace</th><td>Everyone reads and writes the same state, acting when relevant</td><td>Rare — usually a sign the problem isn't broken down yet</td></tr>
+      </tbody>
+    </table></div>
+    <div class="panel mark"><h3>Why the critic works</h3><p>An agent that grades its own output grades generously — for the same reason you cannot proofread your own writing. <b>A second agent, told to refute rather than to help, catches what the first one structurally cannot see.</b></p></div>
+  </div>
+</article>
+
+<article class="slide" data-seg="2" data-title="§2 The harness" data-notes="This is the concept most people are missing, and it explains why two products on the same model feel completely different. The model decides; the harness does literally everything else.">
+  <div class="head"><span class="eyebrow">§2 · Harness</span><span class="clock">4:30 — 8:00</span></div>
+  <h2>The harness: the code that turns a model into an agent</h2>
+  <p class="lede">The model only ever does one thing — read text, write text. <strong>Everything else in the loop is ordinary software somebody wrote,</strong> and that software is the harness.</p>
+  <div class="body">
+    <div class="harness">
+      <span class="cap">The harness — one turn of the loop</span>
+      <div class="row">
+        <span class="chip">gather what it needs to know</span><span class="chip"><span class="k">→</span></span>
+        <span class="chip core">MODEL</span><span class="chip"><span class="k">→</span></span>
+        <span class="chip">read what it asked for</span><span class="chip"><span class="k">→</span></span>
+        <span class="chip">actually run the tool</span><span class="chip"><span class="k">→</span></span>
+        <span class="chip">hand back the result</span>
+      </div>
+      <span class="cap">and all the way round: the rules of the run</span>
+      <div class="row">
+        <span class="chip">step limit</span><span class="chip">spend cap</span><span class="chip">which tools it may touch</span>
+        <span class="chip">what to do on an error</span><span class="chip">when it's finished</span><span class="chip">record everything</span>
+      </div>
+    </div>
+    <div class="cols two">
+      <div class="panel"><h3>You have already used several</h3><p>Claude Code and Cursor's agent mode are harnesses. So is the fifty-line Python loop your engineer wrote last month. <b>The interesting engineering in this field is mostly here</b>, not in the model.</p></div>
+      <div class="panel mark"><h3>Why a PM should care</h3><p>Same model, different harness, <b>completely different capability</b>. Two coding agents on the identical model are not equally good, and the gap is context assembly, tool design and error handling.</p></div>
+    </div>
+  </div>
+  <p class="thesis">The model is available to your competitor <b>at the same price</b>. The harness is not.</p>
+</article>
+
+<article class="slide dense" data-seg="2" data-title="§2 The orchestrator" data-notes="Same who-decides test as last class, one level up. If the fan-out is hard-coded you have a workflow of agents, and that is usually good news — say so.">
+  <div class="head"><span class="eyebrow">§2 · Orchestrator</span><span class="clock">4:30 — 8:00</span></div>
+  <h2>The orchestrator: who decides which agent does what</h2>
+  <div class="body">
+    <div class="cols two">
+      <div>
+        <svg class="fig" viewBox="0 0 460 210" role="img" aria-label="An orchestrator at the top hands work to three workers, whose results go to a critic and back to the orchestrator to merge.">
+          <defs><marker id="a2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L8 4 L0 8 z" class="arrow"/></marker></defs>
+          <rect x="150" y="8" width="160" height="34" rx="2" class="node"/><text x="230" y="30" text-anchor="middle">ORCHESTRATOR</text>
+          <line x1="230" y1="42" x2="230" y2="60" class="stroke"/>
+          <path d="M70 60 L390 60" class="stroke"/>
+          <line x1="70" y1="60" x2="70" y2="82" class="stroke" marker-end="url(#a2)"/>
+          <line x1="230" y1="60" x2="230" y2="82" class="stroke" marker-end="url(#a2)"/>
+          <line x1="390" y1="60" x2="390" y2="82" class="stroke" marker-end="url(#a2)"/>
+          <rect x="18" y="86" width="104" height="32" rx="2" class="soft"/><text x="70" y="106" text-anchor="middle" class="small">worker · §1–15</text>
+          <rect x="178" y="86" width="104" height="32" rx="2" class="soft"/><text x="230" y="106" text-anchor="middle" class="small">worker · §16–35</text>
+          <rect x="338" y="86" width="104" height="32" rx="2" class="soft"/><text x="390" y="106" text-anchor="middle" class="small">worker · §36–60</text>
+          <line x1="70" y1="118" x2="70" y2="140" class="stroke"/><line x1="230" y1="118" x2="230" y2="140" class="stroke"/><line x1="390" y1="118" x2="390" y2="140" class="stroke"/>
+          <path d="M70 140 L390 140" class="stroke"/>
+          <line x1="230" y1="140" x2="230" y2="152" class="stroke" marker-end="url(#a2)"/>
+          <rect x="160" y="156" width="140" height="32" rx="2" class="node"/><text x="230" y="176" text-anchor="middle">CRITIC</text>
+          <text x="230" y="202" text-anchor="middle" class="small">survivors go back up to be merged</text>
+        </svg>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:.7rem">
+        <div class="panel"><h3>Two kinds, and the difference matters</h3>
+          <p><b>Orchestration in code.</b> You wrote the split — always four sections, always a critic. Predictable, testable, boring, usually right.</p>
+          <p><b>Orchestration by a model.</b> A manager agent decides at run time how to break the job up and who gets what. Flexible — and now <b>the who-decides question from last class applies one level up.</b></p></div>
+        <div class="panel mark"><h3>What the orchestrator is actually responsible for</h3>
+          <p>Splitting the work · giving each worker <b>only</b> what it needs · setting each one a budget · merging results · deciding what happens when two workers disagree or one fails · keeping <b>one</b> record of the whole run.</p></div>
+      </div>
+    </div>
+  </div>
+  <p class="thesis">A "multi-agent system" whose fan-out is hard-coded is a <b>workflow of agents</b> — and that is usually good news. The orchestrator is also the accountability point: <b>if nothing owns the merge, nobody owns the answer.</b></p>
+</article>
+
+<article class="slide" data-seg="3" data-title="§3 Split or stay unified?" data-notes="Read this as a checklist. If none of the four is a yes, they are splitting for tidiness, which is the most common mistake in the category right now.">
+  <div class="head"><span class="eyebrow">§3 · One or many</span><span class="clock">8:00 — 11:00</span></div>
+  <h2>Start with one agent. Split only when something forces you.</h2>
+  <div class="body">
+    <div class="tablewrap"><table class="data">
+      <thead><tr><th>Ask</th><th>If yes</th><th>Because</th></tr></thead>
+      <tbody>
+        <tr><th>Would this sub-task bury the main thread in material it doesn't need afterwards?</th><td><b>Split</b></td><td>A reader that swallows forty pages and returns eight lines keeps the main agent sharp</td></tr>
+        <tr><th>Does part of this need different permissions, or a smaller blast radius?</th><td><b>Split</b></td><td>The agent that can pay money should not also be the one browsing the open web</td></tr>
+        <tr><th>Do you need a check from something with no stake in the answer?</th><td><b>Split</b></td><td>That is the critic, and it is the one split that reliably pays</td></tr>
+        <tr><th>Are the parts genuinely independent, and is the wait hurting?</th><td><b>Split</b></td><td>Ten files reviewed at once instead of one after another</td></tr>
+        <tr class="now"><th>None of the above</th><td><b>Stay unified</b></td><td>One agent with more tools beats many agents with fewer, nearly every time</td></tr>
+      </tbody>
+    </table></div>
+    <div class="panel good"><h3>What staying unified buys you</h3><p>It remembers what it already tried. Nothing is lost at a handoff. One trace to read when it goes wrong. One thing to hold accountable. And it costs a fraction as much.</p></div>
+  </div>
+</article>
+
+<article class="slide" data-seg="3" data-title="§3 What splitting costs" data-notes="Put the arithmetic on the board and let them do it. The handoff point is the sharp one — it is the exact problem AI had just removed from human work.">
+  <div class="head"><span class="eyebrow">§3 · One or many</span><span class="clock">8:00 — 11:00</span></div>
+  <h2>More agents usually means less reliability</h2>
+  <div class="body">
+    <div class="cols two">
+      <div class="panel flag"><h3>Errors multiply, they don't average</h3>
+        <p style="font-family:'IBM Plex Mono',monospace;font-size:1.5rem;color:var(--brick);letter-spacing:.02em">0.95<sup>10</sup> ≈ 60%</p>
+        <p>Ten handoffs, each 95% right, and the run is a coin toss.</p></div>
+      <div class="panel flag"><h3>Every handoff loses context</h3>
+        <p>The real gain from AI was that <b>the person holding the context now does the work</b> — nothing is lost explaining it to someone who wasn't in the room.</p>
+        <p><b>A badly split system puts that loss straight back.</b> You have rebuilt the org chart, including the parts of it that don't work.</p></div>
+      <div class="panel"><h3>Cost and waiting multiply</h3><p>Six agents is roughly six times the bill, and the slowest one sets the clock.</p></div>
+      <div class="panel"><h3>Nobody to ask</h3><p>Five agents, one bad answer, and no single place where it went wrong.</p></div>
+    </div>
+  </div>
+</article>
+
+<article class="slide" data-seg="3" data-title="§3 Rules of thumb" data-notes="The practical takeaway of the section. The last 'don't' is the one that catches experienced teams — a second agent papering over a badly specified first one.">
+  <div class="head"><span class="eyebrow">§3 · One or many</span><span class="clock">8:00 — 11:00</span></div>
+  <h2>Rules of thumb</h2>
+  <div class="body">
+    <div class="cols two">
+      <div class="panel good"><h3>Do</h3>
+        <ul class="plain yes">
+          <li>Give <b>one</b> agent more tools before you give <b>two</b> agents fewer.</li>
+          <li>Keep the join narrow — a worker returns a <b>short structured result</b>, not a conversation.</li>
+          <li><b>One level deep.</b> Workers that spawn workers cannot be debugged.</li>
+          <li>Hard-code the split wherever you already know it.</li>
+          <li>Give every agent a <b>budget</b>: steps, tokens, money, minutes.</li>
+          <li>Keep <b>one</b> record for the whole run, not one per agent.</li>
+        </ul></div>
+      <div class="panel flag"><h3>Don't</h3>
+        <ul class="plain no">
+          <li>Don't mirror the org chart. Five human roles is not five agents.</li>
+          <li>Don't split for neatness — only for context, permissions, judgement or speed.</li>
+          <li>Don't let two agents write to the same thing.</li>
+          <li>Don't add a second agent to patch a first one you specified badly. <b>That is a prompt problem wearing a costume.</b></li>
+        </ul></div>
+    </div>
+  </div>
+  <p class="thesis">Add an agent only when it needs a <b>different context</b>, <b>different permissions</b>, <b>independent judgement</b>, or <b>genuine parallelism</b>. Those four. Nothing else.</p>
+</article>
+
+<article class="slide" data-seg="4" data-title="§4 Seeing what it did" data-notes="Plain language only. Flight recorder plus itemised bill. The point is that agents work while nobody is watching, so the recording is the only thing that exists afterwards.">
+  <div class="head"><span class="eyebrow">§4 · Seeing it</span><span class="clock">11:00 — 14:30</span></div>
+  <h2>Observability: being able to play back what it actually did</h2>
+  <p class="lede">An agent works while nobody is watching, and it goes wrong in the middle rather than at the end. <strong>The recording is the only thing that exists afterwards.</strong></p>
+  <div class="body">
+    <div class="cols">
+      <div class="panel"><h3>What did it do?</h3><p>The steps, in order. Every tool it used and what came back.</p></div>
+      <div class="panel mark"><h3>Why did it do that?</h3><p>What it had been told and what it had found <b>at that moment</b>. The answer is nearly always here — and this is the part teams record last.</p></div>
+      <div class="panel"><h3>What did it cost?</h3><p>Money, time, and every call it made to something that bills you.</p></div>
+    </div>
+    <div class="panel flag"><h3>Without it</h3><p>Every bug report is <b>"it did something odd on Tuesday"</b>, and there is nothing to look at. You cannot fix it, and you cannot promise anyone it won't happen again.</p></div>
+  </div>
+</article>
+
+<article class="slide" data-seg="4" data-title="§4 A recording, shown" data-notes="Walk them through it line by line. Note the third line — the policy it retrieved — because that is the 'why', and it is what turns a complaint into a fix.">
+  <div class="head"><span class="eyebrow">§4 · Seeing it</span><span class="clock">11:00 — 14:30</span></div>
+  <h2>This is all it is</h2>
+  <div class="body">
+    <div class="trace">
+<span class="t">09:14:02</span>  ticket #4821 arrives — <b>"parcel arrived damaged, want a refund"</b><br>
+<span class="t">09:14:03</span>  looked up the customer          <span class="out">→ 14 orders, no previous refunds</span><br>
+<span class="t">09:14:04</span>  read the refund policy           <span class="out">→ clause 3.2, damage in transit</span><br>
+<span class="t">09:14:05</span>  looked up the order              <span class="out">→ delivered 2 days ago, ₹1,240</span><br>
+<span class="t">09:14:06</span>  <b>decided: refund</b>                 <span class="out">→ "within 30 days, damage reported on arrival, clause 3.2"</span><br>
+<span class="t">09:14:07</span>  called the refund API ₹1,240     <span class="out">→ success, ref RF-88213</span><br>
+<span class="t">09:14:07</span>  replied to the customer<br>
+<span class="sum">          5 steps · 8 seconds · ₹0.42 of model calls · no human involved</span>
+    </div>
+    <div class="cols two">
+      <div class="panel good"><h3>What this gives the customer team</h3><p>An answer to "why did it refund that?" in ten seconds, with the clause it relied on. <b>A complaint becomes a fix instead of an argument.</b></p></div>
+      <div class="panel mark"><h3>And when it's wrong</h3><p>You can see <b>which step</b> was wrong — not just that the run was. Usually it is line three: it read the wrong policy, or the right one badly.</p></div>
+    </div>
+  </div>
+</article>
+
+<article class="slide" data-seg="4" data-title="§4 Three audiences" data-notes="The product insight: teams build the engineer's view and bolt the other two on later. The user's view is the one that earns trust — it is how someone learns to stop watching.">
+  <div class="head"><span class="eyebrow">§4 · Seeing it</span><span class="clock">11:00 — 14:30</span></div>
+  <h2>The recording has three audiences. Teams build one.</h2>
+  <div class="body">
+    <div class="tablewrap"><table class="data">
+      <thead><tr><th>Who</th><th>Wants it for</th><th>Needs to see</th></tr></thead>
+      <tbody>
+        <tr><th>The engineer</th><td>Fixing it</td><td>Everything, raw</td></tr>
+        <tr><th>The user</th><td>Deciding whether to trust it — and eventually whether to <b>stop watching</b></td><td>A readable account of what was done, with any step openable</td></tr>
+        <tr><th>The organisation</th><td>Answering for it</td><td>Who allowed what, when, under which policy — and kept</td></tr>
+      </tbody>
+    </table></div>
+    <div class="panel mark"><h3>The loop this makes with evals — and it is the whole engineering process</h3>
+      <p>something goes wrong in production → you can see <b>which step</b> → <b>that becomes a new case on the question paper</b> → the fix is checked against every old case too → shipped → watched again</p></div>
+  </div>
+  <p class="thesis">The recording tells you <b>what happened</b>. The evals tell you <b>whether it's getting better</b>. Recordings without evals is archaeology; evals without recordings is a score you can't diagnose.</p>
+</article>
+
+<article class="slide" data-seg="5" data-title="§5 Roles are bundles of jobs" data-notes="The move the whole section stands on. 'Will AI replace this role' is the wrong question because it treats a role as one thing. Abandon is the category nobody claims.">
+  <div class="head"><span class="eyebrow">§5 · Workforce</span><span class="clock">14:30 — 17:00</span></div>
+  <h2>A role is a bundle of jobs. Agents don't replace roles — they unbundle them.</h2>
+  <p class="lede">"Analyst" is not a unit of work. It is thirty jobs bundled together because they happened to need the same person, in the same place, with the same context. <strong>Take the bundle apart first, then ask.</strong></p>
+  <div class="body">
+    <div class="tablewrap"><table class="data">
+      <thead><tr><th>A PM's own week</th><th>Where it goes</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><th>First draft of the PRD</th><td><b>Augment</b></td><td>The draft is cheap now; the argument still isn't</td></tr>
+        <tr><th>Chasing status across five teams</th><td><b>Automate</b></td><td>Bounded, checkable, and nobody ever wanted to do it</td></tr>
+        <tr class="now"><th>The weekly status deck</th><td><b>Abandon</b></td><td>It existed because gathering information was expensive. It isn't any more.</td></tr>
+        <tr><th>Deciding what <em>not</em> to build</th><td><b>Human</b></td><td>Accountability, and taste</td></tr>
+        <tr><th>Telling someone their project is cancelled</th><td><b>Human</b></td><td>Delegating it <b>is</b> the message</td></tr>
+      </tbody>
+    </table></div>
+    <div class="panel mark"><h3>Abandon is the biggest category and the least claimed</h3><p>A lot of corporate work is the residue of a constraint that has gone — reporting, formatting, re-keying, summarising for people who couldn't attend, chasing. <b>Automating that work preserves it.</b> Ask first whether it should exist at all.</p></div>
+  </div>
+</article>
+
+<article class="slide" data-seg="5" data-title="§5 What stays human" data-notes="'Creativity and empathy' is not an answer, it is a way of not having one. And note that none of the new metrics exist without the recordings from the last section.">
+  <div class="head"><span class="eyebrow">§5 · Workforce</span><span class="clock">14:30 — 17:00</span></div>
+  <h2>What stays human, stated precisely</h2>
+  <div class="body">
+    <div class="cols two">
+      <ul class="plain">
+        <li><b>Accountability.</b> An agent cannot be answerable. Somebody must be — that is a legal and social fact, not a gap in the technology.</li>
+        <li><b>Setting the standard.</b> What "good" means <b>here</b> is the input to everything the agents do.</li>
+        <li><b>The reasons nobody wrote down.</b> Including the ones nobody would write down.</li>
+        <li><b>Consent and relationships.</b> Who gets told what, by whom, in what order.</li>
+        <li><b>The case that is genuinely new.</b> Not like the last thousand.</li>
+      </ul>
+      <div>
+        <div class="tablewrap"><table class="data">
+          <thead><tr><th>Managers measured</th><th>Now measure</th></tr></thead>
+          <tbody>
+            <tr><th>Headcount</th><td><b>Cost per finished job</b></td></tr>
+            <tr><th>Utilisation</th><td><b>How much finishes untouched</b></td></tr>
+            <tr><th>Cycle time</th><td><b>How often it escalates</b>, and how long checking takes</td></tr>
+            <tr><th>Defects</th><td><b>How much comes back</b> after being accepted</td></tr>
+          </tbody>
+        </table></div>
+        <p class="lede" style="margin-top:.6rem;font-size:.88rem">None of these exist unless something is recording the work. <strong>Half this workforce files no timesheet and never complains.</strong></p>
+      </div>
+    </div>
+  </div>
+  <p class="thesis warn">Two traps: <b>pair every agent with a reviewer</b> and the reviewer becomes the bottleneck. And <b>output grows faster than anyone's ability to check it</b> — which is the same thing, one quarter later.</p>
+</article>
+
+<article class="slide dense" data-seg="6" data-title="Close · the four forces" data-notes="The one slide not to cut. Read the equation off the table. Both binding forces are organisational, which is why capability is never what blocks an agent sale.">
+  <div class="head"><span class="eyebrow">Close · back to jobs to be done</span><span class="clock">17:00 — 20:00</span></div>
+  <h2>The same instrument, pointed at agents</h2>
+  <div class="body">
+    <div class="tablewrap"><table class="data">
+      <thead><tr><th>Force</th><th>An assistant</th><th>An agent</th></tr></thead>
+      <tbody>
+        <tr><th>PUSH — what's going badly</th><td>I write more than I can type</td><td><b>New, and self-inflicted: assistants let me generate more work than I can execute or check</b></td></tr>
+        <tr><th>PULL — what I can picture</th><td>Vivid. "It writes the thing"</td><td><em>Weak. "It'll do it while you're not watching" is hard to imagine — and a good agent's demo is nothing happening</em></td></tr>
+        <tr><th>ANXIETY — what could go wrong</th><td>Moderate. Is this answer right?</td><td><em>High, and different: it acted, I wasn't there, I can't reconstruct it, and I'm accountable</em></td></tr>
+        <tr><th>HABIT — what I'd have to give up</th><td>Low. Personal, easily broken</td><td><em>High, and organisational: approval chains, audit, who signs off, existing process, existing headcount</em></td></tr>
+      </tbody>
+    </table></div>
+    <div class="panel mark"><h3>Push + Pull must beat Anxiety + Habit</h3>
+      <p>For agents the two forces holding it back are <b>anxiety and habit</b>, and both belong to <b>the organisation, not the person</b>. What blocks an agent sale is almost never capability — it is that nobody can say who is accountable when it's wrong, and the existing process has no slot for it.</p>
+      <p>Which is the good news: those are <b>the two forces a product team can actually work on.</b> Recordings, dry runs, sandboxes, scoped permissions, spend caps, undo, gates, and an eval number you can show a buyer — and fitting the approval chain that already exists rather than replacing it.</p></div>
+  </div>
+</article>
+
+<article class="slide" data-seg="6" data-title="Close · the three eras" data-notes="The job never changed in any of these rows. What moved is the standard — which is exactly what JTBD tells you to watch, and exactly what feature-led analysis never sees.">
+  <div class="head"><span class="eyebrow">Close · back to jobs to be done</span><span class="clock">17:00 — 20:00</span></div>
+  <h2>The job never changed. The standard did — twice.</h2>
+  <div class="body">
+    <div class="tablewrap"><table class="data">
+      <thead><tr><th>Era</th><th>What the user will accept</th></tr></thead>
+      <tbody>
+        <tr><th>Before generative AI</th><td>Output I can work with</td></tr>
+        <tr><th>Assistants</th><td>Output I can send without editing</td></tr>
+        <tr class="now"><th>Agents</th><td><b>Work I didn't have to watch</b></td></tr>
+      </tbody>
+    </table></div>
+    <div class="panel"><h3>Which rewrites the job story, once the work is delegated rather than done</h3>
+      <p style="font-family:'Newsreader',Georgia,serif;font-size:1.15rem;color:var(--ink)">When <em>[circumstance]</em>, I want <em>[the agent]</em> to <em>[do this]</em>, so I can <em>[outcome]</em> — <b>and I'll accept it without checking when <em>[condition]</em>.</b></p>
+      <p>That last clause is the product specification. Ask it of any agent product; most teams have never written the condition down.</p></div>
+  </div>
+  <p class="thesis">What moved is the <b>standard</b> — which is exactly what jobs-to-be-done tells you to look at, and exactly what a feature list never shows you.</p>
+</article>
+
+<article class="slide" data-seg="6" data-title="Close · seven questions" data-notes="The takeaway artifact for both classes. Tell them to run these against any agentic pitch — including the ones their own companies will make at them.">
+  <div class="head"><span class="eyebrow">Close · back to jobs to be done</span><span class="clock">17:00 — 20:00</span></div>
+  <h2>Seven questions for any agentic product</h2>
+  <div class="body">
+    <ol class="steps">
+      <li><b>What job is being handed over, and at what rung?</b> Not "what does it do" — what progress is a person no longer making themselves?</li>
+      <li><b>What's the unit of work, and how does the user know it's finished?</b> No definition of done, no agent — just a process that never ends.</li>
+      <li><b>Where's the last moment you could still undo it, and what happens there?</b></li>
+      <li><b>How does the user check it without redoing it?</b> If checking costs as much as doing, nothing has been handed over.</li>
+      <li><b>What does it do when it doesn't know?</b> Show me that path, or the failure mode is confident invention.</li>
+      <li><b>How would you know it got worse?</b> Which cases, marked how, watched by whom.</li>
+      <li><b>Who is accountable when it's wrong — and does the product make that person's job possible?</b> The question that closes agent deals, and the one teams answer last.</li>
+    </ol>
+  </div>
+</article>
+
+<article class="slide title-slide" data-seg="6" data-title="Closing question" data-notes="Leave it up. Same move as the Wispr close, one turn further on — and it is the brief for whatever they build next.">
+  <span class="kicker">The closing question</span>
+  <h1 style="font-size:clamp(1.8rem,3.4vw,3rem);max-width:23ch">Agents put more work in flight than anyone can supervise.</h1>
+  <div class="rule"></div>
+  <p class="lede" style="font-size:1.08rem;max-width:52ch">Generative AI created a new push by making us produce far more language than we ever have. Checking was already the bottleneck for code. It is about to be the bottleneck for everything an organisation does.</p>
+  <p class="thesis" style="font-size:1.7rem">Where is the product for <b>that</b> side of the exchange?</p>
+</article>
+
+</div>
+
+<div class="notes" id="notes"><b>Speaker note</b><span id="notestext"></span></div>
+<div class="rail" id="rail"></div>
+<div class="foot">
+  <span class="keys">
+    <span><kbd>←</kbd> <kbd>→</kbd> move</span><span><kbd>N</kbd> notes</span>
+    <span><kbd>O</kbd> overview</span><span><kbd>T</kbd> timer</span><span><kbd>F</kbd> full screen</span>
+  </span>
+  <span class="pace off" id="pace"></span>
+  <span class="nav"><span class="count" id="count"></span>
+    <button type="button" id="prev" aria-label="Previous slide">‹</button>
+    <button type="button" id="next" aria-label="Next slide">›</button></span>
+</div>
+</div>
+<div class="overview" id="overview" role="dialog" aria-label="Slide overview">
+  <h3>Overview — click a slide, or press O to close</h3>
+  <div class="ovgrid" id="ovgrid"></div>
+</div>
+
+<script>
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var SEGS = JSON.parse(document.getElementById('segments').textContent);
+  var TOTAL = 0;
+  SEGS.forEach(function(s){ s.start = TOTAL; TOTAL += s.min; s.end = TOTAL; });
+
+  var rail = document.getElementById('rail');
+  SEGS.forEach(function(s, i){
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'seg'; b.style.flex = String(s.min);
+    b.title = s.name + ' · ' + s.min + ' min';
+    b.innerHTML = '<span class="tag"></span><span class="bar"></span>';
+    b.querySelector('.tag').textContent = s.name;
+    b.addEventListener('click', function(){
+      for (var j = 0; j < slides.length; j++){
+        if (Number(slides[j].dataset.seg) === i){ go(j); break; }
+      }
+    });
+    rail.appendChild(b);
+  });
+  var segEls = Array.prototype.slice.call(rail.children);
+
+  var ovgrid = document.getElementById('ovgrid');
+  slides.forEach(function(s, i){
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'ovcard';
+    b.innerHTML = '<span class="n"></span><span class="t"></span>';
+    b.querySelector('.n').textContent = String(i + 1).padStart(2, '0') + ' · ' + SEGS[Number(s.dataset.seg)].name;
+    b.querySelector('.t').textContent = s.dataset.title || '';
+    b.addEventListener('click', function(){ go(i); toggleOverview(false); });
+    ovgrid.appendChild(b);
+  });
+  var ovcards = Array.prototype.slice.call(ovgrid.children);
+
+  var i = 0;
+  var countEl = document.getElementById('count');
+  var notesEl = document.getElementById('notes');
+  var notesText = document.getElementById('notestext');
+  var paceEl = document.getElementById('pace');
+  var overview = document.getElementById('overview');
+
+  function go(n){
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach(function(s, k){ s.classList.toggle('is-live', k === i); });
+    var seg = Number(slides[i].dataset.seg);
+    segEls.forEach(function(e, k){
+      e.classList.toggle('active', k === seg);
+      e.classList.toggle('done', k < seg);
+    });
+    ovcards.forEach(function(c, k){ c.classList.toggle('current', k === i); });
+    countEl.textContent = (i + 1) + ' / ' + slides.length;
+    notesText.textContent = ' ' + (slides[i].dataset.notes || '');
+    slides[i].scrollTop = 0;
+    try { history.replaceState(null, '', '#' + (i + 1)); } catch (err) {}
+    tick();
+  }
+
+  var timerOn = false, t0 = 0;
+  function fmt(s){ s = Math.max(0, Math.floor(s)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); }
+  function tick(){
+    if (!timerOn){ paceEl.classList.add('off'); return; }
+    paceEl.classList.remove('off');
+    var el = (Date.now() - t0) / 1000;
+    var seg = SEGS[Number(slides[i].dataset.seg)];
+    paceEl.textContent = fmt(el) + ' / ' + fmt(TOTAL * 60) + ' — this segment ends ' + fmt(seg.end * 60);
+    paceEl.classList.toggle('late', el > seg.end * 60);
+  }
+  setInterval(tick, 1000);
+
+  function toggleOverview(force){
+    var open = typeof force === 'boolean' ? force : !overview.classList.contains('open');
+    overview.classList.toggle('open', open);
+  }
+
+  document.getElementById('next').addEventListener('click', function(){ go(i + 1); });
+  document.getElementById('prev').addEventListener('click', function(){ go(i - 1); });
+
+  document.addEventListener('keydown', function(e){
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var k = e.key;
+    if (k === 'ArrowRight' || k === 'PageDown' || k === ' ' || k === 'Spacebar'){ e.preventDefault(); go(i + 1); }
+    else if (k === 'ArrowLeft' || k === 'PageUp'){ e.preventDefault(); go(i - 1); }
+    else if (k === 'Home'){ e.preventDefault(); go(0); }
+    else if (k === 'End'){ e.preventDefault(); go(slides.length - 1); }
+    else if (k === 'n' || k === 'N'){ notesEl.classList.toggle('open'); }
+    else if (k === 'o' || k === 'O'){ toggleOverview(); }
+    else if (k === 'Escape'){ toggleOverview(false); }
+    else if (k === 't' || k === 'T'){ if (!timerOn){ timerOn = true; t0 = Date.now(); } else { timerOn = false; } tick(); }
+    else if (k === 'f' || k === 'F'){
+      try {
+        if (!document.fullscreenElement && document.documentElement.requestFullscreen){
+          var r = document.documentElement.requestFullscreen(); if (r && r.catch) r.catch(function(){});
+        } else if (document.exitFullscreen){ var x = document.exitFullscreen(); if (x && x.catch) x.catch(function(){}); }
+      } catch (err) {}
+    }
+  });
+
+  var from = parseInt((location.hash || '').replace('#', ''), 10);
+  go(isFinite(from) && from > 0 ? from - 1 : 0);
+})();
+</script>

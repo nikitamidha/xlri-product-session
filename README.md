@@ -6,13 +6,17 @@ Teaching material for the XLRI product session.
 
 Two modules, in this order.
 
-**Module 1 — 20 minutes: the concepts.** Seven definitions (LLM, agent,
-multi-agent system, human in the loop, evals, observability, hybrid workforce),
-the framework that goes with each, and the tie back to Jobs to be Done.
-Vocabulary first, because you cannot analyse a market whose central nouns you
-cannot define. **There is a slide deck for this one** — see below.
+**Classes 1 and 2 — 20 minutes each: the concepts.** The words, the frameworks
+that go with them, and the tie back to Jobs to be Done. Vocabulary first, because
+you cannot analyse a market whose central nouns you cannot define. **Both have
+slide decks** — see below.
 
-**Module 2 — 20-minute deep dive** on one product, structured around three
+- **Class 1, *The agentic vocabulary*.** LLM · agent · why a probabilistic system
+  ever beats a workflow · human in the loop · evals. The product side.
+- **Class 2, *Many agents, one job*.** Multi-agent systems · the harness and the
+  orchestrator · observability · the hybrid workforce. The organisation side.
+
+**Class 3 — 20-minute deep dive** on one product, structured around three
 questions:
 
 1. **How has the context shifted for the user?** — in Jobs-to-be-Done terms
@@ -40,32 +44,50 @@ carries the cleanest single insight in the category:
 
 | File | What it is |
 | --- | --- |
-| [`slides/agentic-vocabulary.html`](slides/agentic-vocabulary.html) | **The deck for module 1 (20 min).** Twenty-two slides, presentable as-is. Arrow keys to move, `N` for speaker notes, `O` for the overview grid, `T` for a presenter timer that shows whether you are behind, `F` for full screen. The rail along the bottom is the twenty minutes, drawn to scale. |
-| [`agentic-ai-concepts.md`](agentic-ai-concepts.md) | **The notes behind the deck.** What an LLM is, what an agent is, multi-agent systems and their honest costs, the three postures of human-in-the-loop, evals and observability as one system, and how a hybrid workforce is actually allocated — closing by re-scoring the four forces for agents. Everything the deck asserts, argued out. |
+| [`slides/agentic-vocabulary.html`](slides/agentic-vocabulary.html) | **Class 1 deck (20 min, 17 slides).** LLM, agent, the trade, human in the loop, evals. Presentable as-is. |
+| [`slides/many-agents-one-job.html`](slides/many-agents-one-job.html) | **Class 2 deck (20 min, 18 slides).** Multi-agent systems, the harness and the orchestrator, one-or-many, observability, hybrid workforce, and the four forces re-scored. |
+| [`agentic-ai-concepts.md`](agentic-ai-concepts.md) | **The notes behind both decks.** Ten sections, split across the two classes — everything the decks assert, argued out, with the run sheet for each class at the end. |
+
+Both decks share the same controls: arrow keys to move, `N` for speaker notes,
+`O` for the overview grid, `T` for a presenter timer that tells you whether you
+are behind, `F` for full screen. The rail along the bottom is the twenty minutes,
+drawn to scale.
 | [`jtbd-framing.md`](jtbd-framing.md) | **The analytical spine.** What generative AI does and does not change about Jobs to be Done; the pre/post framing side by side; Wispr written strictly (job story, outcome statements, job map, four forces); and the whole candidate portfolio held to the same discipline. **Read this first.** |
 | [`wispr-jobs.md`](wispr-jobs.md) | **The job portfolio.** Thirteen distinct Wispr Flow jobs in standard form, grouped into five families, each read before/after gen AI and tagged with its binding force. |
 | [`wispr-flow-deep-dive.md`](wispr-flow-deep-dive.md) | **The session.** Company snapshot, the JTBD analysis, the pivot story, the product stack, the pre/post contrast slide, and a minute-by-minute run sheet. |
 | [`candidates.md`](candidates.md) | The nineteen products screened before choosing Wispr, each with a one-paragraph synopsis and a single takeaway. Use it to swap the spine, or to source 90-second contrast cases. |
 | [`framework.md`](framework.md) | The three questions expanded into sixteen lenses. Written for a six-session course — at 20-minute scope, treat it as a menu, not a syllabus. |
 
-## Running the 20 minutes — concepts
+## Running class 1 — the agentic vocabulary
 
 | Minutes | Segment |
 | --- | --- |
-| 0–1 | The card. Seven definitions on one slide. |
-| 1–3 | LLM. It can advise; it cannot act. |
-| 3–7 | Agent. Anatomy, the who-decides test, the autonomy ladder. |
-| 7–9 | Multi-agent systems, and why more agents usually means less reliability. |
-| 9–11 | Human in the loop. In / on / after, and where the gate goes. |
-| 11–13 | Evals. You cannot unit-test a distribution; outcome versus trajectory. |
-| 13–14½ | Observability. The trace, and its three audiences. |
-| 14½–16½ | Hybrid workforce. Roles are bundles of jobs — automate, augment, abandon. |
-| 16½–20 | The tie-back: the four forces re-scored for agents. |
+| 0–1 | The card. Four definitions on one slide. |
+| 1–4 | LLM. What it is, which models exist, what it isn't. |
+| 4–9 | Agent. The loop, agent versus workflow, five real agents, the autonomy ladder. |
+| 9–11½ | **The trade.** Why hand anything to a system that is wrong one time in ten. |
+| 11½–15½ | Human in the loop. The refund thresholds, and where the gate goes. |
+| 15½–19 | Evals. A real eval set, and why the right answer isn't enough. |
+| 19–20 | Close. The job of an AI product is to make being wrong cheap. |
 
-Never cut the last segment. It is the only part that is analysis rather than
-vocabulary, and it is the bridge into the deep dive.
+Never cut the trade. It is the only segment that is analysis rather than
+vocabulary.
 
-## Running the 20 minutes — deep dive
+## Running class 2 — many agents, one job
+
+| Minutes | Segment |
+| --- | --- |
+| 0–1 | Recap of class 1. |
+| 1–4½ | Multi-agent. One contract, reviewed two ways. The four shapes. |
+| 4½–8 | The harness and the orchestrator. |
+| 8–11 | One agent or many — when to split, what it costs, rules of thumb. |
+| 11–14½ | Observability. A trace, shown. |
+| 14½–17 | Hybrid workforce. Roles are bundles of jobs. |
+| 17–20 | The tie-back: the four forces re-scored for agents. |
+
+Never cut the last segment. It is the bridge into the deep dive.
+
+## Running class 3 — the deep dive
 
 | Minutes | Segment |
 | --- | --- |
