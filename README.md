@@ -6,10 +6,11 @@ Teaching material for the XLRI product session.
 
 Two modules, in this order.
 
-**Module 1 — 30 minutes: the concepts.** Five definitions (LLM, agent,
-multi-agent system, human in the loop, hybrid workforce), four frameworks, and
-the tie back to Jobs to be Done. Vocabulary first, because you cannot analyse a
-market whose central nouns you cannot define.
+**Module 1 — 20 minutes: the concepts.** Seven definitions (LLM, agent,
+multi-agent system, human in the loop, evals, observability, hybrid workforce),
+the framework that goes with each, and the tie back to Jobs to be Done.
+Vocabulary first, because you cannot analyse a market whose central nouns you
+cannot define. **There is a slide deck for this one** — see below.
 
 **Module 2 — 20-minute deep dive** on one product, structured around three
 questions:
@@ -39,24 +40,27 @@ carries the cleanest single insight in the category:
 
 | File | What it is |
 | --- | --- |
-| [`agentic-ai-concepts.md`](agentic-ai-concepts.md) | **The concepts module (30 min).** What an LLM is, what an agent is, multi-agent systems and their honest costs, the three postures of human-in-the-loop, and how a hybrid workforce is actually allocated — closing by re-scoring the four forces for agents. |
+| [`slides/agentic-vocabulary.html`](slides/agentic-vocabulary.html) | **The deck for module 1 (20 min).** Twenty-two slides, presentable as-is. Arrow keys to move, `N` for speaker notes, `O` for the overview grid, `T` for a presenter timer that shows whether you are behind, `F` for full screen. The rail along the bottom is the twenty minutes, drawn to scale. |
+| [`agentic-ai-concepts.md`](agentic-ai-concepts.md) | **The notes behind the deck.** What an LLM is, what an agent is, multi-agent systems and their honest costs, the three postures of human-in-the-loop, evals and observability as one system, and how a hybrid workforce is actually allocated — closing by re-scoring the four forces for agents. Everything the deck asserts, argued out. |
 | [`jtbd-framing.md`](jtbd-framing.md) | **The analytical spine.** What generative AI does and does not change about Jobs to be Done; the pre/post framing side by side; Wispr written strictly (job story, outcome statements, job map, four forces); and the whole candidate portfolio held to the same discipline. **Read this first.** |
 | [`wispr-jobs.md`](wispr-jobs.md) | **The job portfolio.** Thirteen distinct Wispr Flow jobs in standard form, grouped into five families, each read before/after gen AI and tagged with its binding force. |
 | [`wispr-flow-deep-dive.md`](wispr-flow-deep-dive.md) | **The session.** Company snapshot, the JTBD analysis, the pivot story, the product stack, the pre/post contrast slide, and a minute-by-minute run sheet. |
 | [`candidates.md`](candidates.md) | The nineteen products screened before choosing Wispr, each with a one-paragraph synopsis and a single takeaway. Use it to swap the spine, or to source 90-second contrast cases. |
 | [`framework.md`](framework.md) | The three questions expanded into sixteen lenses. Written for a six-session course — at 20-minute scope, treat it as a menu, not a syllabus. |
 
-## Running the 30 minutes — concepts
+## Running the 20 minutes — concepts
 
 | Minutes | Segment |
 | --- | --- |
-| 0–2 | The card. Five definitions on one slide. |
-| 2–6 | LLM. It can advise; it cannot act. |
-| 6–13 | Agent. Anatomy, the who-decides test, the autonomy ladder. |
-| 13–17 | Multi-agent systems, and why more agents usually means less reliability. |
-| 17–20 | Human in the loop. In / on / after, and where the gate goes. |
-| 20–24 | Hybrid workforce. Roles are bundles of jobs — automate, augment, abandon. |
-| 24–30 | The tie-back: the four forces re-scored for agents. |
+| 0–1 | The card. Seven definitions on one slide. |
+| 1–3 | LLM. It can advise; it cannot act. |
+| 3–7 | Agent. Anatomy, the who-decides test, the autonomy ladder. |
+| 7–9 | Multi-agent systems, and why more agents usually means less reliability. |
+| 9–11 | Human in the loop. In / on / after, and where the gate goes. |
+| 11–13 | Evals. You cannot unit-test a distribution; outcome versus trajectory. |
+| 13–14½ | Observability. The trace, and its three audiences. |
+| 14½–16½ | Hybrid workforce. Roles are bundles of jobs — automate, augment, abandon. |
+| 16½–20 | The tie-back: the four forces re-scored for agents. |
 
 Never cut the last segment. It is the only part that is analysis rather than
 vocabulary, and it is the bridge into the deep dive.

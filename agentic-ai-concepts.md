@@ -1,23 +1,29 @@
 # Agentic AI — the concepts
-### A 30-minute module: five definitions, four frameworks, and the tie back to Jobs to be Done
+### A 20-minute module: seven definitions, the frameworks that go with them, and the tie back to Jobs to be Done
 
 This module runs **before** the product deep dive. Its purpose is narrow and
 worth stating out loud to the room: the vocabulary in this space is used
 loosely, mostly by people selling something, and you cannot analyse a market
-whose five central nouns you cannot define. We fix five words, give each one a
-framework you can actually apply, and then spend the last six minutes putting
+whose central nouns you cannot define. We fix seven words, give each one a
+framework you can actually apply, and then spend the last four minutes putting
 them back inside the JTBD instrument from [`jtbd-framing.md`](jtbd-framing.md).
 
 **One note on order.** The concepts are taught LLM → agent → multi-agent →
-human in the loop → hybrid workforce. An agent is *defined in terms of* an LLM,
-and a hybrid workforce is a consequence of all four. Teaching them in the order
-people ask about them produces definitions that lean on words not yet defined.
+human in the loop → evals → observability → hybrid workforce. An agent is
+*defined in terms of* an LLM; evals and observability are how anyone comes to
+trust one; and a hybrid workforce is the consequence of all six. Teaching them
+in the order people ask about them produces definitions that lean on words not
+yet defined.
+
+There is a **slide deck** of this module — the same content, cut for
+presentation, one idea per slide with the timings on the rail. This file is the
+notes behind it: everything the deck asserts, argued out.
 
 ---
 
 ## The card
 
-Five sentences. Put them on one slide, make the room write them down, and leave
+Seven sentences. Put them on one slide, make the room write them down, and leave
 the slide up for the rest of the session.
 
 | Term | One sentence |
@@ -26,9 +32,11 @@ the slide up for the rest of the session.
 | **Agent** | An LLM placed in a loop with tools and a goal, deciding for itself what to do next and when it is finished. |
 | **Multi-agent system** | Several agents with different contexts, tools or roles, coordinated toward a single objective. |
 | **Human in the loop** | A designed point at which the system must stop and obtain a human decision before proceeding. |
+| **Evals** | A repeatable set of scored cases that says whether the system does the job — QA for output that is probabilistic. |
+| **Observability** | The ability to reconstruct what the system did on one run, and why. |
 | **Hybrid workforce** | An operating model that allocates *jobs* — not roles — across humans and agents as one pool of capacity. |
 
-And the sentence that connects all five:
+And the sentence that connects all seven:
 
 > An LLM produces **language**. An agent produces **consequences**. Everything
 > else on this list — coordination, gates, workforce design — exists because of
@@ -284,9 +292,142 @@ Straight back to the instrument in [`jtbd-framing.md`](jtbd-framing.md) §1.4:
 ---
 ---
 
-# §5 — The hybrid workforce
+# §5 — What evals are
 
-## 5.1 The definition, and the move it depends on
+## 5.1 The definition
+
+> **An eval is a repeatable set of cases, scored against a standard, that tells
+> you whether the system does the job — and whether the last change made it
+> better or only different.**
+
+It exists because of the second property in §1.2. You cannot unit-test a
+distribution. *"It worked when I tried it"* is one sample, reported by the
+person with the strongest incentive to like it. An eval is how a team stops
+arguing about vibes and starts moving a number.
+
+## 5.2 The anatomy — three parts
+
+| Part | What it is | What breaks without it |
+| --- | --- | --- |
+| **Cases** | Real inputs with their real context | You get very good at situations your users do not have |
+| **Grader** | The thing that decides pass, fail, or score | The number moves and nobody in the room believes it |
+| **A tracked history** | The same suite, run on every change | You ship regressions and hear about them from users |
+
+## 5.3 Three ways to grade
+
+| Grader | Right for | Watch out for |
+| --- | --- | --- |
+| **Programmatic** | Checkable facts — did it call the right tool, is the output well-formed, did it stay under budget, did it stop | Only reaches properties you can express in code |
+| **LLM-as-judge** | Rubric-scored quality — faithfulness, completeness, tone | It needs its own calibration against human labels. **An ungraded grader is a rumour.** |
+| **Human** | The hard cases, and setting the standard the other two imitate | Expensive. Use it to calibrate, not to run the suite |
+
+## 5.4 Grading an agent is a different problem
+
+For an assistant you grade a string. For an agent you grade a **run**, and there
+are two axes:
+
+| Axis | The question | What only this axis catches |
+| --- | --- | --- |
+| **Outcome** | Did the world end up in the right state? | The refund is correct, the PR is right, the record matches |
+| **Process** | Was the route acceptable? | It read every customer record to decide, took forty steps, spent twelve dollars, and never escalated the one ambiguous case |
+
+> An agent can arrive at the right answer by an unacceptable route. **Grade only
+> outcomes and you are training a system to be lucky.**
+
+## 5.5 Where the cases come from
+
+From production. Every escalation, every reworked output, every complaint is a
+case with a known right answer, and it costs nothing but the discipline to
+capture it.
+
+> **An eval set is the memory of the product's mistakes.** A team without one
+> relearns the same failure every quarter and calls it bad luck.
+
+Two traps to name for the room:
+
+- **Benchmark theatre.** Public benchmarks measure somebody else's job. A score
+  on one tells you about the model; it tells you nothing about your product.
+- **Optimising the suite.** The eval set quietly becomes the roadmap. Whatever is
+  not in it is not improving — so the hard cases have to be in it, and they are
+  precisely the ones nobody enjoys writing.
+
+## 5.6 What evals are actually for, in this module's terms
+
+> Evals are how a team **earns the right to move up the autonomy ladder.** You do
+> not go from rung 3 to rung 4 because the demo went well. You go because the
+> pass rate on your own cases, for that class of task, is high enough that the
+> residual failures are affordable.
+
+Which gives the shipping rule:
+
+> **You do not ship an agent because it worked. You ship it because it stopped
+> failing where it used to, and you can show the number.**
+
+---
+---
+
+# §6 — What observability is
+
+## 6.1 The definition
+
+> **Observability is the ability to reconstruct, after the fact, exactly what the
+> system did on one particular run — and why it did that.**
+
+An agent fails in the middle, non-deterministically, while nobody is watching.
+Without a record, every bug report is *"it did something odd on Tuesday"* and
+every post-mortem is a séance.
+
+## 6.2 The unit is the trace
+
+One run, recorded end to end: the request, the context that was assembled, every
+model call, every tool call and what it returned, the decisions, the cost, the
+latency, and the final state. Four questions it must be able to answer:
+
+1. **What did it do?** — the actual sequence of actions
+2. **Why did it do that?** — what was in the context at that step. The answer is
+   almost always here, and this is the part teams log last
+3. **What did it cost?** — tokens, money, wall-clock, and calls to systems that
+   bill you
+4. **Where did it go wrong?** — which *step*, not which run
+
+## 6.3 The product insight: a trace has three audiences
+
+| Audience | Uses it to | Needs to see |
+| --- | --- | --- |
+| **The engineer** | Debug | Everything, raw |
+| **The user** | Decide whether to trust it — and eventually whether to stop watching | A legible account of what was done, with any step openable |
+| **The organisation** | Answer for it | Who authorised what, when, under which policy — and retained |
+
+Most teams build the first and bolt the other two on eighteen months later. The
+second is where the product value sits: §8.4 argues that the activity log is a
+**Pull surface**, not a debugging tool.
+
+## 6.4 Evals and observability are one system
+
+> **Observability tells you what happened. Evals tell you whether it is getting
+> better.** Observability without evals is archaeology. Evals without
+> observability is a score you cannot diagnose.
+
+The loop, and it is the entire engineering process of an agent product:
+
+> production trace → a failure is noticed → it becomes an eval case → the fix is
+> verified against the whole suite → shipped → observed again.
+
+## 6.5 And it is what makes a hybrid workforce measurable at all
+
+The metrics in §7.5 — autonomy rate, escalation rate, rework rate, cost per
+completed job — do not exist unless something is recording the work.
+
+> You cannot manage a workforce you cannot observe, and half of this one files no
+> timesheet, attends no standup and never complains. **The trace is the only
+> evidence that the work happened.**
+
+---
+---
+
+# §7 — The hybrid workforce
+
+## 7.1 The definition, and the move it depends on
 
 > **A hybrid workforce allocates jobs — not roles — across humans and agents as a
 > single pool of capacity.**
@@ -300,7 +441,7 @@ has to re-bundle what is left.
 The reason "will AI replace this job" is the wrong question is that it treats a
 role as atomic. Decompose first, then ask.
 
-## 5.2 The three destinations — and the one everyone forgets
+## 7.2 The three destinations — and the one everyone forgets
 
 Take a role, list its jobs, and send each one somewhere:
 
@@ -325,7 +466,7 @@ Worked on a product manager's own week, which an MBA room will recognise:
 > re-keying, summarising for people who could not attend, chasing. Automating
 > that work preserves it. Ask first whether it should exist.
 
-## 5.3 What stays human, stated precisely
+## 7.3 What stays human, stated precisely
 
 "Creativity and empathy" is not an answer; it is a way of not having one. The
 defensible list:
@@ -338,7 +479,7 @@ defensible list:
 | **Consent and relationship** | Who gets told what, by whom, and in what order |
 | **Novel judgment under stakes** | The case that is genuinely not like the previous cases |
 
-## 5.4 The new human work — the skill inversion, applied to a career
+## 7.4 The new human work — the skill inversion, applied to a career
 
 Lens **C4** says every AI product creates a new literacy. A hybrid workforce
 creates one at the level of the job itself. Four new skills, and they are what
@@ -357,7 +498,7 @@ That last point deserves a beat. **When you automate the routine, the human's
 remaining day is uniformly difficult.** The easy cases used to be the recovery
 time. This is a real and under-discussed cost of a hybrid workforce.
 
-## 5.5 What management measures instead
+## 7.5 What management measures instead
 
 | The old unit | The new unit |
 | --- | --- |
@@ -370,7 +511,7 @@ time. This is a real and under-discussed cost of a hybrid workforce.
 > capacity planning stops being hiring. That is the actual organisational
 > content of the phrase "hybrid workforce" — everything else is a slide.
 
-## 5.6 Two failure modes to name before the room meets them
+## 7.6 Two failure modes to name before the room meets them
 
 - **The centaur trap.** Pair every agent with a human reviewer and the reviewer
   becomes the constraint. You have automated production and left verification
@@ -384,12 +525,12 @@ time. This is a real and under-discussed cost of a hybrid workforce.
 ---
 ---
 
-# §6 — Tying it back: JTBD in the agentic world
+# §8 — Tying it back: JTBD in the agentic world
 
 Six minutes, and the point of the whole module. Everything above is vocabulary;
 this is the analysis.
 
-## 6.1 What agents make abundant
+## 8.1 What agents make abundant
 
 Lens **C1** asks what human role just became free. For LLM products, the honest
 answer was an **advisor** — someone who has read the material and will explain it
@@ -407,7 +548,7 @@ chase it, to keep two systems in agreement, to try again tomorrow. That is a
 labour cost that scaled with duration, and duration is exactly what just went to
 approximately zero.
 
-## 6.2 Which class of jobs just became servable
+## 8.2 Which class of jobs just became servable
 
 Lens **P2** — the unservable job — is the core move of the course, and it
 extends cleanly. The original test:
@@ -432,7 +573,7 @@ mystery about the demand, and everyone had concluded people didn't want it
 because nothing was being hired. They were reading a blocked force as an absent
 job.
 
-## 6.3 The four forces, re-scored for agents
+## 8.3 The four forces, re-scored for agents
 
 The strongest slide in the module. Same instrument as §1.4, pointed at a new
 class of product.
@@ -457,10 +598,11 @@ consequence is immediate:
 
 Concretely, that means the roadmap of a serious agent product is mostly
 **anxiety instruments** — traces, dry-run, sandboxing, scoped permissions,
-spend limits, undo, gates, audit logs — and **habit instruments**: fitting the
+spend limits, undo, gates, audit logs, and an eval number you can put in front
+of a buyer — and **habit instruments**: fitting the
 existing approval chain instead of asking the organisation to replace it.
 
-## 6.4 The Pull problem, which is specific to agents and badly under-appreciated
+## 8.4 The Pull problem, which is specific to agents and badly under-appreciated
 
 An agent that works produces **no event.** Nothing to watch, nothing to feel, no
 moment of delight. The user's experience of a successful agent is an absence.
@@ -478,7 +620,7 @@ skimmed, then ignored. **A well-designed agent product is one the user
 progressively stops looking at** — and the product has to earn each step of
 that. Most agent products are designed for day one and never for day ninety.
 
-## 6.5 The job statement, rewritten for delegation
+## 8.5 The job statement, rewritten for delegation
 
 The template from §1.2 of the JTBD pack gains a fourth clause the moment the
 work is delegated rather than performed:
@@ -492,7 +634,7 @@ it is what determines the rung on the autonomy ladder, and it is the only
 honest measure of whether the agent has been hired. Ask it of any agent product
 in the room and most teams discover they have never written the condition down.
 
-## 6.6 The three eras — the slide to close on
+## 8.6 The three eras — the slide to close on
 
 The Wispr analysis in this pack turns on the observation that the *acceptable
 outcome* moved: from output you could work with to output you could send
@@ -509,7 +651,7 @@ summary of the last four years that this pack can give:
 > is exactly what JTBD says to look at, and exactly what feature-led analysis
 > never sees.
 
-## 6.7 The six questions — the artifact of this module
+## 8.7 The seven questions — the artifact of this module
 
 For any agentic product or proposal, in this order:
 
@@ -523,7 +665,10 @@ For any agentic product or proposal, in this order:
    work? If verification costs as much as doing it, nothing has been delegated.
 5. **What does it do when it doesn't know?** Show me the escalation path. If
    there isn't one, the product's failure mode is confident fabrication.
-6. **Who is accountable when it is wrong, and does the product make that
+6. **How would you know it got worse?** Which cases, scored how, watched by
+   whom. A team that cannot answer this has no way to improve the product except
+   by anecdote.
+7. **Who is accountable when it is wrong, and does the product make that
    person's job possible?** This is the question that closes agent deals and the
    one teams answer last.
 
@@ -543,24 +688,32 @@ Mirror the pack's own closing move.
 ---
 ---
 
-# Running it in thirty minutes
+# Running it in twenty minutes
 
-| Min | Segment | Land this |
+Seven concepts and a tie-back inside twenty minutes is tight, and it works only
+if each segment lands one sentence rather than covering a section. The right-hand
+column is that sentence. Everything else in this file is support for it.
+
+| Min | Segment | Land this one sentence |
 | --- | --- | --- |
-| 0–2 | The card. Five definitions, written down. | An LLM produces language; an agent produces consequences |
-| 2–6 | **§1 LLM.** One capability, three properties, three confusions. | It can advise; it cannot act |
-| 6–13 | **§2 Agent.** Anatomy, the who-decides test, the five-example round, the autonomy ladder. | Autonomy is priced by the cost of being wrong |
-| 13–17 | **§3 Multi-agent.** Three reasons to add one, four patterns, the 0.95¹⁰ arithmetic. | Add an agent for context, tools or incentives — never for the org chart |
-| 17–20 | **§4 Human in the loop.** In / on / after. The reversibility × blast-radius grid. | A gate approved 99% of the time is a ritual |
-| 20–24 | **§5 Hybrid workforce.** Roles are bundles of jobs. Automate / augment / **abandon**. What stays human. The new metrics. | Unbundle the role before asking whether AI replaces it |
-| 24–30 | **§6 Tie-back.** Persistence became abundant → the duration test → the four forces re-scored → the three eras → the six questions → the closing question. | For agents, anxiety and habit are binding, and both are organisational |
+| 0–1 | **The card.** Seven definitions, written down. | An LLM produces language; an agent produces consequences |
+| 1–3 | **§1 LLM.** One capability, three properties, three confusions. | It can advise; it cannot act |
+| 3–7 | **§2 Agent.** Anatomy, the who-decides test, the five-example round, the autonomy ladder. | Autonomy is not a maturity level — it is priced by the cost of being wrong |
+| 7–9 | **§3 Multi-agent.** Three legitimate reasons, and the 0.95¹⁰ arithmetic. | Add an agent for context, tools or incentives — never for the org chart |
+| 9–11 | **§4 Human in the loop.** In / on / after; the reversibility × blast-radius grid. | A gate approved 99% of the time is a ritual, not a control |
+| 11–13 | **§5 Evals.** Cases, graders, and outcome versus trajectory. | You cannot unit-test a distribution — and grading only outcomes trains a system to be lucky |
+| 13–14½ | **§6 Observability.** The trace, its three audiences, the loop with evals. | Observability tells you what happened; evals tell you whether it is getting better |
+| 14½–16½ | **§7 Hybrid workforce.** Roles are bundles of jobs: automate / augment / **abandon**. | Unbundle the role before asking whether AI replaces it |
+| 16½–20 | **§8 Tie-back.** Persistence became abundant → the duration test → the four forces re-scored → the three eras → the seven questions. | For agents, anxiety and habit are the binding forces, and both are organisational |
 
-**If you are short on time**, cut §3.3 (the coordination patterns) and the PM
-week table in §5.2. **Never cut §6.3.** The re-scoring of the four forces is the
-only part of this module that is analysis rather than vocabulary, and it is the
-bridge to the Wispr deep dive that follows.
+**If you are running behind**, the compressible segments are §3 (state the test,
+skip the patterns) and §7 (the three destinations, skip the PM-week table).
+**Never cut §8.3.** The re-scoring of the four forces is the only part of this
+module that is analysis rather than vocabulary, and it is the bridge into the
+Wispr deep dive.
 
-**If you have longer**, the natural extensions are the generator–critic pattern
-worked in detail (§3.3) and a live teardown: take any agent product the room
-names and run the six questions of §6.7 against it on the board. Ten minutes,
-and it exposes more than a case study.
+**If you have thirty minutes**, the three highest-value expansions are the
+generator–critic pattern worked in detail (§3.3), the eval-case-from-production
+loop drawn on the board (§5.5 and §6.4 together), and a live teardown — take any
+agent product the room names and run the seven questions of §8.7 against it.
+Ten minutes, and it exposes more than a prepared case study.
