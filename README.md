@@ -32,6 +32,7 @@ carries the cleanest single insight in the category:
 | File | What it is |
 | --- | --- |
 | [`jtbd-framing.md`](jtbd-framing.md) | **The analytical spine.** What generative AI does and does not change about Jobs to be Done; the pre/post framing side by side; Wispr written strictly (job story, outcome statements, job map, four forces); and the whole candidate portfolio held to the same discipline. **Read this first.** |
+| [`wispr-jobs.md`](wispr-jobs.md) | **The job portfolio.** Thirteen distinct Wispr Flow jobs in standard form, grouped into five families, each read before/after gen AI and tagged with its binding force. |
 | [`wispr-flow-deep-dive.md`](wispr-flow-deep-dive.md) | **The session.** Company snapshot, the JTBD analysis, the pivot story, the product stack, the pre/post contrast slide, and a minute-by-minute run sheet. |
 | [`candidates.md`](candidates.md) | The nineteen products screened before choosing Wispr, each with a one-paragraph synopsis and a single takeaway. Use it to swap the spine, or to source 90-second contrast cases. |
 | [`framework.md`](framework.md) | The three questions expanded into sixteen lenses. Written for a six-session course — at 20-minute scope, treat it as a menu, not a syllabus. |
