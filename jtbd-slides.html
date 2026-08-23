@@ -1,0 +1,903 @@
+<title>Hired, Not Bought</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+
+<style>
+/* ---------- tokens: light is the base, both dark paths redefine only tokens ---------- */
+:root{
+  --paper:#E7EAEC; --surface:#F8FAFA; --raised:#FFFFFF;
+  --ink:#14202A; --ink-2:#3F4E59; --ink-3:#6E7D88;
+  --rule:#C7CFD4; --rule-soft:#DCE2E6;
+  --advance:#14607F; --resist:#96382A; --brass:#8C6413;
+  --advance-wash:rgba(20,96,127,.09); --resist-wash:rgba(150,56,42,.09); --brass-wash:rgba(140,100,19,.10);
+  --grid:rgba(20,32,42,.075);
+  --shadow:0 1px 0 rgba(20,32,42,.05), 0 8px 26px -18px rgba(20,32,42,.45);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0D151C; --surface:#141F28; --raised:#1B2732;
+    --ink:#E7EDF1; --ink-2:#AABAC5; --ink-3:#7A8C98;
+    --rule:#2B3843; --rule-soft:#222E38;
+    --advance:#63B8D6; --resist:#E29079; --brass:#D8B063;
+    --advance-wash:rgba(99,184,214,.12); --resist-wash:rgba(226,144,121,.12); --brass-wash:rgba(216,176,99,.12);
+    --grid:rgba(231,237,241,.07);
+    --shadow:0 1px 0 rgba(0,0,0,.3), 0 10px 30px -20px rgba(0,0,0,.9);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0D151C; --surface:#141F28; --raised:#1B2732;
+  --ink:#E7EDF1; --ink-2:#AABAC5; --ink-3:#7A8C98;
+  --rule:#2B3843; --rule-soft:#222E38;
+  --advance:#63B8D6; --resist:#E29079; --brass:#D8B063;
+  --advance-wash:rgba(99,184,214,.12); --resist-wash:rgba(226,144,121,.12); --brass-wash:rgba(216,176,99,.12);
+  --grid:rgba(231,237,241,.07);
+  --shadow:0 1px 0 rgba(0,0,0,.3), 0 10px 30px -20px rgba(0,0,0,.9);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
+  font-size:clamp(15px,1.05vw + 9px,19px); line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---------- deck shell ---------- */
+.deck{min-height:100svh}
+.slide{
+  min-height:100svh; display:flex; flex-direction:column; justify-content:center;
+  padding:clamp(28px,4.2vw,72px) clamp(20px,5vw,88px) clamp(56px,6vw,84px);
+  border-bottom:1px solid var(--rule-soft);
+  position:relative;
+}
+.deck.ready .slide{display:none; border-bottom:0}
+.deck.ready .slide.on{display:flex; animation:rise .34s cubic-bezier(.2,.7,.3,1) both}
+@keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+@media (prefers-reduced-motion:reduce){ .deck.ready .slide.on{animation:none} }
+.wrap{width:100%; max-width:1180px; margin:0 auto; max-height:calc(100svh - 120px); overflow-y:auto; overflow-x:hidden; padding-right:4px}
+.wrap::-webkit-scrollbar{width:8px} .wrap::-webkit-scrollbar-thumb{background:var(--rule); border-radius:8px}
+
+/* ---------- type ---------- */
+h1,h2,h3,.eyebrow,.chip,.num,.mono,th,.tag{font-family:Archivo,"Helvetica Neue",Arial,sans-serif}
+h1{font-size:clamp(38px,6.2vw,86px); font-weight:700; letter-spacing:-.028em; line-height:.98; margin:0; text-wrap:balance}
+h2{font-size:clamp(26px,3.3vw,44px); font-weight:700; letter-spacing:-.022em; line-height:1.06; margin:0 0 .5em; text-wrap:balance}
+h3{font-size:clamp(16px,1.3vw,21px); font-weight:600; letter-spacing:-.008em; margin:0 0 .35em}
+p{margin:0 0 .85em; max-width:70ch}
+.lede{font-size:clamp(17px,1.5vw,23px); color:var(--ink-2); max-width:60ch}
+.eyebrow,.mono,.tag,.chip{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
+.eyebrow{font-size:12px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-3); margin:0 0 clamp(10px,1.4vw,20px); display:flex; gap:.85em; align-items:center}
+.eyebrow::after{content:""; flex:1; height:1px; background:var(--rule); max-width:220px}
+.mono{font-size:.82em}
+em{font-style:italic}
+strong{font-weight:600}
+.said{font-family:"IBM Plex Mono",monospace; font-size:.8em; color:var(--ink-3)}
+.hl{color:var(--brass); font-weight:600}
+.adv{color:var(--advance)} .res{color:var(--resist)}
+
+/* ---------- rules & callouts ---------- */
+.rule{border:0; height:1px; background:var(--rule); margin:clamp(16px,2vw,28px) 0}
+.claim{
+  border-left:3px solid var(--brass); background:var(--brass-wash);
+  padding:.7em 1.1em; margin:clamp(14px,1.8vw,24px) 0; max-width:74ch;
+  font-size:1.05em;
+}
+.claim p:last-child{margin:0}
+.two > div > .claim:first-child, .stack > .claim:first-child{margin-top:0}
+.note{color:var(--ink-3); font-size:.9em; max-width:72ch}
+
+/* ---------- layout helpers ---------- */
+.two{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:clamp(18px,2.6vw,42px); align-items:start}
+.three{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:clamp(14px,1.8vw,24px)}
+.cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(255px,1fr)); gap:clamp(12px,1.5vw,20px)}
+.card{background:var(--surface); border:1px solid var(--rule-soft); border-radius:3px; padding:clamp(14px,1.5vw,20px); box-shadow:var(--shadow)}
+.card p:last-child{margin:0}
+.cards.g3{grid-template-columns:repeat(3,1fr)}
+@media (max-width:920px){ .cards.g3{grid-template-columns:repeat(auto-fit,minmax(255px,1fr))} }
+.card .num{display:block; font-size:11px; font-weight:600; letter-spacing:.14em; color:var(--ink-3); margin-bottom:.5em}
+.stack{display:flex; flex-direction:column; gap:clamp(10px,1.3vw,18px)}
+
+/* ---------- tables ---------- */
+.tblwrap{overflow-x:auto; margin:clamp(10px,1.4vw,18px) 0}
+table{border-collapse:collapse; width:100%; min-width:520px; font-size:.94em}
+th{
+  font-size:11px; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:var(--ink-3);
+  text-align:left; padding:0 1em .55em 0; border-bottom:1px solid var(--rule); white-space:nowrap;
+}
+td{padding:.72em 1em .72em 0; border-bottom:1px solid var(--rule-soft); vertical-align:top}
+tr:last-child td{border-bottom:0}
+td:first-child,th:first-child{padding-left:0}
+.numcol{font-variant-numeric:tabular-nums}
+
+/* verdict glyphs: forward vs blocked, same semantics as the force colours */
+.v{font-family:"IBM Plex Mono",monospace; font-weight:500; white-space:nowrap}
+.v.ok{color:var(--advance)} .v.no{color:var(--resist)}
+.tag{
+  display:inline-block; font-size:10.5px; font-weight:500; letter-spacing:.1em; text-transform:uppercase;
+  padding:.25em .6em; border-radius:2px; border:1px solid currentColor; white-space:nowrap;
+}
+.tag.ok{color:var(--advance); background:var(--advance-wash)}
+.tag.no{color:var(--resist); background:var(--resist-wash)}
+.tag.mid{color:var(--brass); background:var(--brass-wash)}
+
+/* ---------- figures ---------- */
+figure{margin:clamp(8px,1.4vw,18px) 0; width:100%}
+figure svg{display:block; width:100%; max-width:100%; height:auto; color:var(--ink)}
+figcaption{font-family:"IBM Plex Mono",monospace; font-size:11.5px; line-height:1.5; color:var(--ink-3); margin-top:.8em; max-width:78ch}
+
+/* ---------- the equation ---------- */
+.eq{
+  font-family:Archivo,sans-serif; font-weight:700; letter-spacing:-.02em;
+  font-size:clamp(20px,3.1vw,42px); line-height:1.15; display:flex; flex-wrap:wrap; align-items:baseline; gap:.35em;
+  margin:clamp(10px,1.6vw,22px) 0;
+}
+.eq .gt{color:var(--brass)}
+
+/* ---------- job statement anatomy ---------- */
+.anat{display:flex; flex-wrap:wrap; gap:.5em; align-items:stretch; font-size:clamp(15px,1.5vw,22px); line-height:1.35}
+.anat .part{border:1px solid var(--rule); border-top:3px solid var(--pc,var(--rule)); background:var(--surface); padding:.6em .8em; flex:1 1 240px}
+.anat .part .lbl{display:block; font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.13em; text-transform:uppercase; color:var(--pc,var(--ink-3)); margin-bottom:.4em}
+.anat .part .q{display:block; font-size:12.5px; font-family:"IBM Plex Mono",monospace; color:var(--ink-3); margin-top:.5em; line-height:1.45}
+
+/* ---------- chrome ---------- */
+.bar{
+  position:fixed; left:0; right:0; bottom:0; height:auto; z-index:20;
+  display:flex; align-items:center; gap:14px;
+  padding:10px clamp(14px,3vw,32px); background:var(--paper); background:color-mix(in srgb, var(--paper) 88%, transparent);
+  border-top:1px solid var(--rule); backdrop-filter:blur(8px);
+}
+.deck:not(.ready) ~ .bar{display:none}
+.bar .who{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); margin-right:auto; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.btn{
+  font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+  background:var(--surface); color:var(--ink-2); border:1px solid var(--rule); border-radius:2px;
+  padding:.5em .8em; cursor:pointer; line-height:1;
+}
+.btn:hover{color:var(--ink); border-color:var(--ink-3)}
+.btn:focus-visible,.tocitem:focus-visible{outline:2px solid var(--brass); outline-offset:2px}
+.count{font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--ink-3); font-variant-numeric:tabular-nums; white-space:nowrap}
+.prog{position:fixed; top:0; left:0; height:2px; background:var(--brass); z-index:30; transition:width .3s ease}
+@media (prefers-reduced-motion:reduce){ .prog{transition:none} }
+
+/* ---------- contents overlay ---------- */
+.toc{
+  position:fixed; inset:0; z-index:40; background:var(--paper); padding:clamp(24px,5vw,64px);
+  overflow-y:auto; display:none;
+}
+.toc.open{display:block}
+.toc ol{list-style:none; margin:0; padding:0; columns:2; column-gap:clamp(24px,4vw,64px); max-width:1100px}
+@media (max-width:720px){ .toc ol{columns:1} }
+.tocitem{
+  display:flex; gap:1em; align-items:baseline; width:100%; text-align:left; background:none; border:0; cursor:pointer;
+  padding:.55em 0; border-bottom:1px solid var(--rule-soft); color:var(--ink-2);
+  font-family:"Source Serif 4",serif; font-size:1em; break-inside:avoid;
+}
+.tocitem:hover{color:var(--ink)}
+.tocitem .n{font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--ink-3); font-variant-numeric:tabular-nums; min-width:2.2em}
+.tocitem.cur{color:var(--brass)}
+
+/* ---------- cover ---------- */
+.cover .marks{display:flex; gap:clamp(10px,1.4vw,18px); flex-wrap:wrap; margin-top:clamp(18px,2.4vw,32px)}
+.cover .mk{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); border:1px solid var(--rule); padding:.5em .8em}
+
+@media print{
+  .deck.ready .slide{display:flex !important; page-break-after:always; min-height:auto}
+  .bar,.prog,.toc{display:none !important}
+  .wrap{max-height:none; overflow:visible}
+}
+</style>
+
+<div class="prog" id="prog"></div>
+
+<div class="deck" id="deck">
+
+<!-- 1 -->
+<section class="slide cover" data-toc="Cover">
+  <div class="wrap">
+    <p class="eyebrow">XLRI &middot; Product Management in the AI-Native World</p>
+    <h1>Hired,<br>not bought.</h1>
+    <p class="lede" style="margin-top:1em">Jobs to Be Done &mdash; the demand-side theory that says nobody wants your product. They want the progress it makes possible, and they will fire it the moment something else makes that progress cheaper.</p>
+    <div class="marks">
+      <span class="mk">Christensen &middot; the theory</span>
+      <span class="mk">Moesta &amp; Spiek &middot; the method</span>
+      <span class="mk">Ulwick &middot; the measurement</span>
+    </div>
+    <p class="note" style="margin-top:2em">&larr; &rarr; or space to move &middot; press <strong>C</strong> for contents</p>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="slide" data-toc="The one idea">
+  <div class="wrap">
+    <p class="eyebrow">01 &middot; The one idea</p>
+    <h2>People don&rsquo;t buy products. They hire them.</h2>
+    <div class="two">
+      <div>
+        <p>McDonald&rsquo;s wanted to sell more milkshakes. They asked milkshake buyers what would make a better milkshake &mdash; thicker, cheaper, chunkier &mdash; shipped all of it, and sales did not move.</p>
+        <p>Then someone asked a different question: <em>what job were these people hiring a milkshake to do?</em> Nearly half of all milkshakes were sold before 8am, to solo drivers, taken away. The job was: <span class="said">&ldquo;make my boring 30-minute commute less boring, with one hand, without crumbs on my suit, and keep me full until 11.&rdquo;</span></p>
+        <p>The real competitors were a banana (gone in two minutes), a bagel (needs two hands), and a doughnut (crumbs). <strong>Not other milkshakes.</strong></p>
+      </div>
+      <div>
+        <div class="claim">
+          <p>A <strong>job to be done</strong> is the progress a person is trying to make in a particular circumstance &mdash; functionally, emotionally and socially.</p>
+        </div>
+        <p>Three consequences, and they are the whole reason the framework is worth your time:</p>
+        <div class="stack">
+          <div class="card"><span class="num">CONSEQUENCE 01</span><p><strong>Your competitor set changes.</strong> It includes bananas. It includes doing nothing at all.</p></div>
+          <div class="card"><span class="num">CONSEQUENCE 02</span><p><strong>Your unit of analysis changes.</strong> Not a customer &mdash; a <em>circumstance</em>. The same person hires different things at 7am and at 4pm.</p></div>
+          <div class="card"><span class="num">CONSEQUENCE 03</span><p><strong>Every hire is also a fire.</strong> Something got displaced. If you cannot name what, you have not found a job.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="slide" data-toc="What a job is &mdash; and isn&rsquo;t">
+  <div class="wrap">
+    <p class="eyebrow">02 &middot; Definition</p>
+    <h2>A job is not a task, an activity, a feature, or a category.</h2>
+    <div class="two">
+      <div>
+        <div class="tblwrap">
+          <table>
+            <thead><tr><th>Often called a job</th><th>What it actually is</th></tr></thead>
+            <tbody>
+              <tr><td>&ldquo;Dictating&rdquo;</td><td>An activity. Nobody wants to dictate.</td></tr>
+              <tr><td>&ldquo;Using our app&rdquo;</td><td>A solution &mdash; and <em>our</em> goal, not theirs.</td></tr>
+              <tr><td>&ldquo;Voice input&rdquo;</td><td>A category.</td></tr>
+              <tr><td>&ldquo;Onboarding&rdquo;</td><td>A stage in <em>our</em> funnel.</td></tr>
+              <tr><td>&ldquo;Being more productive&rdquo;</td><td>An aspiration. Unfalsifiable, so it rules nothing out.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <h3>Two tests, run them in this order</h3>
+        <div class="stack">
+          <div class="card">
+            <span class="num">TEST 01 &middot; THE STRIKE TEST</span>
+            <p>Delete every product, brand and technology name from your statement. <strong>If what remains still reads as true, you have a job. If the sentence dies, you had a feature.</strong></p>
+          </div>
+          <div class="card">
+            <span class="num">TEST 02 &middot; THE AGE TEST</span>
+            <p>Would the statement have been recognisable twenty years ago? Jobs are old. <em>Solutions</em> are new. A &ldquo;job&rdquo; that could not have existed before 2023 is almost always a capability in disguise.</p>
+          </div>
+        </div>
+        <div class="claim">
+          <p>A third, blunter test: <strong>does the statement kill anything on your roadmap?</strong> A job statement that rules nothing out is doing no work.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="slide" data-toc="Anatomy of a job statement">
+  <div class="wrap">
+    <p class="eyebrow">03 &middot; The form</p>
+    <h2>Three parts. You need all three.</h2>
+    <div class="anat">
+      <div class="part" style="--pc:var(--brass)">
+        <span class="lbl">When &mdash; the circumstance</span>
+        I have a formed thought and an empty text field in front of me,
+        <span class="q">What makes the job arise? A moment you could have filmed.</span>
+      </div>
+      <div class="part" style="--pc:var(--advance)">
+        <span class="lbl">I want to &mdash; the motivation</span>
+        get it out of my head at something near the speed I think it,
+        <span class="q">The job proper. No product may appear here.</span>
+      </div>
+      <div class="part" style="--pc:var(--ink-3)">
+        <span class="lbl">So I can &mdash; the outcome</span>
+        stay in the flow of the work instead of becoming my own transcriptionist.
+        <span class="q">The standard <em>they</em> judge success by. Not your metric.</span>
+      </div>
+    </div>
+    <div class="two" style="margin-top:1.6em">
+      <div>
+        <p>Drop the <strong>circumstance</strong> and you get a universal truth that describes everyone and directs nothing.</p>
+        <p>Drop the <strong>outcome</strong> and you have a slogan &mdash; nothing to measure, so nothing to falsify.</p>
+      </div>
+      <div>
+        <div class="claim"><p>Strike &ldquo;Wispr Flow&rdquo; from the statement above and it still holds &mdash; and would have held in 1985. <strong>That is the strike test and the age test passing at the same time.</strong> Which raises the real question: if the job is forty years old, why did nobody hire a product for it until 2024?</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="slide" data-toc="The three layers">
+  <div class="wrap">
+    <p class="eyebrow">04 &middot; Depth</p>
+    <h2>Every job has three layers. Most roadmaps only serve one.</h2>
+    <div class="cards">
+      <div class="card">
+        <span class="num">LAYER 01</span>
+        <h3>Functional</h3>
+        <p class="note" style="margin-bottom:.6em">What is the practical task?</p>
+        <p>Convert a thought into usable text.</p>
+      </div>
+      <div class="card">
+        <span class="num">LAYER 02</span>
+        <h3>Emotional</h3>
+        <p class="note" style="margin-bottom:.6em">How do I want to feel &mdash; or avoid feeling?</p>
+        <p>Not experience myself as the bottleneck to my own thinking.</p>
+      </div>
+      <div class="card" style="border-color:var(--brass)">
+        <span class="num" style="color:var(--brass)">LAYER 03</span>
+        <h3>Social</h3>
+        <p class="note" style="margin-bottom:.6em">How do I want to be perceived?</p>
+        <p><strong>Produce text that reads as competent &mdash; nobody should be able to tell I dictated it.</strong></p>
+      </div>
+    </div>
+    <div class="claim">
+      <p>Dictation software served the functional layer beautifully for forty years, was given away free with Windows, and was hired by almost nobody. <strong>It failed on a layer nobody had written down.</strong> Speaking to your laptop in an open-plan office is a social act; sending prose that reads as dictated is a social risk.</p>
+    </div>
+    <p class="note">The emotional and social layers are where the durable advantage sits, precisely because they are hard to measure and therefore rarely copied on purpose.</p>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="slide" data-toc="Good &amp; bad jobs">
+  <div class="wrap">
+    <p class="eyebrow">05 &middot; Quality control</p>
+    <h2>Good and bad jobs to be done</h2>
+    <div class="tblwrap">
+      <table>
+        <thead><tr><th style="width:44%">Statement</th><th style="width:14%">Verdict</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td>&ldquo;Our users want a better spreadsheet.&rdquo;</td><td><span class="tag no">Solution</span></td><td>Names a category. Strike it and nothing remains.</td></tr>
+          <tr><td>&ldquo;Millennials want convenience.&rdquo;</td><td><span class="tag no">Demographic</span></td><td>A segment is not a circumstance. Two people in the same segment, in different moments, hire different things.</td></tr>
+          <tr><td>&ldquo;I want to be more productive.&rdquo;</td><td><span class="tag no">Unfalsifiable</span></td><td>No circumstance, no standard of success. Rules nothing out, so it cannot prioritise.</td></tr>
+          <tr><td>&ldquo;I want to check my balance in the app.&rdquo;</td><td><span class="tag no">Our goal</span></td><td>Feature usage. The user&rsquo;s job is <em>knowing whether they can afford the thing they are standing in front of</em>.</td></tr>
+          <tr><td>&ldquo;When I&rsquo;m on the 6:40 train with no signal, I want the day&rsquo;s numbers already on my phone, so I can walk into the 9am with a point of view.&rdquo;</td><td><span class="tag ok">Job</span></td><td>Filmable circumstance, solution-free motivation, checkable outcome. It also <strong>rules out</strong> a live dashboard.</td></tr>
+          <tr><td>&ldquo;When my parents ask what I&rsquo;m doing with my life, I want an answer that sounds like a plan, so I can stop feeling behind my batchmates.&rdquo;</td><td><span class="tag ok">Job</span></td><td>The emotional and social job of hiring an MBA. No brochure writes it down. Every applicant feels it.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="two">
+      <div><div class="claim"><p><strong>The bad ones share a shape:</strong> they describe a <em>person</em> or a <em>product</em>. The good ones describe a <em>moment</em> and a <em>standard</em>.</p></div></div>
+      <div><p class="note">Useful habit: write the job, then write down two things it forbids you from building. If you cannot, the statement is decoration.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="slide" data-toc="Context: the circumstance">
+  <div class="wrap">
+    <p class="eyebrow">06 &middot; Context</p>
+    <h2>What a <em>good</em> context looks like</h2>
+    <p class="lede">The circumstance is the load-bearing half of the job. Get it wrong and everything downstream is a survey result.</p>
+    <div class="two">
+      <div>
+        <div class="stack">
+          <div class="card"><span class="num">01 &middot; SITUATIONAL, NOT PERSONAL</span><p>A moment, not a demographic, not a personality. <span class="res">&ldquo;Busy professionals&rdquo;</span> &rarr; <span class="adv">&ldquo;the fifteen minutes between back-to-back calls&rdquo;</span>.</p></div>
+          <div class="card"><span class="num">02 &middot; FILMABLE</span><p>If you could not have pointed a camera at it, it is an attitude, not a circumstance. Where were they? What time? Who else was there?</p></div>
+          <div class="card"><span class="num">03 &middot; COUNTABLE</span><p>It recurs at a knowable frequency. <strong>Frequency &times; population is your market size</strong> &mdash; and it is a far better estimate than a category report.</p></div>
+          <div class="card"><span class="num">04 &middot; SOLUTION-FREE</span><p>No product names, yours or anyone&rsquo;s. <span class="res">&ldquo;When I open the app&hellip;&rdquo;</span> is not a context; it is a funnel step.</p></div>
+          <div class="card"><span class="num">05 &middot; CONSTRAINING</span><p>A good context explains <em>why the obvious answer fails here</em>. &ldquo;No signal&rdquo; kills the dashboard. &ldquo;One hand on the wheel&rdquo; kills the bagel.</p></div>
+        </div>
+      </div>
+      <div>
+        <h3>How you actually get it</h3>
+        <p>You do not ask for context. People answer that question with a self-portrait. <strong>You reconstruct it</strong>, from one real event:</p>
+        <div class="tblwrap">
+          <table>
+            <thead><tr><th>Instead of</th><th>Ask</th></tr></thead>
+            <tbody>
+              <tr><td class="said">&ldquo;When do you usually&hellip;?&rdquo;</td><td>&ldquo;Take me to the <em>last</em> time. What day was it?&rdquo;</td></tr>
+              <tr><td class="said">&ldquo;Why did you need it?&rdquo;</td><td>&ldquo;What had just happened before you sat down?&rdquo;</td></tr>
+              <tr><td class="said">&ldquo;Where do you use it?&rdquo;</td><td>&ldquo;Where were you physically standing? Was anyone with you?&rdquo;</td></tr>
+              <tr><td class="said">&ldquo;How often?&rdquo;</td><td>&ldquo;How many times did that happen last week?&rdquo;</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="claim"><p><strong>The tell that you have the real context:</strong> it comes with a time of day, a location, and another person in it. Generic contexts have none of those.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section class="slide" data-toc="Outcomes: their standard">
+  <div class="wrap">
+    <p class="eyebrow">07 &middot; Outcomes</p>
+    <h2>What a <em>good</em> outcome looks like</h2>
+    <p class="lede">An outcome statement is the standard the user privately judges you against. Two grammatical forms, and only two.</p>
+    <div class="two">
+      <div>
+        <div class="claim" style="border-left-color:var(--advance); background:var(--advance-wash)">
+          <p class="mono" style="font-size:1em; line-height:1.9">Minimise <strong>the time it takes to</strong> [step]<br>Minimise <strong>the likelihood that</strong> [bad thing]</p>
+        </div>
+        <div class="tblwrap">
+          <table>
+            <thead><tr><th style="width:52%">Candidate</th><th>Verdict</th></tr></thead>
+            <tbody>
+              <tr><td>&ldquo;Improve NPS to 60.&rdquo;</td><td><span class="v no">&#10007;</span> <span class="note">Our outcome. The user has never heard of it.</span></td></tr>
+              <tr><td>&ldquo;Delight the user.&rdquo;</td><td><span class="v no">&#10007;</span> <span class="note">Not measurable, not falsifiable.</span></td></tr>
+              <tr><td>&ldquo;Increase daily active users.&rdquo;</td><td><span class="v no">&#10007;</span> <span class="note">For most jobs, <em>less</em> time in your product <em>is</em> the outcome.</span></td></tr>
+              <tr><td>&ldquo;Minimise the time to correct a misheard word.&rdquo;</td><td><span class="v ok">&#10003;</span> <span class="note">Measurable, solution-free, stable across technologies.</span></td></tr>
+              <tr><td>&ldquo;Minimise the likelihood the recipient can tell it was dictated.&rdquo;</td><td><span class="v ok">&#10003;</span> <span class="note">A <em>social</em> outcome, written as a testable statement.</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <h3>Five ways to pull outcomes out of a person</h3>
+        <div class="stack">
+          <div class="card"><span class="num">01</span><p>&ldquo;<strong>How did you know it had worked?</strong>&rdquo; &mdash; the answer is an outcome statement, badly worded.</p></div>
+          <div class="card"><span class="num">02</span><p>&ldquo;<strong>What did you check afterwards?</strong>&rdquo; &mdash; whatever they inspected is what they were worried about.</p></div>
+          <div class="card"><span class="num">03</span><p><strong>Hunt the workaround.</strong> Every spreadsheet, sticky note and copy-paste ritual is an unserved outcome wearing a disguise.</p></div>
+          <div class="card"><span class="num">04</span><p>&ldquo;<strong>Tell me about the last time it let you down.</strong>&rdquo; &mdash; failure stories are outcomes stated in the negative.</p></div>
+          <div class="card"><span class="num">05</span><p><strong>Rewrite every complaint as a &ldquo;minimise&rdquo; sentence.</strong> If it will not convert, it was a feature request, not an outcome.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 -->
+<section class="slide" data-toc="The gap map">
+  <div class="wrap">
+    <p class="eyebrow">08 &middot; Where the opening is</p>
+    <h2>Score every outcome against today&rsquo;s solutions.</h2>
+    <p>Write out every outcome for one job. Mark each row for how well the <em>current</em> way serves it &mdash; not your product, the way they do it today, including doing nothing. This is the whole method for getting from &ldquo;we understand the user&rdquo; to &ldquo;we know what to build.&rdquo;</p>
+    <div class="tblwrap">
+      <table>
+        <thead><tr><th style="width:56%">Outcome statement &mdash; getting a thought into text, before generative AI</th><th>How the old way served it</th></tr></thead>
+        <tbody>
+          <tr><td>Minimise the time to get a formed thought into a text field</td><td><span class="tag mid">Partly served</span></td></tr>
+          <tr><td><strong>Minimise the effort to structure a thought before expressing it</strong></td><td><span class="tag no">Made actively worse</span></td></tr>
+          <tr><td>Minimise the likelihood the output needs editing before it can be sent</td><td><span class="tag no">Unserved</span></td></tr>
+          <tr><td><strong>Minimise the likelihood the recipient can tell it was dictated</strong></td><td><span class="tag no">Unserved</span></td></tr>
+          <tr><td>Minimise the time to correct a misrecognised word</td><td><span class="tag mid">Poorly served</span></td></tr>
+          <tr><td>Minimise the setup effort before the first useful output</td><td><span class="tag no">Unserved</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="two">
+      <div><div class="claim"><p><strong>Row two is the entire case.</strong> Old dictation did not merely fail that outcome &mdash; it was <em>worse than typing</em>, because it demanded you compose finished prose in your head and then perform it aloud. That is precisely the labour the job exists to avoid.</p></div></div>
+      <div><p><strong>The unserved rows are the roadmap. The &ldquo;made worse&rdquo; row is the business.</strong></p>
+      <p class="note">One more column belongs on this table in a real analysis: <em>importance to the user</em>. High importance &times; poorly served is the opportunity; high importance &times; well served is table stakes you must match and cannot win on.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="slide" data-toc="The four forces &mdash; the diagram">
+  <div class="wrap">
+    <p class="eyebrow">09 &middot; The forces of progress</p>
+    <h2>Four forces act on every switch. Two forward, two back.</h2>
+    <figure>
+      <div style="overflow-x:auto">
+      <svg viewBox="0 0 980 450" role="img" aria-label="Free-body diagram of the four forces of progress. Push of the situation and pull of the new way are arrows pointing right, from today's way toward the new way. Anxiety about the new way and habit of the present are arrows pointing left, back toward today's way. A switch happens only when push plus pull exceeds anxiety plus habit." style="min-width:680px; max-height:44vh">
+        <defs>
+          <pattern id="gp" width="28" height="28" patternUnits="userSpaceOnUse">
+            <path d="M28 0H0V28" fill="none" stroke="currentColor" stroke-width="1" style="opacity:.08"/>
+          </pattern>
+          <marker id="arwA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" style="fill:var(--advance)"/>
+          </marker>
+          <marker id="arwR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" style="fill:var(--resist)"/>
+          </marker>
+        </defs>
+        <rect x="0" y="0" width="980" height="450" fill="url(#gp)"/>
+
+        <text x="200" y="44" font-family="IBM Plex Mono, monospace" font-size="11.5" letter-spacing="1.4" style="fill:currentColor; opacity:.5">PROMOTING &mdash; MOVE THE PERSON TOWARD THE NEW WAY</text>
+
+        <text x="200" y="86" font-family="IBM Plex Mono, monospace" font-size="14.5" letter-spacing="1.2" style="fill:var(--advance)">PUSH OF THE SITUATION</text>
+        <line x1="200" y1="100" x2="772" y2="100" stroke-width="3.5" style="stroke:var(--advance)" marker-end="url(#arwA)"/>
+        <text x="200" y="123" font-family="IBM Plex Mono, monospace" font-size="12.5" style="fill:currentColor; opacity:.62">&ldquo;I can&rsquo;t keep doing this.&rdquo;   &mdash; belongs to their circumstance. You cannot manufacture it.</text>
+
+        <text x="200" y="156" font-family="IBM Plex Mono, monospace" font-size="14.5" letter-spacing="1.2" style="fill:var(--advance)">PULL OF THE NEW WAY</text>
+        <line x1="200" y1="170" x2="772" y2="170" stroke-width="3.5" style="stroke:var(--advance)" marker-end="url(#arwA)"/>
+        <text x="200" y="193" font-family="IBM Plex Mono, monospace" font-size="12.5" style="fill:currentColor; opacity:.62">&ldquo;If this worked, I could finally&hellip;&rdquo;   &mdash; the only force you fully own.</text>
+
+        <rect x="20" y="205" width="164" height="90" rx="2" fill="none" stroke="currentColor" style="opacity:.55" stroke-width="1.5"/>
+        <text x="102" y="245" text-anchor="middle" font-family="Archivo, sans-serif" font-size="15" font-weight="600" style="fill:currentColor">TODAY&rsquo;S WAY</text>
+        <text x="102" y="266" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" style="fill:currentColor; opacity:.55">already paid for</text>
+
+        <line x1="192" y1="250" x2="788" y2="250" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 7" style="opacity:.4"/>
+        <text x="490" y="238" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" letter-spacing="1.6" style="fill:var(--brass)">THE SWITCH</text>
+        <text x="490" y="272" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" style="fill:currentColor; opacity:.5">one person, one moment &mdash; not a market</text>
+
+        <rect x="796" y="205" width="164" height="90" rx="2" fill="none" stroke="currentColor" style="opacity:.55" stroke-width="1.5"/>
+        <text x="878" y="245" text-anchor="middle" font-family="Archivo, sans-serif" font-size="15" font-weight="600" style="fill:currentColor">THE NEW WAY</text>
+        <text x="878" y="266" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" style="fill:currentColor; opacity:.55">unproven</text>
+
+        <text x="200" y="298" font-family="IBM Plex Mono, monospace" font-size="11.5" letter-spacing="1.4" style="fill:currentColor; opacity:.5">BLOCKING &mdash; HOLD THE PERSON WHERE THEY ARE</text>
+
+        <text x="200" y="330" font-family="IBM Plex Mono, monospace" font-size="14.5" letter-spacing="1.2" style="fill:var(--resist)">ANXIETY ABOUT THE NEW WAY</text>
+        <line x1="772" y1="344" x2="206" y2="344" stroke-width="3.5" style="stroke:var(--resist)" marker-end="url(#arwR)"/>
+        <text x="200" y="367" font-family="IBM Plex Mono, monospace" font-size="12.5" style="fill:currentColor; opacity:.62">&ldquo;Yeah, but what if&hellip;&rdquo;   &mdash; lives in their imagination, not in your feature list.</text>
+
+        <text x="200" y="400" font-family="IBM Plex Mono, monospace" font-size="14.5" letter-spacing="1.2" style="fill:var(--resist)">HABIT OF THE PRESENT</text>
+        <line x1="772" y1="414" x2="206" y2="414" stroke-width="3.5" style="stroke:var(--resist)" marker-end="url(#arwR)"/>
+        <text x="200" y="437" font-family="IBM Plex Mono, monospace" font-size="12.5" style="fill:currentColor; opacity:.62">&ldquo;It&rsquo;s fine. I&rsquo;m used to it.&rdquo;   &mdash; automatic, and already sunk.</text>
+      </svg>
+      </div>
+      <figcaption>The forces of progress, after Bob Moesta and Chris Spiek. Direction encodes role: rightward arrows promote the switch, leftward arrows block it. All four act on the same person at the same moment.</figcaption>
+    </figure>
+    <div class="eq">
+      <span class="adv">PUSH + PULL</span> <span class="gt">&gt;</span> <span class="res">ANXIETY + HABIT</span>
+    </div>
+    <p class="note">Read it as a vector sum, not a scorecard. You do not have to win all four. You have to win the total &mdash; and the total is read one person at a time.</p>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="slide" data-toc="Forces: four owners">
+  <div class="wrap">
+    <p class="eyebrow">10 &middot; How to really think about it &mdash; part one</p>
+    <h2>Four forces, four different owners.</h2>
+    <p class="lede">This is the reframe that changes what a team does on Monday. The forces are not four boxes of equal status. They belong to different people, and only two of them are actually yours.</p>
+    <div class="tblwrap">
+      <table>
+        <thead><tr><th>Force</th><th>Belongs to</th><th>What that means for you</th></tr></thead>
+        <tbody>
+          <tr><td><strong class="adv">Push</strong></td><td>Their <strong>situation</strong></td><td>You cannot create it. You can only <em>find people who already have it</em> &mdash; and name it back to them in their own words. Most &ldquo;bad&rdquo; segments are just people without push.</td></tr>
+          <tr><td><strong class="adv">Pull</strong></td><td>Your <strong>solution</strong></td><td>The only force you own outright &mdash; which is exactly why every roadmap and every campaign lives here, and why so many of them fail to move anything.</td></tr>
+          <tr><td><strong class="res">Anxiety</strong></td><td>Their <strong>imagination</strong></td><td>It does not have to be true to block the sale. A factually wrong fear stops the switch just as hard as a real one. Arguing with it makes it worse.</td></tr>
+          <tr><td><strong class="res">Habit</strong></td><td>Their <strong>past</strong></td><td>Already paid for, invisible, and often part of their identity. Habit is not loyalty &mdash; people are held by habits they actively dislike.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="claim">
+      <p><strong>Pull has sharply diminishing returns against an entrenched habit.</strong> Being thirty per cent better than something automatic and already paid for is worth approximately nothing. Yet pull is where nearly all the effort goes, because it is the force the team controls.</p>
+    </div>
+    <p><strong>Anxiety and habit are the two levers actually available to a product team. Almost nobody works on them.</strong></p>
+  </div>
+</section>
+
+<!-- 12 -->
+<section class="slide" data-toc="Forces: four clocks">
+  <div class="wrap">
+    <p class="eyebrow">11 &middot; How to really think about it &mdash; part two</p>
+    <h2>The forces run on different clocks.</h2>
+    <figure>
+      <div style="overflow-x:auto">
+      <svg viewBox="0 0 1060 350" role="img" aria-label="Timeline of a purchase in six stages: first thought, passive looking, active looking, deciding, first use, ongoing use. Two events break the timeline: event one turns passive looking into active looking, event two forces the decision. Bands beneath show when each force is active: push from first thought through deciding, pull from passive looking through deciding, anxiety in choice from active looking through deciding, habit from first thought through first use, and anxiety in use from first use onward. Push and pull map to acquisition, anxiety and habit to conversion, and anxiety in use to retention." style="min-width:760px; max-height:38vh">
+
+        <text x="460" y="18" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1.2" style="fill:var(--brass)">EVENT 1</text>
+        <text x="600" y="18" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1.2" style="fill:var(--brass)">EVENT 2</text>
+
+        <text x="250" y="44" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" letter-spacing=".8" style="fill:currentColor">FIRST THOUGHT</text>
+        <text x="390" y="44" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" letter-spacing=".8" style="fill:currentColor">PASSIVE LOOKING</text>
+        <text x="530" y="44" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" letter-spacing=".8" style="fill:currentColor">ACTIVE LOOKING</text>
+        <text x="670" y="44" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" letter-spacing=".8" style="fill:currentColor">DECIDING</text>
+        <text x="810" y="44" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" letter-spacing=".8" style="fill:currentColor">FIRST USE</text>
+        <text x="950" y="44" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" letter-spacing=".8" style="fill:currentColor">ONGOING USE</text>
+
+        <line x1="180" y1="64" x2="1020" y2="64" stroke="currentColor" stroke-width="1.5" style="opacity:.5"/>
+        <line x1="180" y1="60" x2="180" y2="70" stroke="currentColor" stroke-width="1.5" style="opacity:.5"/>
+        <line x1="320" y1="60" x2="320" y2="70" stroke="currentColor" stroke-width="1.5" style="opacity:.5"/>
+        <line x1="740" y1="60" x2="740" y2="70" stroke="currentColor" stroke-width="1.5" style="opacity:.5"/>
+        <line x1="880" y1="60" x2="880" y2="70" stroke="currentColor" stroke-width="1.5" style="opacity:.5"/>
+        <line x1="1020" y1="60" x2="1020" y2="70" stroke="currentColor" stroke-width="1.5" style="opacity:.5"/>
+
+        <line x1="460" y1="26" x2="460" y2="286" stroke-width="1.5" stroke-dasharray="4 5" style="stroke:var(--brass); opacity:.8"/>
+        <line x1="600" y1="26" x2="600" y2="286" stroke-width="1.5" stroke-dasharray="4 5" style="stroke:var(--brass); opacity:.8"/>
+
+        <text x="168" y="115" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="12" style="fill:var(--advance)">PUSH</text>
+        <rect x="180" y="100" width="560" height="22" rx="2" style="fill:var(--advance-wash); stroke:var(--advance)" stroke-width="1.2"/>
+
+        <text x="168" y="153" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="12" style="fill:var(--advance)">PULL</text>
+        <rect x="320" y="138" width="420" height="22" rx="2" style="fill:var(--advance-wash); stroke:var(--advance)" stroke-width="1.2"/>
+
+        <text x="168" y="191" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="12" style="fill:var(--resist)">ANXIETY IN CHOICE</text>
+        <rect x="460" y="176" width="280" height="22" rx="2" style="fill:var(--resist-wash); stroke:var(--resist)" stroke-width="1.2"/>
+
+        <text x="168" y="229" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="12" style="fill:var(--resist)">HABIT</text>
+        <rect x="180" y="214" width="700" height="22" rx="2" style="fill:var(--resist-wash); stroke:var(--resist)" stroke-width="1.2"/>
+
+        <text x="168" y="267" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="12" style="fill:var(--resist)">ANXIETY IN USE</text>
+        <rect x="740" y="252" width="280" height="22" rx="2" style="fill:var(--resist-wash); stroke:var(--resist)" stroke-width="1.2"/>
+
+        <path d="M180 300 V308 H600 V300" fill="none" stroke="currentColor" stroke-width="1.2" style="opacity:.45"/>
+        <text x="390" y="328" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" letter-spacing="1.2" style="fill:currentColor; opacity:.65">ACQUISITION</text>
+        <path d="M606 300 V308 H740 V300" fill="none" stroke="currentColor" stroke-width="1.2" style="opacity:.45"/>
+        <text x="673" y="328" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" letter-spacing="1.2" style="fill:currentColor; opacity:.65">CONVERSION</text>
+        <path d="M746 300 V308 H1020 V300" fill="none" stroke="currentColor" stroke-width="1.2" style="opacity:.45"/>
+        <text x="883" y="328" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" letter-spacing="1.2" style="fill:currentColor; opacity:.65">RETENTION</text>
+      </svg>
+      </div>
+      <figcaption>The six stages of a purchase, after Bob Moesta&rsquo;s demand-side timeline. Bands show when each force is live. Event 1 breaks the passivity; Event 2 forces the decision. Both are things that happen <em>to</em> the person &mdash; not campaigns you ran.</figcaption>
+    </figure>
+    <div class="two">
+      <div><p><strong>Anxiety splits in two, and the split is the useful part.</strong> <em>Anxiety in choice</em> asks &ldquo;will this work for me?&rdquo; and blocks the purchase. <em>Anxiety in use</em> asks &ldquo;will it let me down at a bad moment?&rdquo; and blocks the <em>second</em> purchase. One is a conversion problem; the other is your churn.</p></div>
+      <div><div class="claim"><p>AI products carry unusually high <strong>anxiety in use</strong>, because the output is probabilistic and the user often cannot verify it. Citations, diffs, previews and undo are not features. <strong>They are anxiety instruments.</strong></p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 13 -->
+<section class="slide" data-toc="Forces: what to actually do">
+  <div class="wrap">
+    <p class="eyebrow">12 &middot; How to really think about it &mdash; part three</p>
+    <h2>Find the binding force. Then use the right instrument on it.</h2>
+    <p>Every switch has one force that decides. Working on any of the other three is motion without movement. Score all four for one real person, pick the largest opposing one, and act on <em>that</em>.</p>
+    <div class="cards">
+      <div class="card" style="border-top:3px solid var(--advance)">
+        <span class="num" style="color:var(--advance)">IF PUSH IS BINDING</span>
+        <p>They are not struggling enough to change anything. <strong>Do not build. Re-target.</strong> Go find the segment already in pain and stop trying to educate the comfortable.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--advance)">
+        <span class="num" style="color:var(--advance)">IF PULL IS BINDING</span>
+        <p>They cannot picture life on the other side. <strong>Show, don&rsquo;t claim.</strong> A thirty-second demo with their own data beats any list of benefits. Midjourney&rsquo;s early problem was not quality &mdash; nobody could imagine the output.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--resist)">
+        <span class="num" style="color:var(--resist)">IF ANXIETY IS BINDING</span>
+        <p><strong>Benefits do not answer fear.</strong> Evidence, reversibility and a small first step do: no card required, undo, a preview before it commits, someone like them saying it worked, and a first useful result inside a minute.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--resist)">
+        <span class="num" style="color:var(--resist)">IF HABIT IS BINDING</span>
+        <p>Two moves only. <strong>Fit the old groove</strong> &mdash; same shortcut, same file, import everything. Or <strong>catch a broken habit</strong>: new job, new laptop, new city, new baby, new financial year. Life events unstick people; that is a targeting instruction, not a platitude.</p>
+      </div>
+    </div>
+    <div class="claim">
+      <p><strong>New circumstances have no incumbent habit &mdash; which makes them a land grab.</strong> Twenty-five years of typing is entrenched for email. For prompting an AI, the habit is two years old and still forming. That is why the same product can be immovable in one context and obvious in another.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 14 -->
+<section class="slide" data-toc="Worked: forces, before and after">
+  <div class="wrap">
+    <p class="eyebrow">13 &middot; Worked example</p>
+    <h2>Same job, same product idea, forty years apart.</h2>
+    <p>The job &mdash; <em>get a formed thought out of my head at the speed I think it</em> &mdash; did not change. Dictation software was free with Windows for decades and was hired by nearly nobody. Score the forces and the mystery dissolves.</p>
+    <div class="tblwrap">
+      <table>
+        <thead><tr><th>Force</th><th style="width:31%">Before generative AI</th><th style="width:31%">After</th><th>What moved</th></tr></thead>
+        <tbody>
+          <tr><td><strong class="adv">Push</strong></td><td><span class="tag mid">Moderate</span> I think faster than I type &mdash; but I only typed as much as I had to say to other humans.</td><td><span class="tag ok">Very strong</span> Machine-directed prose, at volume, dozens of times a day.</td><td>A <strong>new circumstance</strong> that did not exist in 2021 &mdash; and it grows as the models get more useful.</td></tr>
+          <tr><td><strong class="adv">Pull</strong></td><td><span class="tag mid">Moderate</span> &ldquo;Speech is three times faster.&rdquo; True, theoretical, heard it before.</td><td><span class="tag ok">Very strong</span> Not just faster &mdash; <em>finished</em>. And conversation wants to be spoken.</td><td>The promise became imaginable.</td></tr>
+          <tr><td><strong class="res">Anxiety</strong></td><td><span class="tag no">Very strong</span> Voice enrollment, a custom dictionary, garbage output, talking at my laptop in an open-plan office.</td><td><span class="tag ok">Collapsed</span> The same technology that understands the instruction cleans up the speech.</td><td>Setup cost and social risk both went to near zero.</td></tr>
+          <tr><td><strong class="res">Habit</strong></td><td><span class="tag no">Very strong</span> Twenty-five years of typing, costing no conscious thought.</td><td><span class="tag ok">Weak &mdash; in the new context</span> There is no twenty-five-year habit of typing prompts at an AI.</td><td><strong>The new circumstance arrived without an incumbent.</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="two">
+      <div><div class="claim"><p><strong>Push + Pull &lt; Anxiety + Habit &rarr; no switch. For forty years.</strong> Real demand, a working solution, free distribution &mdash; and no hires, because the forces never resolved.</p></div></div>
+      <div><p class="note">Note which force the popular account misses. &ldquo;AI made transcription good&rdquo; only explains the anxiety row &mdash; and cannot explain the <em>timing</em>, because that technology existed two years before the product landed. The push row is the market observation; the anxiety row is only a capability observation.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 15 -->
+<section class="slide" data-toc="Digging in: the switch interview">
+  <div class="wrap">
+    <p class="eyebrow">14 &middot; What to talk about</p>
+    <h2>You do not research a market. You reconstruct one switch.</h2>
+    <div class="two">
+      <div>
+        <h3>The unit of study</h3>
+        <p><strong>One person, one real change, recently made.</strong> Not a prospect. Not an opinion. Not a segment. An event that actually happened, with a date on it, that you can walk backwards through minute by minute.</p>
+        <div class="stack">
+          <div class="card"><span class="num">WHO TO TALK TO</span><p>People who <strong>switched in the last few weeks</strong> &mdash; memory of a decision decays fast. Then, and this is the underused half: people who <strong>looked hard and did not switch</strong>. That is the cleanest read on anxiety and habit you will ever get.</p></div>
+          <div class="card"><span class="num">HOW MANY</span><p>You are not counting, you are reconstructing. Eight to twelve interviews on one switch usually saturates &mdash; you start predicting the answers.</p></div>
+          <div class="card"><span class="num">WHO ELSE WAS IN THE ROOM</span><p>Interview everyone in the decision: the spouse, the budget holder, the colleague who vetoed the first option. Most switches are joint decisions pretending to be individual ones.</p></div>
+        </div>
+      </div>
+      <div>
+        <h3>Walk the timeline backwards</h3>
+        <p>Start at the moment of purchase and reverse out of it. Then walk forward again and check for gaps &mdash; the gaps are where the interesting things are hidden.</p>
+        <div class="claim">
+          <p><strong>Hunt for energy spikes.</strong> Where did they spend disproportionate effort? Drove across town. Built a comparison spreadsheet at 11pm. Called three friends. Took a half-day off. Argued about it at dinner.</p>
+          <p style="margin-top:.6em"><strong>Energy marks the struggling moment.</strong> That is where the job lives. Everything else is context around it.</p>
+        </div>
+        <p><strong>Ask what got fired.</strong> Every hire displaces something. And ask what physically happened to the old thing &mdash; thrown out, sold, still in a drawer &ldquo;just in case&rdquo;. Where the old solution ended up tells you how complete the switch really was.</p>
+        <p class="note">Play detective, not therapist. You are reconstructing an event, not exploring a feeling &mdash; the feelings will arrive on their own, attached to facts, which is the only form in which they are useful.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 16 -->
+<section class="slide" data-toc="The question bank">
+  <div class="wrap">
+    <p class="eyebrow">15 &middot; How to dig</p>
+    <h2>Questions that get you fiction, and the ones that don&rsquo;t.</h2>
+    <div class="tblwrap">
+      <table>
+        <thead><tr><th style="width:38%">Do not ask</th><th style="width:44%">Ask instead</th><th>Because</th></tr></thead>
+        <tbody>
+          <tr><td class="said">&ldquo;What features would you like?&rdquo;</td><td>&ldquo;Walk me through the day you bought it. What time did you get up?&rdquo;</td><td>People are excellent witnesses and terrible designers.</td></tr>
+          <tr><td class="said">&ldquo;Why did you choose us?&rdquo;</td><td>&ldquo;What else were you looking at &mdash; and what ruled each one out?&rdquo;</td><td>&ldquo;Why&rdquo; invites a rationalisation, constructed on the spot and delivered with total confidence.</td></tr>
+          <tr><td class="said">&ldquo;How satisfied are you?&rdquo;</td><td>&ldquo;Tell me about the last time it let you down. What did you do?&rdquo;</td><td>Satisfaction is a number. Behaviour is evidence.</td></tr>
+          <tr><td class="said">&ldquo;Would you pay for X?&rdquo;</td><td>&ldquo;What did you actually pay for &mdash; and what did you stop paying for?&rdquo;</td><td>Hypothetical willingness to pay is the most reliably wrong number in product management.</td></tr>
+          <tr><td class="said">&ldquo;Do you like it?&rdquo;</td><td>&ldquo;What did you fire to make room for this?&rdquo;</td><td>Names the real competitor &mdash; which is often &ldquo;nothing&rdquo;.</td></tr>
+          <tr><td class="said">&ldquo;What&rsquo;s your biggest problem?&rdquo;</td><td>&ldquo;When did you first think there might be a better way? What made you think it?&rdquo;</td><td>Finds first thought, which is usually months or years before the purchase.</td></tr>
+          <tr><td class="said">&ldquo;How do you usually do this?&rdquo;</td><td>&ldquo;Show me how you did it last Tuesday.&rdquo;</td><td>&ldquo;Usually&rdquo; produces an idealised average that describes no actual day.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="three">
+      <div class="card"><span class="num">TECHNIQUE 01</span><p><strong>Use silence.</strong> Count to five after they stop. The second answer is the true one.</p></div>
+      <div class="card"><span class="num">TECHNIQUE 02</span><p><strong>Keep their words.</strong> Verbatims, not your categories. If your notes read like a summary, the data is already gone.</p></div>
+      <div class="card"><span class="num">TECHNIQUE 03</span><p><strong>Replay it back wrong, slightly.</strong> &ldquo;So you decided in March?&rdquo; People correct errors with far more detail than they volunteer.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 17 -->
+<section class="slide" data-toc="Gotchas I &mdash; the framework">
+  <div class="wrap">
+    <p class="eyebrow">16 &middot; Gotchas, part one</p>
+    <h2>Six ways to write a job statement that does nothing.</h2>
+    <div class="cards g3">
+      <div class="card"><span class="num">GOTCHA 01</span><h3>The job is a solution</h3>
+        <p><strong>Tell:</strong> strike the product noun and the sentence dies.<br><strong>Fix:</strong> ask &ldquo;so they can <em>what</em>?&rdquo; until you reach progress, then delete everything above it.</p></div>
+      <div class="card"><span class="num">GOTCHA 02</span><h3>The job is a task</h3>
+        <p><strong>Tell:</strong> it is a verb the user would never volunteer &mdash; &ldquo;dictating&rdquo;, &ldquo;filing&rdquo;, &ldquo;onboarding&rdquo;.<br><strong>Fix:</strong> tasks are steps <em>inside</em> a job. Climb one level and check the age test.</p></div>
+      <div class="card"><span class="num">GOTCHA 03</span><h3>Altitude sickness</h3>
+        <p><strong>Tell:</strong> &ldquo;be more productive&rdquo;, &ldquo;grow my business&rdquo;. True of everyone, useful to no one.<br><strong>Fix:</strong> a job statement must <em>forbid</em> something. Name two features it kills.</p></div>
+      <div class="card"><span class="num">GOTCHA 04</span><h3>A persona in the &ldquo;when&rdquo;</h3>
+        <p><strong>Tell:</strong> &ldquo;When a busy mid-market sales manager&hellip;&rdquo;<br><strong>Fix:</strong> replace the <em>person</em> with a <em>moment</em>. Circumstances buy things; demographics do not.</p></div>
+      <div class="card"><span class="num">GOTCHA 05</span><h3>Functional only</h3>
+        <p><strong>Tell:</strong> the roadmap is entirely speed and cost.<br><strong>Fix:</strong> write the emotional and social layers explicitly. Forty years of dictation software served the functional job perfectly and was never hired.</p></div>
+      <div class="card"><span class="num">GOTCHA 06</span><h3>One job per product</h3>
+        <p><strong>Tell:</strong> a single heroic job statement on a slide, and nothing else.<br><strong>Fix:</strong> real products serve a <em>portfolio</em> of jobs, and different jobs are blocked by different forces. Write the portfolio; tag each job with its binding force.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 18 -->
+<section class="slide" data-toc="Gotchas II &mdash; the practice">
+  <div class="wrap">
+    <p class="eyebrow">17 &middot; Gotchas, part two</p>
+    <h2>Six ways to run the method and still learn nothing.</h2>
+    <div class="cards g3">
+      <div class="card"><span class="num">GOTCHA 07</span><h3>Asking instead of reconstructing</h3>
+        <p><strong>Tell:</strong> your research is in the future tense &mdash; &ldquo;would you&hellip;&rdquo;, &ldquo;how likely are you to&hellip;&rdquo;.<br><strong>Fix:</strong> past tense, one real event, one real date.</p></div>
+      <div class="card"><span class="num">GOTCHA 08</span><h3>Workshop JTBD</h3>
+        <p><strong>Tell:</strong> beautiful job statements, zero verbatims, written in a room with no customers in it.<br><strong>Fix:</strong> every job statement carries a reference to the interview that produced it &mdash; or it is a hypothesis, and must be labelled as one.</p></div>
+      <div class="card"><span class="num">GOTCHA 09</span><h3>Your pull filed as their push</h3>
+        <p><strong>Tell:</strong> the push column contains your value proposition.<br><strong>Fix:</strong> push must be quotable from a customer, in the past tense, about their own life. If you wrote it, it is pull.</p></div>
+      <div class="card"><span class="num">GOTCHA 10</span><h3>Answering anxiety with pull</h3>
+        <p><strong>Tell:</strong> the reply to &ldquo;what if it doesn&rsquo;t work for me?&rdquo; is another benefit, louder.<br><strong>Fix:</strong> evidence, reversibility, a small first step. Fear is not a shortage of reasons.</p></div>
+      <div class="card"><span class="num">GOTCHA 11</span><h3>Competitors are logos</h3>
+        <p><strong>Tell:</strong> the market map contains only companies.<br><strong>Fix:</strong> add <strong>non-consumption</strong>. For most jobs the largest competitor is not doing the thing at all &mdash; and in new markets it is the entire segment being converted.</p></div>
+      <div class="card"><span class="num">GOTCHA 12</span><h3>Big hire, no little hire</h3>
+        <p><strong>Tell:</strong> signups look healthy, week-four retention does not.<br><strong>Fix:</strong> the <em>big hire</em> is the purchase; the <em>little hire</em> is choosing it again on Tuesday morning. Two different force readings. Most teams only measure the first.</p></div>
+    </div>
+    <p class="note" style="margin-top:1.2em"><strong>And one meta-gotcha:</strong> three schools travel under the same name &mdash; Christensen&rsquo;s theory of progress, Moesta and Spiek&rsquo;s switch interviews and forces, Ulwick&rsquo;s outcome-driven innovation. All three are useful. Blended silently, they produce an analysis that cannot be argued with because nobody can tell what it claims. Say which one you are using.</p>
+  </div>
+</section>
+
+<!-- 19 -->
+<section class="slide" data-toc="Do this next">
+  <div class="wrap">
+    <p class="eyebrow">18 &middot; The assignment</p>
+    <h2>Interview the person sitting next to you.</h2>
+    <p class="lede">Subject: <strong>why they hired an MBA.</strong> Twenty minutes. It is the one switch everyone in this room has genuinely made, recently, at real cost.</p>
+    <div class="two">
+      <div>
+        <h3>What to bring back</h3>
+        <div class="stack">
+          <div class="card"><span class="num">01</span><p>The <strong>timeline</strong>: first thought (when did this first cross their mind &mdash; probably years ago), passive looking, the event that made it active, the event that forced the decision.</p></div>
+          <div class="card"><span class="num">02</span><p><strong>Three energy spikes.</strong> Where did they spend effort out of proportion to the step?</p></div>
+          <div class="card"><span class="num">03</span><p>The <strong>job statement</strong>, all three layers &mdash; and be honest about the social one.</p></div>
+          <div class="card"><span class="num">04</span><p>All <strong>four forces</strong>, scored, with a verbatim quote for each. Then name the <strong>binding force</strong>.</p></div>
+          <div class="card"><span class="num">05</span><p>What they <strong>fired</strong> &mdash; the job they turned down, the city they left, the relationship they put on hold.</p></div>
+        </div>
+      </div>
+      <div>
+        <h3>What you will find</h3>
+        <p>The functional job on every application form is <em>&ldquo;acquire skills and a network to change career track&rdquo;</em>. It is true, and it is almost never the binding force.</p>
+        <p>The binding force is usually <strong>anxiety</strong> &mdash; two years of forgone salary, and the fear of arriving on the other side no more employable than before &mdash; or <strong>habit</strong>: a job that was survivable, a city they knew, a salary that arrived every month.</p>
+        <div class="claim"><p>And the push almost always has a date on it. A promotion that went to someone else. A batchmate&rsquo;s LinkedIn post. A restructuring. <strong>Find the date and you have found the push.</strong></p></div>
+        <p class="note">Then do the same exercise on the product you are working on. If you cannot get a date, a location and another person into the push, you do not yet have one.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 20 -->
+<section class="slide" data-toc="Sources">
+  <div class="wrap">
+    <p class="eyebrow">19 &middot; Where this comes from</p>
+    <h2>Sources, and which school each belongs to.</h2>
+    <div class="two">
+      <div>
+        <div class="tblwrap">
+          <table>
+            <thead><tr><th>Source</th><th>Contributes</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Clayton Christensen</strong> &mdash; <em>Competing Against Luck</em> (2016); &ldquo;Jobs to be Done&rdquo; and the milkshake study</td><td>The theory: progress, circumstance, and the competitive set</td></tr>
+              <tr><td><strong>Bob Moesta &amp; Chris Spiek</strong> &mdash; The Re-Wired Group (2008); <em>The Jobs-to-be-Done Handbook</em> (2014)</td><td><strong>The forces of progress diagram and the switch interview</strong></td></tr>
+              <tr><td><strong>Bob Moesta</strong> &mdash; <em>Demand-Side Sales 101</em> (2020)</td><td>The six-stage buying timeline; the two events; big hire and little hire</td></tr>
+              <tr><td><strong>Tony Ulwick</strong> &mdash; <em>Jobs to be Done: Theory to Practice</em> (2016)</td><td>Outcome statements, and scoring importance against satisfaction</td></tr>
+              <tr><td><strong>Alan Klement</strong> &mdash; <em>When Coffee and Kale Compete</em> (2016)</td><td>Job stories, and the argument against demographic segmentation</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <h3>If you read one thing</h3>
+        <p>Read <em>Demand-Side Sales 101</em>. It is the least academic of the five and the only one written from inside the interview.</p>
+        <div class="claim">
+          <p><strong>The whole framework in one sentence, to leave the room with:</strong></p>
+          <p style="margin-top:.6em">Find someone who already has a push you did not create, in a circumstance you can film, and remove enough anxiety and habit that they can afford to try.</p>
+        </div>
+        <p class="note">The worked examples in this deck are drawn from the session&rsquo;s own case material on Wispr Flow and the pre/post generative-AI shift &mdash; the same four forces, read twice, forty years apart.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /deck -->
+
+<div class="bar">
+  <span class="who">Jobs to Be Done &middot; XLRI</span>
+  <button class="btn" id="tocBtn" aria-haspopup="dialog">Contents</button>
+  <button class="btn" id="prevBtn" aria-label="Previous slide">&larr;</button>
+  <span class="count"><span id="cur">1</span>&thinsp;/&thinsp;<span id="tot">20</span></span>
+  <button class="btn" id="nextBtn" aria-label="Next slide">&rarr;</button>
+</div>
+
+<div class="toc" id="toc" role="dialog" aria-label="Contents">
+  <p class="eyebrow">Contents &mdash; press C or Escape to close</p>
+  <ol id="tocList"></ol>
+</div>
+
+<script>
+(function(){
+  var deck   = document.getElementById('deck');
+  var slides = Array.prototype.slice.call(deck.querySelectorAll('.slide'));
+  var prog   = document.getElementById('prog');
+  var curEl  = document.getElementById('cur');
+  var toc    = document.getElementById('toc');
+  var tocList= document.getElementById('tocList');
+  var i = 0;
+
+  document.getElementById('tot').textContent = slides.length;
+  deck.classList.add('ready');
+
+  slides.forEach(function(s, n){
+    var li = document.createElement('li');
+    var b  = document.createElement('button');
+    b.className = 'tocitem';
+    b.innerHTML = '<span class="n">' + String(n + 1).padStart(2, '0') + '</span><span>' + (s.dataset.toc || 'Slide ' + (n + 1)) + '</span>';
+    b.addEventListener('click', function(){ go(n); closeToc(); });
+    li.appendChild(b);
+    tocList.appendChild(li);
+  });
+  var tocItems = Array.prototype.slice.call(tocList.querySelectorAll('.tocitem'));
+
+  function go(n){
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach(function(s, k){ s.classList.toggle('on', k === i); });
+    tocItems.forEach(function(b, k){ b.classList.toggle('cur', k === i); });
+    curEl.textContent = i + 1;
+    prog.style.width = ((i + 1) / slides.length * 100) + '%';
+    var w = slides[i].querySelector('.wrap'); if (w) w.scrollTop = 0;
+    try { localStorage.setItem('jtbd-slide', String(i)); } catch (e) {}
+  }
+  function openToc(){ toc.classList.add('open'); }
+  function closeToc(){ toc.classList.remove('open'); }
+  function tocOpen(){ return toc.classList.contains('open'); }
+
+  document.getElementById('nextBtn').addEventListener('click', function(){ go(i + 1); });
+  document.getElementById('prevBtn').addEventListener('click', function(){ go(i - 1); });
+  document.getElementById('tocBtn').addEventListener('click', function(){ tocOpen() ? closeToc() : openToc(); });
+
+  document.addEventListener('keydown', function(e){
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var k = e.key;
+    if (k === 'Escape') { closeToc(); return; }
+    if (k === 'c' || k === 'C') { e.preventDefault(); tocOpen() ? closeToc() : openToc(); return; }
+    if (tocOpen()) return;
+    if (k === 'ArrowRight' || k === 'PageDown' || k === ' ' || k === 'n') { e.preventDefault(); go(i + 1); }
+    else if (k === 'ArrowLeft' || k === 'PageUp' || k === 'p') { e.preventDefault(); go(i - 1); }
+    else if (k === 'Home') { e.preventDefault(); go(0); }
+    else if (k === 'End') { e.preventDefault(); go(slides.length - 1); }
+  });
+
+  var start = 0;
+  try { var saved = parseInt(localStorage.getItem('jtbd-slide'), 10); if (!isNaN(saved)) start = saved; } catch (e) {}
+  go(start);
+})();
+</script>
