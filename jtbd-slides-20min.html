@@ -1,0 +1,622 @@
+<title>The Switch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+
+<style>
+/* ---------- tokens: light is the base, both dark paths redefine only tokens ---------- */
+:root{
+  --paper:#E7EAEC; --surface:#F8FAFA; --raised:#FFFFFF;
+  --ink:#14202A; --ink-2:#3F4E59; --ink-3:#6E7D88;
+  --rule:#C7CFD4; --rule-soft:#DCE2E6;
+  --advance:#14607F; --resist:#96382A; --brass:#8C6413;
+  --advance-wash:rgba(20,96,127,.09); --resist-wash:rgba(150,56,42,.09); --brass-wash:rgba(140,100,19,.10);
+  --grid:rgba(20,32,42,.075);
+  --shadow:0 1px 0 rgba(20,32,42,.05), 0 8px 26px -18px rgba(20,32,42,.45);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0D151C; --surface:#141F28; --raised:#1B2732;
+    --ink:#E7EDF1; --ink-2:#AABAC5; --ink-3:#7A8C98;
+    --rule:#2B3843; --rule-soft:#222E38;
+    --advance:#63B8D6; --resist:#E29079; --brass:#D8B063;
+    --advance-wash:rgba(99,184,214,.12); --resist-wash:rgba(226,144,121,.12); --brass-wash:rgba(216,176,99,.12);
+    --grid:rgba(231,237,241,.07);
+    --shadow:0 1px 0 rgba(0,0,0,.3), 0 10px 30px -20px rgba(0,0,0,.9);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0D151C; --surface:#141F28; --raised:#1B2732;
+  --ink:#E7EDF1; --ink-2:#AABAC5; --ink-3:#7A8C98;
+  --rule:#2B3843; --rule-soft:#222E38;
+  --advance:#63B8D6; --resist:#E29079; --brass:#D8B063;
+  --advance-wash:rgba(99,184,214,.12); --resist-wash:rgba(226,144,121,.12); --brass-wash:rgba(216,176,99,.12);
+  --grid:rgba(231,237,241,.07);
+  --shadow:0 1px 0 rgba(0,0,0,.3), 0 10px 30px -20px rgba(0,0,0,.9);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
+  font-size:clamp(15px,1.05vw + 9px,19px); line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---------- deck shell ---------- */
+.deck{min-height:100svh}
+.slide{
+  min-height:100svh; display:flex; flex-direction:column; justify-content:center;
+  padding:clamp(28px,4.2vw,72px) clamp(20px,5vw,88px) clamp(56px,6vw,84px);
+  border-bottom:1px solid var(--rule-soft);
+  position:relative;
+}
+.deck.ready .slide{display:none; border-bottom:0}
+.deck.ready .slide.on{display:flex; animation:rise .34s cubic-bezier(.2,.7,.3,1) both}
+@keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+@media (prefers-reduced-motion:reduce){ .deck.ready .slide.on{animation:none} }
+.wrap{width:100%; max-width:1180px; margin:0 auto; max-height:calc(100svh - 120px); overflow-y:auto; overflow-x:hidden; padding-right:4px}
+.wrap::-webkit-scrollbar{width:8px} .wrap::-webkit-scrollbar-thumb{background:var(--rule); border-radius:8px}
+
+/* ---------- type ---------- */
+h1,h2,h3,.eyebrow,.chip,.num,.mono,th,.tag{font-family:Archivo,"Helvetica Neue",Arial,sans-serif}
+h1{font-size:clamp(38px,6.2vw,86px); font-weight:700; letter-spacing:-.028em; line-height:.98; margin:0; text-wrap:balance}
+h2{font-size:clamp(26px,3.3vw,44px); font-weight:700; letter-spacing:-.022em; line-height:1.06; margin:0 0 .5em; text-wrap:balance}
+h3{font-size:clamp(16px,1.3vw,21px); font-weight:600; letter-spacing:-.008em; margin:0 0 .35em}
+p{margin:0 0 .85em; max-width:70ch}
+.lede{font-size:clamp(17px,1.5vw,23px); color:var(--ink-2); max-width:60ch}
+.eyebrow,.mono,.tag,.chip{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
+.eyebrow{font-size:12px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-3); margin:0 0 clamp(10px,1.4vw,20px); display:flex; gap:.85em; align-items:center}
+.eyebrow::after{content:""; flex:1; height:1px; background:var(--rule); max-width:220px}
+.mono{font-size:.82em}
+em{font-style:italic}
+strong{font-weight:600}
+.said{font-family:"IBM Plex Mono",monospace; font-size:.8em; color:var(--ink-3)}
+.hl{color:var(--brass); font-weight:600}
+.adv{color:var(--advance)} .res{color:var(--resist)}
+
+/* ---------- rules & callouts ---------- */
+.rule{border:0; height:1px; background:var(--rule); margin:clamp(16px,2vw,28px) 0}
+.claim{
+  border-left:3px solid var(--brass); background:var(--brass-wash);
+  padding:.7em 1.1em; margin:clamp(14px,1.8vw,24px) 0; max-width:74ch;
+  font-size:1.05em;
+}
+.claim p:last-child{margin:0}
+.two > div > .claim:first-child, .stack > .claim:first-child{margin-top:0}
+.note{color:var(--ink-3); font-size:.9em; max-width:72ch}
+
+/* ---------- layout helpers ---------- */
+.two{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:clamp(18px,2.6vw,42px); align-items:start}
+.three{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:clamp(14px,1.8vw,24px)}
+.cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(255px,1fr)); gap:clamp(12px,1.5vw,20px)}
+.card{background:var(--surface); border:1px solid var(--rule-soft); border-radius:3px; padding:clamp(14px,1.5vw,20px); box-shadow:var(--shadow)}
+.card p:last-child{margin:0}
+.cards.g3{grid-template-columns:repeat(3,1fr)}
+@media (max-width:920px){ .cards.g3{grid-template-columns:repeat(auto-fit,minmax(255px,1fr))} }
+.card .num{display:block; font-size:11px; font-weight:600; letter-spacing:.14em; color:var(--ink-3); margin-bottom:.5em}
+.stack{display:flex; flex-direction:column; gap:clamp(10px,1.3vw,18px)}
+
+/* ---------- tables ---------- */
+.tblwrap{overflow-x:auto; margin:clamp(10px,1.4vw,18px) 0}
+table{border-collapse:collapse; width:100%; min-width:520px; font-size:.94em}
+th{
+  font-size:11px; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:var(--ink-3);
+  text-align:left; padding:0 1em .55em 0; border-bottom:1px solid var(--rule); white-space:nowrap;
+}
+td{padding:.72em 1em .72em 0; border-bottom:1px solid var(--rule-soft); vertical-align:top}
+tr:last-child td{border-bottom:0}
+td:first-child,th:first-child{padding-left:0}
+.numcol{font-variant-numeric:tabular-nums}
+
+/* verdict glyphs: forward vs blocked, same semantics as the force colours */
+.v{font-family:"IBM Plex Mono",monospace; font-weight:500; white-space:nowrap}
+.v.ok{color:var(--advance)} .v.no{color:var(--resist)}
+.tag{
+  display:inline-block; font-size:10.5px; font-weight:500; letter-spacing:.1em; text-transform:uppercase;
+  padding:.25em .6em; border-radius:2px; border:1px solid currentColor; white-space:nowrap;
+}
+.tag.ok{color:var(--advance); background:var(--advance-wash)}
+.tag.no{color:var(--resist); background:var(--resist-wash)}
+.tag.mid{color:var(--brass); background:var(--brass-wash)}
+
+/* ---------- figures ---------- */
+figure{margin:clamp(8px,1.4vw,18px) 0; width:100%}
+figure svg{display:block; width:100%; max-width:100%; height:auto; color:var(--ink)}
+figcaption{font-family:"IBM Plex Mono",monospace; font-size:11.5px; line-height:1.5; color:var(--ink-3); margin-top:.8em; max-width:78ch}
+
+/* ---------- the equation ---------- */
+.eq{
+  font-family:Archivo,sans-serif; font-weight:700; letter-spacing:-.02em;
+  font-size:clamp(20px,3.1vw,42px); line-height:1.15; display:flex; flex-wrap:wrap; align-items:baseline; gap:.35em;
+  margin:clamp(10px,1.6vw,22px) 0;
+}
+.eq .gt{color:var(--brass)}
+
+/* ---------- job statement anatomy ---------- */
+.anat{display:flex; flex-wrap:wrap; gap:.5em; align-items:stretch; font-size:clamp(15px,1.5vw,22px); line-height:1.35}
+.anat .part{border:1px solid var(--rule); border-top:3px solid var(--pc,var(--rule)); background:var(--surface); padding:.6em .8em; flex:1 1 240px}
+.anat .part .lbl{display:block; font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.13em; text-transform:uppercase; color:var(--pc,var(--ink-3)); margin-bottom:.4em}
+.anat .part .q{display:block; font-size:12.5px; font-family:"IBM Plex Mono",monospace; color:var(--ink-3); margin-top:.5em; line-height:1.45}
+
+/* ---------- chrome ---------- */
+.bar{
+  position:fixed; left:0; right:0; bottom:0; height:auto; z-index:20;
+  display:flex; align-items:center; gap:14px;
+  padding:10px clamp(14px,3vw,32px); background:var(--paper); background:color-mix(in srgb, var(--paper) 88%, transparent);
+  border-top:1px solid var(--rule); backdrop-filter:blur(8px);
+}
+.deck:not(.ready) ~ .bar{display:none}
+.bar .who{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); margin-right:auto; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.btn{
+  font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+  background:var(--surface); color:var(--ink-2); border:1px solid var(--rule); border-radius:2px;
+  padding:.5em .8em; cursor:pointer; line-height:1;
+}
+.btn:hover{color:var(--ink); border-color:var(--ink-3)}
+.btn:focus-visible,.tocitem:focus-visible{outline:2px solid var(--brass); outline-offset:2px}
+.count{font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--ink-3); font-variant-numeric:tabular-nums; white-space:nowrap}
+.prog{position:fixed; top:0; left:0; height:2px; background:var(--brass); z-index:30; transition:width .3s ease}
+@media (prefers-reduced-motion:reduce){ .prog{transition:none} }
+
+/* ---------- contents overlay ---------- */
+.toc{
+  position:fixed; inset:0; z-index:40; background:var(--paper); padding:clamp(24px,5vw,64px);
+  overflow-y:auto; display:none;
+}
+.toc.open{display:block}
+.toc ol{list-style:none; margin:0; padding:0; columns:2; column-gap:clamp(24px,4vw,64px); max-width:1100px}
+@media (max-width:720px){ .toc ol{columns:1} }
+.tocitem{
+  display:flex; gap:1em; align-items:baseline; width:100%; text-align:left; background:none; border:0; cursor:pointer;
+  padding:.55em 0; border-bottom:1px solid var(--rule-soft); color:var(--ink-2);
+  font-family:"Source Serif 4",serif; font-size:1em; break-inside:avoid;
+}
+.tocitem:hover{color:var(--ink)}
+.tocitem .n{font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--ink-3); font-variant-numeric:tabular-nums; min-width:2.2em}
+.tocitem.cur{color:var(--brass)}
+
+/* ---------- cover ---------- */
+.cover .marks{display:flex; gap:clamp(10px,1.4vw,18px); flex-wrap:wrap; margin-top:clamp(18px,2.4vw,32px)}
+.cover .mk{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); border:1px solid var(--rule); padding:.5em .8em}
+
+@media print{
+  .deck.ready .slide{display:flex !important; page-break-after:always; min-height:auto}
+  .bar,.prog,.toc{display:none !important}
+  .wrap{max-height:none; overflow:visible}
+}
+</style>
+
+<div class="prog" id="prog"></div>
+
+<div class="deck" id="deck">
+
+<!-- 1 -->
+<section class="slide cover" data-toc="Cover">
+  <div class="wrap">
+    <p class="eyebrow">XLRI &middot; Product Management &middot; 20 minutes</p>
+    <h1>The switch.</h1>
+    <p class="lede" style="margin-top:1em">Jobs to Be Done, in one sitting. Nobody wants your product. They want the progress it makes possible &mdash; and they will fire it the moment something else makes that progress cheaper.</p>
+    <div class="marks">
+      <span class="mk">Christensen &middot; the theory</span>
+      <span class="mk">Moesta &amp; Spiek &middot; the method</span>
+      <span class="mk">Running case &middot; UPI</span>
+    </div>
+    <p class="note" style="margin-top:2em">&larr; &rarr; or space to move &middot; press <strong>C</strong> for contents</p>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="slide" data-toc="People hire products">
+  <div class="wrap">
+    <p class="eyebrow">01 &middot; The one idea</p>
+    <h2>People don&rsquo;t buy products. They hire them.</h2>
+    <div class="two">
+      <div>
+        <p>McDonald&rsquo;s asked milkshake buyers what would make a better milkshake &mdash; thicker, cheaper, chunkier &mdash; shipped all of it, and sales did not move.</p>
+        <p>Then someone asked what job the milkshake was being <em>hired</em> to do. Nearly half were sold before 8am, to solo drivers, taken away. The job: <span class="said">&ldquo;make my boring commute less boring, with one hand, no crumbs on my suit, and keep me full until 11.&rdquo;</span></p>
+        <p>The real competitors were a banana, a bagel and a doughnut. <strong>Not other milkshakes.</strong></p>
+      </div>
+      <div>
+        <div class="claim"><p>A <strong>job to be done</strong> is the progress a person is trying to make in a particular circumstance &mdash; functionally, emotionally and socially.</p></div>
+        <div class="stack">
+          <div class="card"><span class="num">CONSEQUENCE 01</span><p><strong>Your competitor set changes.</strong> It includes bananas. It includes doing nothing at all &mdash; which is the biggest competitor most products have.</p></div>
+          <div class="card"><span class="num">CONSEQUENCE 02</span><p><strong>Your unit of analysis changes.</strong> Not a customer &mdash; a <em>circumstance</em>. The same person hires different things at 7am and at 4pm.</p></div>
+          <div class="card"><span class="num">CONSEQUENCE 03</span><p><strong>Every hire is a fire.</strong> Something got displaced. If you cannot name what, you have not found a job.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="slide" data-toc="The job statement">
+  <div class="wrap">
+    <p class="eyebrow">02 &middot; The form</p>
+    <h2>Three parts, and three layers.</h2>
+    <div class="anat">
+      <div class="part" style="--pc:var(--brass)">
+        <span class="lbl">When &mdash; the circumstance</span>
+        I&rsquo;m at a vegetable cart, the bill is &#8377;143 and I have a &#8377;500 note,
+        <span class="q">What makes the job arise? A moment you could have filmed.</span>
+      </div>
+      <div class="part" style="--pc:var(--advance)">
+        <span class="lbl">I want to &mdash; the motivation</span>
+        settle the exact amount then and there,
+        <span class="q">The job proper. No product may appear here.</span>
+      </div>
+      <div class="part" style="--pc:var(--ink-3)">
+        <span class="lbl">So I can &mdash; the outcome</span>
+        walk away without owing anyone, or being owed, or taking a toffee as change.
+        <span class="q">The standard <em>they</em> judge success by. Not your metric.</span>
+      </div>
+    </div>
+    <div class="three" style="margin-top:1.4em">
+      <div class="card"><span class="num">LAYER 01 &middot; FUNCTIONAL</span><p>Move the exact amount from me to them.</p></div>
+      <div class="card"><span class="num">LAYER 02 &middot; EMOTIONAL</span><p>Not feel cheated over &#8377;7, and not feel like the person making a fuss over &#8377;7.</p></div>
+      <div class="card" style="border-color:var(--brass)"><span class="num" style="color:var(--brass)">LAYER 03 &middot; SOCIAL</span><p><strong>Not be the customer who holds up the queue.</strong> And on the vendor&rsquo;s side: not be the shop that turns people away for want of change.</p></div>
+    </div>
+    <p class="note" style="margin-top:1em">Strike every product name and it still holds &mdash; and would have held in 1985. That is the <strong>strike test</strong> and the <strong>age test</strong> passing together. Jobs are old; solutions are new. If your &ldquo;job&rdquo; could not have existed before 2023, you have found a capability, not a job.</p>
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="slide" data-toc="Good &amp; bad jobs">
+  <div class="wrap">
+    <p class="eyebrow">03 &middot; Quality control</p>
+    <h2>Good and bad jobs to be done</h2>
+    <div class="two">
+      <div style="flex:2">
+        <div class="tblwrap">
+          <table>
+            <thead><tr><th style="width:52%">Statement</th><th>Verdict</th></tr></thead>
+            <tbody>
+              <tr><td>&ldquo;Our users want a better fitness app.&rdquo;</td><td><span class="tag no">Solution</span> <span class="note">Names a category. Strike it and nothing remains.</span></td></tr>
+              <tr><td>&ldquo;Gen Z wants instant gratification.&rdquo;</td><td><span class="tag no">Demographic</span> <span class="note">A segment is not a circumstance.</span></td></tr>
+              <tr><td>&ldquo;I want to manage my money better.&rdquo;</td><td><span class="tag no">Unfalsifiable</span> <span class="note">Rules nothing out, so it cannot prioritise.</span></td></tr>
+              <tr><td>&ldquo;I want to finish KYC in the app.&rdquo;</td><td><span class="tag no">Our goal</span> <span class="note">A compliance step of ours, endured by them.</span></td></tr>
+              <tr><td>&ldquo;When I&rsquo;m splitting a dinner bill six ways and everyone&rsquo;s doing mental arithmetic, I want to settle before we leave the table, so nobody has to chase anyone next week.&rdquo;</td><td><span class="tag ok">Job</span> <span class="note">Filmable, solution-free, checkable &mdash; and it <strong>rules out</strong> a shared-expense ledger.</span></td></tr>
+              <tr><td>&ldquo;When my parents ask what I&rsquo;m doing with my life, I want an answer that sounds like a plan, so I can stop feeling behind my batchmates.&rdquo;</td><td><span class="tag ok">Job</span> <span class="note">The real job of hiring an MBA. No brochure writes it down.</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <h3>The test that matters</h3>
+        <div class="claim"><p><strong>Does the statement kill anything on your roadmap?</strong> A job statement that rules nothing out is doing no work.</p></div>
+        <p><strong>Weak:</strong> <span class="said">&ldquo;Field sales want a better CRM.&rdquo;</span> Kills nothing &mdash; the dashboard, the redesign, the reports module all survive.</p>
+        <p><strong>Strong:</strong> <span class="said">&ldquo;When I&rsquo;m walking out of one client meeting to the next, I want what just happened recorded before I forget it, so I&rsquo;m not reconstructing my week on Friday night.&rdquo;</span></p>
+        <p class="note">Kills the desktop-first redesign, the analytics module, and mandatory-field validation. Funds two-tap capture, offline queue, and pre-filling from the calendar entry. <strong>The constraints in the circumstance do the killing</strong> &mdash; not sharper wording.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="slide" data-toc="Context &amp; outcomes">
+  <div class="wrap">
+    <p class="eyebrow">04 &middot; The two halves that do the work</p>
+    <h2>A circumstance you could film. A standard you could check.</h2>
+    <div class="two">
+      <div>
+        <h3>What makes a context good</h3>
+        <div class="stack">
+          <div class="card"><p><strong>Situational, not personal.</strong> <span class="res">&ldquo;Busy professionals&rdquo;</span> &rarr; <span class="adv">&ldquo;the fifteen minutes between back-to-back calls&rdquo;</span>.</p></div>
+          <div class="card"><p><strong>Filmable.</strong> A time of day, a location, another person in it. Generic contexts have none of those.</p></div>
+          <div class="card"><p><strong>Countable.</strong> Frequency &times; population <em>is</em> your market size &mdash; and a better estimate than any category report.</p></div>
+          <div class="card"><p><strong>Constraining.</strong> It explains why the obvious answer fails <em>here</em>. &ldquo;No signal&rdquo; kills the live dashboard. &ldquo;One hand on the wheel&rdquo; kills the bagel.</p></div>
+        </div>
+        <p class="note">You never ask for context &mdash; people answer that with a self-portrait. You <strong>reconstruct</strong> it: &ldquo;take me to the last time; what day was it; what had just happened?&rdquo;</p>
+      </div>
+      <div>
+        <h3>What makes an outcome good</h3>
+        <div class="claim" style="border-left-color:var(--advance); background:var(--advance-wash)">
+          <p class="mono" style="font-size:1em; line-height:1.9">Minimise <strong>the time it takes to</strong> [step]<br>Minimise <strong>the likelihood that</strong> [bad thing]</p>
+        </div>
+        <p>Then score every outcome against the way they do it <em>today</em>. Paying for small things in cash, before 2016:</p>
+        <div class="tblwrap">
+          <table>
+            <thead><tr><th style="width:62%">Outcome</th><th>Cash served it</th></tr></thead>
+            <tbody>
+              <tr><td>Minimise the time to pay &#8377;40 at a tea stall</td><td><span class="tag ok">Served</span></td></tr>
+              <tr><td><strong>Minimise the likelihood I need exact change</strong></td><td><span class="tag no">Made worse</span></td></tr>
+              <tr><td>Minimise the effort to prove I paid</td><td><span class="tag no">Unserved</span></td></tr>
+              <tr><td>Minimise trips to an ATM</td><td><span class="tag mid">Poorly served</span></td></tr>
+              <tr><td>Minimise the effort to pay someone not in front of me</td><td><span class="tag no">Unserved</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note"><strong>Unserved rows are the roadmap. The &ldquo;made worse&rdquo; row is the business.</strong> NPS, DAU and MRR are <em>your</em> outcomes; the user has never heard of them.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="slide" data-toc="The four forces">
+  <div class="wrap">
+    <p class="eyebrow">05 &middot; The forces of progress</p>
+    <h2>Four forces act on every switch. Two forward, two back.</h2>
+    <figure>
+      <div style="overflow-x:auto">
+      <svg viewBox="0 0 980 450" role="img" aria-label="Free-body diagram of the four forces of progress. Push of the situation and pull of the new way are arrows pointing right, from today's way toward the new way. Anxiety about the new way and habit of the present are arrows pointing left, back toward today's way. A switch happens only when push plus pull exceeds anxiety plus habit." style="min-width:680px; max-height:42vh">
+        <defs>
+          <pattern id="gp" width="28" height="28" patternUnits="userSpaceOnUse">
+            <path d="M28 0H0V28" fill="none" stroke="currentColor" stroke-width="1" style="opacity:.08"/>
+          </pattern>
+          <marker id="arwA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" style="fill:var(--advance)"/>
+          </marker>
+          <marker id="arwR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" style="fill:var(--resist)"/>
+          </marker>
+        </defs>
+        <rect x="0" y="0" width="980" height="450" fill="url(#gp)"/>
+
+        <text x="200" y="44" font-family="IBM Plex Mono, monospace" font-size="11.5" letter-spacing="1.4" style="fill:currentColor; opacity:.5">PROMOTING &mdash; MOVE THE PERSON TOWARD THE NEW WAY</text>
+
+        <text x="200" y="86" font-family="IBM Plex Mono, monospace" font-size="14.5" letter-spacing="1.2" style="fill:var(--advance)">PUSH OF THE SITUATION</text>
+        <line x1="200" y1="100" x2="772" y2="100" stroke-width="3.5" style="stroke:var(--advance)" marker-end="url(#arwA)"/>
+        <text x="200" y="123" font-family="IBM Plex Mono, monospace" font-size="12.5" style="fill:currentColor; opacity:.62">&ldquo;I can&rsquo;t keep doing this.&rdquo;   &mdash; belongs to their circumstance. You cannot manufacture it.</text>
+
+        <text x="200" y="156" font-family="IBM Plex Mono, monospace" font-size="14.5" letter-spacing="1.2" style="fill:var(--advance)">PULL OF THE NEW WAY</text>
+        <line x1="200" y1="170" x2="772" y2="170" stroke-width="3.5" style="stroke:var(--advance)" marker-end="url(#arwA)"/>
+        <text x="200" y="193" font-family="IBM Plex Mono, monospace" font-size="12.5" style="fill:currentColor; opacity:.62">&ldquo;If this worked, I could finally&hellip;&rdquo;   &mdash; the only force you fully own.</text>
+
+        <rect x="20" y="205" width="164" height="90" rx="2" fill="none" stroke="currentColor" style="opacity:.55" stroke-width="1.5"/>
+        <text x="102" y="245" text-anchor="middle" font-family="Archivo, sans-serif" font-size="15" font-weight="600" style="fill:currentColor">TODAY&rsquo;S WAY</text>
+        <text x="102" y="266" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" style="fill:currentColor; opacity:.55">already paid for</text>
+
+        <line x1="192" y1="250" x2="788" y2="250" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 7" style="opacity:.4"/>
+        <text x="490" y="238" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" letter-spacing="1.6" style="fill:var(--brass)">THE SWITCH</text>
+        <text x="490" y="272" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" style="fill:currentColor; opacity:.5">one person, one moment &mdash; not a market</text>
+
+        <rect x="796" y="205" width="164" height="90" rx="2" fill="none" stroke="currentColor" style="opacity:.55" stroke-width="1.5"/>
+        <text x="878" y="245" text-anchor="middle" font-family="Archivo, sans-serif" font-size="15" font-weight="600" style="fill:currentColor">THE NEW WAY</text>
+        <text x="878" y="266" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" style="fill:currentColor; opacity:.55">unproven</text>
+
+        <text x="200" y="298" font-family="IBM Plex Mono, monospace" font-size="11.5" letter-spacing="1.4" style="fill:currentColor; opacity:.5">BLOCKING &mdash; HOLD THE PERSON WHERE THEY ARE</text>
+
+        <text x="200" y="330" font-family="IBM Plex Mono, monospace" font-size="14.5" letter-spacing="1.2" style="fill:var(--resist)">ANXIETY ABOUT THE NEW WAY</text>
+        <line x1="772" y1="344" x2="206" y2="344" stroke-width="3.5" style="stroke:var(--resist)" marker-end="url(#arwR)"/>
+        <text x="200" y="367" font-family="IBM Plex Mono, monospace" font-size="12.5" style="fill:currentColor; opacity:.62">&ldquo;Yeah, but what if&hellip;&rdquo;   &mdash; lives in their imagination, not in your feature list.</text>
+
+        <text x="200" y="400" font-family="IBM Plex Mono, monospace" font-size="14.5" letter-spacing="1.2" style="fill:var(--resist)">HABIT OF THE PRESENT</text>
+        <line x1="772" y1="414" x2="206" y2="414" stroke-width="3.5" style="stroke:var(--resist)" marker-end="url(#arwR)"/>
+        <text x="200" y="437" font-family="IBM Plex Mono, monospace" font-size="12.5" style="fill:currentColor; opacity:.62">&ldquo;It&rsquo;s fine. I&rsquo;m used to it.&rdquo;   &mdash; automatic, and already sunk.</text>
+      </svg>
+      </div>
+      <figcaption>The forces of progress, after Bob Moesta and Chris Spiek. Direction encodes role: rightward promotes the switch, leftward blocks it. All four act on the same person at the same moment.</figcaption>
+    </figure>
+    <div class="eq"><span class="adv">PUSH + PULL</span> <span class="gt">&gt;</span> <span class="res">ANXIETY + HABIT</span></div>
+    <p class="note">A vector sum, not a scorecard. You do not have to win all four &mdash; you have to win the total, and the total is read one person at a time.</p>
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="slide" data-toc="Four owners, four instruments">
+  <div class="wrap">
+    <p class="eyebrow">06 &middot; How to really think about it</p>
+    <h2>The four forces belong to four different people.</h2>
+    <p class="lede">Only one of them is yours &mdash; which is exactly why most roadmaps push on it and nothing moves.</p>
+    <div class="cards">
+      <div class="card" style="border-top:3px solid var(--advance)">
+        <span class="num" style="color:var(--advance)">PUSH &middot; THEIR SITUATION</span>
+        <p>You cannot create it. You can only <strong>find people who already have it</strong> and name it back in their words. If push is the binding force, <strong>do not build &mdash; re-target.</strong></p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--advance)">
+        <span class="num" style="color:var(--advance)">PULL &middot; YOUR SOLUTION</span>
+        <p>The only force you own outright. <strong>Show, don&rsquo;t claim</strong> &mdash; thirty seconds with their own data beats any list of benefits. But pull has sharply diminishing returns against an entrenched habit: being 30% better than something automatic and free is worth nothing.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--resist)">
+        <span class="num" style="color:var(--resist)">ANXIETY &middot; THEIR IMAGINATION</span>
+        <p>It does not have to be true to block the sale. <strong>Benefits do not answer fear.</strong> Evidence, reversibility and a small first step do: no card required, undo, a preview before it commits, someone like them saying it worked.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--resist)">
+        <span class="num" style="color:var(--resist)">HABIT &middot; THEIR PAST</span>
+        <p>Not loyalty &mdash; people are held by habits they dislike. Two moves: <strong>fit the old groove</strong> (same gesture, same file, import everything), or <strong>catch a broken habit</strong> &mdash; new job, new city, new phone, new baby.</p>
+      </div>
+    </div>
+    <div class="two" style="margin-top:1.1em">
+      <div><div class="claim"><p><strong>Anxiety and habit are the two levers actually available to a product team. Almost nobody works on them.</strong></p></div></div>
+      <div><p class="note"><strong>And anxiety splits in two.</strong> <em>Anxiety in choice</em> &mdash; &ldquo;will this work for me?&rdquo; &mdash; blocks the purchase, so it is a conversion problem. <em>Anxiety in use</em> &mdash; &ldquo;will it let me down at a bad moment?&rdquo; &mdash; blocks the <em>second</em> purchase. That one is your churn.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section class="slide" data-toc="Worked: UPI">
+  <div class="wrap">
+    <p class="eyebrow">07 &middot; Worked example</p>
+    <h2>UPI: the same product, three readings.</h2>
+    <figure>
+      <div style="overflow-x:auto">
+      <svg viewBox="0 0 1000 320" role="img" aria-label="Three force readings of UPI adoption. In October 2016, six months after launch, push and pull are very short and anxiety and habit are long, so the net vector points backward and there is no switch. In December 2016, after the note ban, push is very long and habit is short because cash was removed, so the net points forward. From 2017 to 2019, pull is long and anxiety and habit are both short, giving the largest forward net." style="min-width:820px; max-height:36vh">
+        <defs>
+          <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--advance)"/></marker>
+          <marker id="r2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--resist)"/></marker>
+          <marker id="n2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--brass)"/></marker>
+        </defs>
+
+        <text x="320" y="40" text-anchor="middle" font-family="Archivo, sans-serif" font-size="14" font-weight="600" style="fill:currentColor">OCT 2016</text>
+        <text x="320" y="59" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" style="fill:currentColor; opacity:.6">six months after launch</text>
+        <text x="600" y="40" text-anchor="middle" font-family="Archivo, sans-serif" font-size="14" font-weight="600" style="fill:currentColor">DEC 2016</text>
+        <text x="600" y="59" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" style="fill:currentColor; opacity:.6">after the note ban</text>
+        <text x="880" y="40" text-anchor="middle" font-family="Archivo, sans-serif" font-size="14" font-weight="600" style="fill:currentColor">2017&ndash;2019</text>
+        <text x="880" y="59" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" style="fill:currentColor; opacity:.6">after the anxiety work</text>
+
+        <line x1="460" y1="70" x2="460" y2="308" stroke="currentColor" stroke-width="1" style="opacity:.2"/>
+        <line x1="740" y1="70" x2="740" y2="308" stroke="currentColor" stroke-width="1" style="opacity:.2"/>
+        <line x1="320" y1="78" x2="320" y2="240" stroke="currentColor" stroke-width="1" stroke-dasharray="3 5" style="opacity:.35"/>
+        <line x1="600" y1="78" x2="600" y2="240" stroke="currentColor" stroke-width="1" stroke-dasharray="3 5" style="opacity:.35"/>
+        <line x1="880" y1="78" x2="880" y2="240" stroke="currentColor" stroke-width="1" stroke-dasharray="3 5" style="opacity:.35"/>
+
+        <text x="142" y="104" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="12" style="fill:var(--advance)">PUSH</text>
+        <line x1="320" y1="100" x2="350" y2="100" stroke-width="3" style="stroke:var(--advance)" marker-end="url(#a2)"/>
+        <line x1="600" y1="100" x2="712" y2="100" stroke-width="3" style="stroke:var(--advance)" marker-end="url(#a2)"/>
+        <line x1="880" y1="100" x2="922" y2="100" stroke-width="3" style="stroke:var(--advance)" marker-end="url(#a2)"/>
+
+        <text x="142" y="140" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="12" style="fill:var(--advance)">PULL</text>
+        <line x1="320" y1="136" x2="362" y2="136" stroke-width="3" style="stroke:var(--advance)" marker-end="url(#a2)"/>
+        <line x1="600" y1="136" x2="655" y2="136" stroke-width="3" style="stroke:var(--advance)" marker-end="url(#a2)"/>
+        <line x1="880" y1="136" x2="988" y2="136" stroke-width="3" style="stroke:var(--advance)" marker-end="url(#a2)"/>
+
+        <text x="142" y="190" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="12" style="fill:var(--resist)">ANXIETY</text>
+        <line x1="320" y1="186" x2="220" y2="186" stroke-width="3" style="stroke:var(--resist)" marker-end="url(#r2)"/>
+        <line x1="600" y1="186" x2="515" y2="186" stroke-width="3" style="stroke:var(--resist)" marker-end="url(#r2)"/>
+        <line x1="880" y1="186" x2="844" y2="186" stroke-width="3" style="stroke:var(--resist)" marker-end="url(#r2)"/>
+
+        <text x="142" y="226" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="12" style="fill:var(--resist)">HABIT</text>
+        <line x1="320" y1="222" x2="208" y2="222" stroke-width="3" style="stroke:var(--resist)" marker-end="url(#r2)"/>
+        <line x1="600" y1="222" x2="568" y2="222" stroke-width="3" style="stroke:var(--resist)" marker-end="url(#r2)"/>
+        <line x1="880" y1="222" x2="848" y2="222" stroke-width="3" style="stroke:var(--resist)" marker-end="url(#r2)"/>
+
+        <text x="142" y="276" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="12" letter-spacing="1" style="fill:var(--brass)">NET</text>
+        <line x1="320" y1="272" x2="242" y2="272" stroke-width="4.5" style="stroke:var(--brass)" marker-end="url(#n2)"/>
+        <line x1="600" y1="272" x2="652" y2="272" stroke-width="4.5" style="stroke:var(--brass)" marker-end="url(#n2)"/>
+        <line x1="880" y1="272" x2="962" y2="272" stroke-width="4.5" style="stroke:var(--brass)" marker-end="url(#n2)"/>
+
+        <text x="320" y="302" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" style="fill:currentColor; opacity:.7">no switch &mdash; ~1 lakh a month</text>
+        <text x="600" y="302" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" style="fill:currentColor; opacity:.7">a switch &mdash; but to wallets</text>
+        <text x="880" y="302" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" style="fill:currentColor; opacity:.7">1 billion a month by Oct 2019</text>
+      </svg>
+      </div>
+      <figcaption>Arrow length encodes strength; direction encodes role. The same four forces, read at three moments. Volumes from NPCI.</figcaption>
+    </figure>
+    <div class="two">
+      <div>
+        <p><strong>UPI launched in April 2016</strong> with RBI backing, twenty-one banks, and no fee. By the end of October it had done about a lakh of transactions in total. A working solution, free distribution, real demand &mdash; and <span class="res">anxiety and habit won</span>.</p>
+        <p><strong>On 8 November the incumbent was removed.</strong> Not by a campaign. By a policy nobody at NPCI could have manufactured &mdash; which is the cleanest demonstration you will ever see that <strong>push belongs to the situation, not to you</strong>.</p>
+      </div>
+      <div>
+        <div class="claim"><p><strong>And the note ban did not hand the win to UPI.</strong> The first beneficiary was the wallet already sitting on people&rsquo;s phones. In a panic, demand goes to whatever has the <em>lowest anxiety and lowest habit cost at that moment</em> &mdash; not to the better architecture.</p></div>
+        <p class="note">UPI won over the next three years by removing what was left: money stays in your bank, no top-up, any app to any bank, a QR code at every cart, and still no fee. <strong>That is the little hire &mdash; being chosen again on Tuesday morning.</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 -->
+<section class="slide" data-toc="Six gotchas">
+  <div class="wrap">
+    <p class="eyebrow">08 &middot; Gotchas</p>
+    <h2>Six ways to run this and learn nothing.</h2>
+    <div class="cards g3">
+      <div class="card"><span class="num">GOTCHA 01</span><h3>The job is a solution</h3>
+        <p><strong>Tell:</strong> strike the product noun and the sentence dies.<br><strong>Fix:</strong> ask &ldquo;so they can <em>what</em>?&rdquo; until you reach progress.</p></div>
+      <div class="card"><span class="num">GOTCHA 02</span><h3>A persona in the &ldquo;when&rdquo;</h3>
+        <p><strong>Tell:</strong> &ldquo;When a busy mid-market sales manager&hellip;&rdquo;<br><strong>Fix:</strong> replace the <em>person</em> with a <em>moment</em>. Circumstances buy things; demographics do not.</p></div>
+      <div class="card"><span class="num">GOTCHA 03</span><h3>Altitude sickness</h3>
+        <p><strong>Tell:</strong> it rules nothing out.<br><strong>Fix:</strong> run it against your real roadmap. If it kills less than a third, it is decoration.</p></div>
+      <div class="card"><span class="num">GOTCHA 04</span><h3>Functional only</h3>
+        <p><strong>Tell:</strong> the roadmap is entirely speed and cost.<br><strong>Fix:</strong> write the emotional and social layers down. They are where the durable advantage sits, precisely because they are hard to measure.</p></div>
+      <div class="card"><span class="num">GOTCHA 05</span><h3>Asking, not reconstructing</h3>
+        <p><strong>Tell:</strong> your research is in the future tense &mdash; &ldquo;would you&hellip;&rdquo;, &ldquo;how likely are you to&hellip;&rdquo;.<br><strong>Fix:</strong> past tense, one real event, one real date. People are good witnesses and bad designers.</p></div>
+      <div class="card"><span class="num">GOTCHA 06</span><h3>Answering anxiety with pull</h3>
+        <p><strong>Tell:</strong> the reply to &ldquo;what if it doesn&rsquo;t work for me?&rdquo; is another benefit, louder.<br><strong>Fix:</strong> evidence, reversibility, a small first step. Fear is not a shortage of reasons.</p></div>
+    </div>
+    <p class="note" style="margin-top:1.1em"><strong>Two more worth naming:</strong> a market map with only logos on it has forgotten <strong>non-consumption</strong> &mdash; usually the largest competitor. And counting the <strong>big hire</strong> (the signup) while ignoring the <strong>little hire</strong> (choosing it again on Tuesday) is how a product with healthy activation and dead week-four retention gets called a success.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="slide" data-toc="Do this next">
+  <div class="wrap">
+    <p class="eyebrow">09 &middot; Twenty minutes, with the person next to you</p>
+    <h2>Why did you hire an MBA?</h2>
+    <div class="two">
+      <div>
+        <p class="lede">It is the one switch everyone in this room has genuinely made, recently, at real cost. Interview each other and bring back five things &mdash; and obey one rule.</p>
+        <div class="three" style="margin-top:1em">
+          <div class="card"><span class="num">01</span><p>The <strong>timeline</strong> &mdash; first thought, and the two events that moved it.</p></div>
+          <div class="card"><span class="num">02</span><p>Three <strong>energy spikes</strong>: where did they spend effort out of proportion?</p></div>
+          <div class="card"><span class="num">03</span><p>The <strong>job</strong>, all three layers &mdash; honestly on the social one.</p></div>
+          <div class="card"><span class="num">04</span><p>All four <strong>forces</strong>, with a verbatim quote each. Name the binding one.</p></div>
+          <div class="card"><span class="num">05</span><p>What they <strong>fired</strong> &mdash; the job turned down, the city left.</p></div>
+          <div class="card"><span class="num">06</span><p>Never ask <strong>why</strong>. Ask <em>when</em>, <em>where were you</em>, <em>what happened just before</em>.</p></div>
+        </div>
+      </div>
+      <div>
+        <p>The functional job on every application form is <em>&ldquo;acquire skills and a network to change track&rdquo;</em>. True, and almost never the binding force. The binding force is usually <strong>anxiety</strong> &mdash; two years of forgone salary and the fear of arriving no more employable &mdash; or <strong>habit</strong>: a survivable job, a known city, a salary that arrived every month.</p>
+        <div class="claim"><p><strong>The push almost always has a date on it.</strong> A promotion that went to someone else. A batchmate&rsquo;s post. A restructuring. Find the date and you have found the push.</p></div>
+        <hr class="rule">
+        <p class="note"><strong>The whole framework in one sentence:</strong> find someone who already has a push you did not create, in a circumstance you can film, and remove enough anxiety and habit that they can afford to try.</p>
+        <p class="note" style="margin-top:1em">Christensen, <em>Competing Against Luck</em> (2016) &mdash; the theory. Moesta &amp; Spiek, <em>The Jobs-to-be-Done Handbook</em> (2014) and Moesta, <em>Demand-Side Sales 101</em> (2020) &mdash; the forces and the switch interview. Ulwick, <em>Theory to Practice</em> (2016) &mdash; outcome statements. UPI volumes: NPCI.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /deck -->
+
+<div class="bar">
+  <span class="who">Jobs to Be Done &middot; XLRI &middot; 20 min</span>
+  <button class="btn" id="tocBtn" aria-haspopup="dialog">Contents</button>
+  <button class="btn" id="prevBtn" aria-label="Previous slide">&larr;</button>
+  <span class="count"><span id="cur">1</span>&thinsp;/&thinsp;<span id="tot">10</span></span>
+  <button class="btn" id="nextBtn" aria-label="Next slide">&rarr;</button>
+</div>
+
+<div class="toc" id="toc" role="dialog" aria-label="Contents">
+  <p class="eyebrow">Contents &mdash; press C or Escape to close</p>
+  <ol id="tocList"></ol>
+</div>
+
+<script>
+(function(){
+  var deck   = document.getElementById('deck');
+  var slides = Array.prototype.slice.call(deck.querySelectorAll('.slide'));
+  var prog   = document.getElementById('prog');
+  var curEl  = document.getElementById('cur');
+  var toc    = document.getElementById('toc');
+  var tocList= document.getElementById('tocList');
+  var i = 0;
+
+  document.getElementById('tot').textContent = slides.length;
+  deck.classList.add('ready');
+
+  slides.forEach(function(s, n){
+    var li = document.createElement('li');
+    var b  = document.createElement('button');
+    b.className = 'tocitem';
+    b.innerHTML = '<span class="n">' + String(n + 1).padStart(2, '0') + '</span><span>' + (s.dataset.toc || 'Slide ' + (n + 1)) + '</span>';
+    b.addEventListener('click', function(){ go(n); closeToc(); });
+    li.appendChild(b);
+    tocList.appendChild(li);
+  });
+  var tocItems = Array.prototype.slice.call(tocList.querySelectorAll('.tocitem'));
+
+  function go(n){
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach(function(s, k){ s.classList.toggle('on', k === i); });
+    tocItems.forEach(function(b, k){ b.classList.toggle('cur', k === i); });
+    curEl.textContent = i + 1;
+    prog.style.width = ((i + 1) / slides.length * 100) + '%';
+    var w = slides[i].querySelector('.wrap'); if (w) w.scrollTop = 0;
+    try { localStorage.setItem('jtbd20-slide', String(i)); } catch (e) {}
+  }
+  function openToc(){ toc.classList.add('open'); }
+  function closeToc(){ toc.classList.remove('open'); }
+  function tocOpen(){ return toc.classList.contains('open'); }
+
+  document.getElementById('nextBtn').addEventListener('click', function(){ go(i + 1); });
+  document.getElementById('prevBtn').addEventListener('click', function(){ go(i - 1); });
+  document.getElementById('tocBtn').addEventListener('click', function(){ tocOpen() ? closeToc() : openToc(); });
+
+  document.addEventListener('keydown', function(e){
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var k = e.key;
+    if (k === 'Escape') { closeToc(); return; }
+    if (k === 'c' || k === 'C') { e.preventDefault(); tocOpen() ? closeToc() : openToc(); return; }
+    if (tocOpen()) return;
+    if (k === 'ArrowRight' || k === 'PageDown' || k === ' ' || k === 'n') { e.preventDefault(); go(i + 1); }
+    else if (k === 'ArrowLeft' || k === 'PageUp' || k === 'p') { e.preventDefault(); go(i - 1); }
+    else if (k === 'Home') { e.preventDefault(); go(0); }
+    else if (k === 'End') { e.preventDefault(); go(slides.length - 1); }
+  });
+
+  var start = 0;
+  try { var saved = parseInt(localStorage.getItem('jtbd20-slide'), 10); if (!isNaN(saved)) start = saved; } catch (e) {}
+  go(start);
+})();
+</script>
