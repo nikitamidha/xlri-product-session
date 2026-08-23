@@ -11,26 +11,77 @@ before/after gen AI, and tagged with the force that was actually binding.
 
 ---
 
-## The portfolio at a glance
+## The master table
 
-| # | Job | Family | Existed before gen AI? |
-| --- | --- | --- | --- |
-| J1 | Hand over full context to a model | **Machine-directed** | **No — new** |
-| J2 | Redirect a model that's 80% right | **Machine-directed** | **No — new** |
-| J3 | Brief an agent on a long task | **Machine-directed** | **No — new** |
-| J4 | Clear a backlog of replies | Human-directed | Yes |
-| J5 | Get past the blank page | Human-directed | Yes — very old |
-| J6 | Capture when hands or eyes are busy | Situational | Yes |
-| J7 | Work at full capacity when typing hurts | Situational | Yes — **the only pre-AI market** |
-| J8 | Produce real text on a phone | Situational | Yes |
-| J9 | Write as fluently as I speak | Fluency | Yes — largely unserved |
-| J10 | Think in one language, write in another | Fluency | Yes — unserved |
-| J11 | Capture thought before I lose it | Cognitive | Yes |
-| J12 | Dictate where others can hear me | **Second-order** | **No — created by the product** |
-| J13 | Dictate confidential material | **Second-order** | **No — created by adoption** |
+Every job crafted in full, with the context before and after — and, crucially,
+**whether the context actually changed.**
 
-Three families of one. **Only J1–J3 are new** — and they are the growth engine,
-because they scale with AI adoption rather than with headcount.
+Doing this honestly splits the portfolio in two, and the split is the finding:
+
+- **Five jobs where generative AI created or altered the circumstance itself.**
+- **Eight jobs where the circumstance is completely unchanged** and only the
+  solution crossed a threshold.
+
+Most analyses blur these together. Keeping them apart is what lets you say which
+part of Wispr's growth compounds with AI adoption and which part is a
+forty-year-old market finally unlocking.
+
+---
+
+### Table 1 — Jobs where the CONTEXT changed
+*Generative AI created the circumstance. These did not exist in 2021.*
+
+| # | The job, crafted | Context BEFORE gen AI | Context AFTER gen AI | Why the context shifted |
+| --- | --- | --- | --- | --- |
+| **J1** | **When** I need a model's help with something that requires real context before it can be useful, **I want to** hand over everything in my head without pruning it to what I'm willing to type, **so I can** get a usable answer on the first attempt instead of the fourth. | **No such circumstance.** The only machine you addressed at any length was a search box — and it *punished* extra words. Forty years of training to strip language out. | A machine that gives a better result the more you tell it. Typing is now the only thing standing between the context in your head and the context in the prompt. | **The machine's appetite for language inverted** — from keyword-minimising to context-maximising. The circumstance is manufactured entirely by the LLM. |
+| **J2** | **When** a model's answer is close but wrong in a specific way, **I want to** say what's off in the way I'd say it to a colleague, **so I can** converge in three turns instead of giving up and accepting something worse. | **No such circumstance.** Software was right or it was broken. Nothing was ever 80% right *and* improvable by talking to it. | Output is probabilistic and negotiable. Correction became a first-class, repeated activity. | **Software stopped being binary.** A partially-correct-but-improvable artifact is new — and conversation is its repair mechanism. |
+| **J3** | **When** I'm setting an agent off on a multi-step task I won't be watching, **I want to** specify the constraints, the edge cases and what *not* to do, **so I can** avoid babysitting it or cleaning up after it. | **No such circumstance.** Machines took parameters. You briefed *people* — and you did that by talking. | Machines take briefs. A bad brief is expensive, so briefs get long and careful. | **The machine became something you delegate to rather than operate.** Delegation has always been verbal; typing it is the anomaly. |
+| **J12** | **When** I'm in an open-plan office, a café or a shared home, **I want to** dictate without disturbing anyone or being overheard, **so I can** use this everywhere rather than only when I'm alone. | **Couldn't have the problem** — you weren't dictating. | You dictate all day, so the *room* becomes the binding constraint on where you can work. | **Created by adoption.** A second-order circumstance the product's own success produced. → Canto. |
+| **J13** | **When** the text contains client, patient or commercially sensitive material, **I want to** know it isn't retained or trained on, **so I can** use this for the work that actually matters rather than only the trivial parts. | **Couldn't have the problem** — nothing was being sent anywhere. | The low-stakes uses converted, so now you want the high-stakes ones — and those carry obligations. | **Created by adoption.** Second-order. → the Enterprise tier. |
+
+---
+
+### Table 2 — Jobs where the context is UNCHANGED
+*Forty years old, identical circumstance. Only the solution crossed a threshold.*
+
+| # | The job, crafted | Context BEFORE gen AI | Context AFTER gen AI | What actually changed |
+| --- | --- | --- | --- | --- |
+| **J4** | **When** I have forty unanswered messages and twenty minutes before my next meeting, **I want to** clear them at something near speaking speed, **so I can** end the day without a queue hanging over me. | Identical. The inbox was always full. | Identical. | **The output crossed the sendable threshold.** Dictation always produced words; it never produced text you could send. Editing ate the saving. |
+| **J5** | **When** I need to write something careful and I'm staring at an empty field with nothing coming, **I want to** talk my way into it, **so I can** find out what I actually think instead of freezing. | Identical — the blank page is *ancient*. | Identical. | **The precondition was removed.** Old dictation demanded a finished sentence in your head, making it useless exactly when you were stuck. It required as input the thing you were trying to produce. |
+| **J6** | **When** I'm walking, cooking, driving or between meetings and something occurs to me, **I want to** get it down without stopping what I'm doing, **so I can** not lose it. | Identical. | Identical. | **The debt was removed.** Voice memos *deferred* the work — capture created a transcription liability. Now capture and completion are one step. |
+| **J7** | **When** typing causes me pain or isn't fully available to me, **I want to** work at my full capacity, **so I can** have my output set by my thinking rather than by my hands. | Identical — and **this was the one segment already being served**, badly and expensively. | Identical. | **The price of admission fell.** Nothing about these users changed. What changed is that *everyone else's* forces caught up, so this stopped being a separate market. |
+| **J8** | **When** I'm on my phone and need to produce more than a sentence, **I want to** not thumb-type it, **so I can** do real work away from a desk. | Identical — and push here was always *higher* than on desktop. | Identical. | **Cleanup, and only cleanup.** Free dictation shipped on every handset for a decade against a bigger push and still lost. The cleanest control experiment in the portfolio. |
+| **J9** | **When** I'm writing in a language I speak fluently but write more slowly and less confidently, **I want to** produce text that reads as fluent, **so I can** be judged on what I said rather than on my grammar. | Identical. | Identical. | **Correction became rendering.** Grammar checkers caught errors *after* the fact; the anxiety was *before*. The cleanup layer doesn't fix your English — it renders your meaning in fluent English. |
+| **J10** | **When** the thought arrives in my first language but the output has to be in English, **I want to** say it as it comes and get English out, **so I can** work at the speed I think rather than the speed I translate. | Identical. | Identical. | **Two steps collapsed into one.** Translation tools required you to write the source first. One model now does capture, cleanup and translation in a single pass. |
+| **J11** | **When** thoughts arrive faster than my hands can move and I can feel one slipping, **I want to** get it out at the speed it arrived, **so I can** keep the thread instead of losing the second idea while recording the first. | Identical. | Identical. | **The tool stopped competing for the same cognitive resource.** Old dictation *added* load by demanding pre-formed sentences — it taxed the very faculty that was already overloaded. |
+
+---
+
+### What the split tells you
+
+**1. Only five of thirteen circumstances are actually new — and three of those
+(J1–J3) are the growth engine.** They scale with AI adoption. The other eight
+scale with headcount, which grows a few percent a year. *A durable AI-native
+product is one where the new-circumstance jobs are also the fast-growing ones.*
+
+**2. For eight jobs, nothing about the user's world changed at all.** The
+circumstance in 2026 is word-for-word the circumstance in 1995. Every one of
+those rows is a **forty-year-old unserved outcome finally being served** — which
+is why they converted so fast when the solution finally crossed the line.
+
+**3. Read the right-hand column of Table 2 and one pattern repeats.** The old
+solution didn't just fail — it **demanded from the user the very thing the user
+was short of**. A finished sentence when they were stuck (J5). Spare cognitive
+capacity when they were overloaded (J11). Extra editing time when they had none
+(J4). Written fluency when writing was the weak point (J9).
+
+> **That's the diagnostic to hand the class: when a solution has existed for
+> decades and nobody hires it, check whether it requires as input the thing the
+> user came to you lacking.**
+
+**4. The two second-order jobs are already productised** — J12 as Canto, J13 as
+the Enterprise tier. Watch which second-order job a company builds first; it
+tells you where they think the money is.
 
 ---
 ---
