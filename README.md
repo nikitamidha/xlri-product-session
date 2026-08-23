@@ -11,10 +11,11 @@ that go with them, and the tie back to Jobs to be Done. Vocabulary first, becaus
 you cannot analyse a market whose central nouns you cannot define. **Both have
 slide decks** — see below.
 
-- **Class 1, *The agentic vocabulary*.** LLM · agent · why a probabilistic system
-  ever beats a workflow · human in the loop · evals. The product side.
+- **Class 1, *The agentic vocabulary*.** LLM · agent · tools, skills and context ·
+  why a probabilistic system ever beats a workflow · human in the loop · evals.
+  The product side.
 - **Class 2, *Many agents, one job*.** Multi-agent systems · the harness and the
-  orchestrator · observability · the hybrid workforce. The organisation side.
+  orchestrator · RAG · observability · the hybrid workforce. The organisation side.
 
 **Class 3 — 20-minute deep dive** on one product, structured around three
 questions:
@@ -44,8 +45,8 @@ carries the cleanest single insight in the category:
 
 | File | What it is |
 | --- | --- |
-| [`slides/agentic-vocabulary.html`](slides/agentic-vocabulary.html) | **Class 1 deck (20 min, 17 slides).** LLM, agent, the trade, human in the loop, evals. Presentable as-is. |
-| [`slides/many-agents-one-job.html`](slides/many-agents-one-job.html) | **Class 2 deck (20 min, 18 slides).** Multi-agent systems, the harness and the orchestrator, one-or-many, observability, hybrid workforce, and the four forces re-scored. |
+| [`slides/agentic-vocabulary.html`](slides/agentic-vocabulary.html) | **Class 1 deck (20 min, 18 slides).** LLM, agent, tools/skills/context, the trade, human in the loop, evals. Presentable as-is. |
+| [`slides/many-agents-one-job.html`](slides/many-agents-one-job.html) | **Class 2 deck (20 min, 19 slides).** Multi-agent systems, the harness and the orchestrator, RAG, one-or-many, observability, hybrid workforce, and the four forces re-scored. |
 | [`agentic-ai-concepts.md`](agentic-ai-concepts.md) | **The notes behind both decks.** Ten sections, split across the two classes — everything the decks assert, argued out, with the run sheet for each class at the end. |
 
 Both decks share the same controls: arrow keys to move, `N` for speaker notes,
@@ -64,10 +65,10 @@ drawn to scale.
 | --- | --- |
 | 0–1 | The card. Four definitions on one slide. |
 | 1–4 | LLM. What it is, which models exist, what it isn't. |
-| 4–9 | Agent. The loop, agent versus workflow, five real agents, the autonomy ladder. |
-| 9–11½ | **The trade.** Why hand anything to a system that is wrong one time in ten. |
-| 11½–15½ | Human in the loop. The refund thresholds, and where the gate goes. |
-| 15½–19 | Evals. A real eval set, and why the right answer isn't enough. |
+| 4–10 | Agent. The loop, agent versus workflow, five real agents, tools/skills/context, the ladder. |
+| 10–12½ | **The trade.** Why hand anything to a system that is wrong one time in ten. |
+| 12½–16 | Human in the loop. The refund thresholds, and where the gate goes. |
+| 16–19 | Evals. A real eval set, and why the right answer isn't enough. |
 | 19–20 | Close. The job of an AI product is to make being wrong cheap. |
 
 Never cut the trade. It is the only segment that is analysis rather than
@@ -77,11 +78,11 @@ vocabulary.
 
 | Minutes | Segment |
 | --- | --- |
-| 0–1 | Recap of class 1. |
-| 1–4½ | Multi-agent. One contract, reviewed two ways. The four shapes. |
-| 4½–8 | The harness and the orchestrator. |
-| 8–11 | One agent or many — when to split, what it costs, rules of thumb. |
-| 11–14½ | Observability. A trace, shown. |
+| 0–2½ | Recap, and today's five words — including RAG. |
+| 2½–5½ | Multi-agent. One contract, reviewed two ways. The four shapes. |
+| 5½–8½ | The harness and the orchestrator. |
+| 8½–11½ | One agent or many — when to split, what it costs, rules of thumb. |
+| 11½–14½ | Observability. A trace, shown. |
 | 14½–17 | Hybrid workforce. Roles are bundles of jobs. |
 | 17–20 | The tie-back: the four forces re-scored for agents. |
 

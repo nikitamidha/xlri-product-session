@@ -236,8 +236,8 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
 </style>
 
 <script type="application/json" id="segments">[
- {"name":"Recap","min":1},{"name":"§1 Many agents","min":3.5},{"name":"§2 Harness","min":3.5},
- {"name":"§3 One or many","min":3},{"name":"§4 Seeing it","min":3.5},{"name":"§5 Workforce","min":2.5},
+ {"name":"Recap & words","min":2.5},{"name":"§1 Many agents","min":3},{"name":"§2 Harness","min":3},
+ {"name":"§3 One or many","min":3},{"name":"§4 Seeing it","min":3},{"name":"§5 Workforce","min":2.5},
  {"name":"Close","min":3}]</script>
 
 <div class="stage">
@@ -258,12 +258,13 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
 </article>
 
 <article class="slide" data-seg="0" data-title="Recap" data-notes="Sixty seconds. You only need the last line to land — the trade we made in class one is what everything today is dealing with the consequences of.">
-  <div class="head"><span class="eyebrow">From last time</span><span class="clock">0:00 — 1:00</span></div>
+  <div class="head"><span class="eyebrow">From last time</span><span class="clock">0:00 — 2:30</span></div>
   <h2>Where we got to</h2>
   <div class="body">
     <dl class="defs">
       <div class="def"><dt>LLM</dt><dd>Turns text into text. It can <b>advise</b>; it cannot <b>act</b>.</dd></div>
       <div class="def"><dt>Agent</dt><dd>An LLM in a loop with tools and a goal, choosing its own next step.</dd></div>
+      <div class="def"><dt>Tools · skills · context</dt><dd>What it can <b>do</b> · how you want it <b>done</b> · what it <b>knows right now</b>.</dd></div>
       <div class="def"><dt>The trade</dt><dd>We gave up certainty and bought <b>coverage</b> — the cases nobody could write rules for.</dd></div>
       <div class="def"><dt>Human in the loop</dt><dd>Where a person has to say yes. Placed by <b>what it costs to be wrong</b>, not by model confidence.</dd></div>
       <div class="def"><dt>Evals</dt><dd>A question paper you keep, and re-take on every change.</dd></div>
@@ -272,8 +273,31 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
   <p class="thesis">The job of an AI product is not to be right. <b>It is to make being wrong cheap.</b> Today is what that costs once there is more than one agent and a whole company involved.</p>
 </article>
 
+<article class="slide dense" data-seg="0" data-title="Today's five words" data-notes="Front-load the definitions so each section can start at the interesting part instead of a definition. Spend the extra time on RAG — it is the one on this list they will be sold most often, and the only one not covered elsewhere today.">
+  <div class="head"><span class="eyebrow">Today's words</span><span class="clock">0:00 — 2:30</span></div>
+  <h2>Five more definitions. Write these down too.</h2>
+  <div class="body">
+    <dl class="defs">
+      <div class="def"><dt>Multi-agent system</dt><dd>Several agents with different jobs, tools or contexts, working toward <b>one</b> objective.</dd></div>
+      <div class="def"><dt>Harness</dt><dd>The code that turns a model into an agent — the loop, the tools, the limits, the record.</dd></div>
+      <div class="def"><dt>Orchestrator</dt><dd>The one that decides <b>which agent does what</b>, and puts the results back together.</dd></div>
+      <div class="def"><dt>RAG</dt><dd>Fetch the relevant material first, put it in front of the model, <b>then</b> answer.</dd></div>
+      <div class="def"><dt>Observability</dt><dd>Being able to play back what the system actually did on one run, and why.</dd></div>
+    </dl>
+    <div class="cols two">
+      <div class="panel mark"><h3>RAG, slightly longer — you'll be sold this one constantly</h3>
+        <p>The model has never seen your documents and they would never fit anyway. So: <b>search your own content, take the few most relevant pieces, paste them in with the question.</b> "Retrieval-augmented generation" is three words for <b>look it up before you answer</b>.</p>
+        <p>It is how an answer becomes grounded in <b>your</b> material rather than the internet's — and it is what makes a citation possible at all.</p></div>
+      <div class="panel flag"><h3>And the part vendors skip</h3>
+        <p><b>If the right passage wasn't fetched, no model can rescue the answer.</b> Retrieval quality is the ceiling — not model quality. Most disappointing "AI search" projects are search projects that failed.</p>
+        <p><em>In an agent, retrieval is usually just another tool — "search the knowledge base" — and the agent decides when to reach for it.</em></p></div>
+    </div>
+  </div>
+  <p class="thesis">RAG is not a kind of AI. It is <b>"look it up first"</b> — and the looking up is the hard part.</p>
+</article>
+
 <article class="slide dense" data-seg="1" data-title="§1 One job, two ways" data-notes="Do not present the multi version as the upgrade. It trades one kind of blindness for another — that is the honest framing and it sets up the whole section.">
-  <div class="head"><span class="eyebrow">§1 · Many agents</span><span class="clock">1:00 — 4:30</span></div>
+  <div class="head"><span class="eyebrow">§1 · Many agents</span><span class="clock">2:30 — 5:30</span></div>
   <h2>Several agents, different jobs, one objective</h2>
   <p class="lede">Same task both ways: <strong>"review this 60-page vendor contract against our policy."</strong></p>
   <div class="body">
@@ -292,7 +316,7 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
 </article>
 
 <article class="slide" data-seg="1" data-title="§1 The four shapes" data-notes="Four arrangements. Generator-critic is the one worth their attention: it is the cheapest large gain in reliability available, and almost nobody does it.">
-  <div class="head"><span class="eyebrow">§1 · Many agents</span><span class="clock">1:00 — 4:30</span></div>
+  <div class="head"><span class="eyebrow">§1 · Many agents</span><span class="clock">2:30 — 5:30</span></div>
   <h2>Four shapes, and what each is for</h2>
   <div class="body">
     <div class="tablewrap"><table class="data">
@@ -309,7 +333,7 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
 </article>
 
 <article class="slide" data-seg="2" data-title="§2 The harness" data-notes="This is the concept most people are missing, and it explains why two products on the same model feel completely different. The model decides; the harness does literally everything else.">
-  <div class="head"><span class="eyebrow">§2 · Harness</span><span class="clock">4:30 — 8:00</span></div>
+  <div class="head"><span class="eyebrow">§2 · Harness</span><span class="clock">5:30 — 8:30</span></div>
   <h2>The harness: the code that turns a model into an agent</h2>
   <p class="lede">The model only ever does one thing — read text, write text. <strong>Everything else in the loop is ordinary software somebody wrote,</strong> and that software is the harness.</p>
   <div class="body">
@@ -337,7 +361,7 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
 </article>
 
 <article class="slide dense" data-seg="2" data-title="§2 The orchestrator" data-notes="Same who-decides test as last class, one level up. If the fan-out is hard-coded you have a workflow of agents, and that is usually good news — say so.">
-  <div class="head"><span class="eyebrow">§2 · Orchestrator</span><span class="clock">4:30 — 8:00</span></div>
+  <div class="head"><span class="eyebrow">§2 · Orchestrator</span><span class="clock">5:30 — 8:30</span></div>
   <h2>The orchestrator: who decides which agent does what</h2>
   <div class="body">
     <div class="cols two">
@@ -373,7 +397,7 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
 </article>
 
 <article class="slide" data-seg="3" data-title="§3 Split or stay unified?" data-notes="Read this as a checklist. If none of the four is a yes, they are splitting for tidiness, which is the most common mistake in the category right now.">
-  <div class="head"><span class="eyebrow">§3 · One or many</span><span class="clock">8:00 — 11:00</span></div>
+  <div class="head"><span class="eyebrow">§3 · One or many</span><span class="clock">8:30 — 11:30</span></div>
   <h2>Start with one agent. Split only when something forces you.</h2>
   <div class="body">
     <div class="tablewrap"><table class="data">
@@ -391,7 +415,7 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
 </article>
 
 <article class="slide" data-seg="3" data-title="§3 What splitting costs" data-notes="Put the arithmetic on the board and let them do it. The handoff point is the sharp one — it is the exact problem AI had just removed from human work.">
-  <div class="head"><span class="eyebrow">§3 · One or many</span><span class="clock">8:00 — 11:00</span></div>
+  <div class="head"><span class="eyebrow">§3 · One or many</span><span class="clock">8:30 — 11:30</span></div>
   <h2>More agents usually means less reliability</h2>
   <div class="body">
     <div class="cols two">
@@ -408,7 +432,7 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
 </article>
 
 <article class="slide" data-seg="3" data-title="§3 Rules of thumb" data-notes="The practical takeaway of the section. The last 'don't' is the one that catches experienced teams — a second agent papering over a badly specified first one.">
-  <div class="head"><span class="eyebrow">§3 · One or many</span><span class="clock">8:00 — 11:00</span></div>
+  <div class="head"><span class="eyebrow">§3 · One or many</span><span class="clock">8:30 — 11:30</span></div>
   <h2>Rules of thumb</h2>
   <div class="body">
     <div class="cols two">
@@ -434,7 +458,7 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
 </article>
 
 <article class="slide" data-seg="4" data-title="§4 Seeing what it did" data-notes="Plain language only. Flight recorder plus itemised bill. The point is that agents work while nobody is watching, so the recording is the only thing that exists afterwards.">
-  <div class="head"><span class="eyebrow">§4 · Seeing it</span><span class="clock">11:00 — 14:30</span></div>
+  <div class="head"><span class="eyebrow">§4 · Seeing it</span><span class="clock">11:30 — 14:30</span></div>
   <h2>Observability: being able to play back what it actually did</h2>
   <p class="lede">An agent works while nobody is watching, and it goes wrong in the middle rather than at the end. <strong>The recording is the only thing that exists afterwards.</strong></p>
   <div class="body">
@@ -448,7 +472,7 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
 </article>
 
 <article class="slide" data-seg="4" data-title="§4 A recording, shown" data-notes="Walk them through it line by line. Note the third line — the policy it retrieved — because that is the 'why', and it is what turns a complaint into a fix.">
-  <div class="head"><span class="eyebrow">§4 · Seeing it</span><span class="clock">11:00 — 14:30</span></div>
+  <div class="head"><span class="eyebrow">§4 · Seeing it</span><span class="clock">11:30 — 14:30</span></div>
   <h2>This is all it is</h2>
   <div class="body">
     <div class="trace">
@@ -469,7 +493,7 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
 </article>
 
 <article class="slide" data-seg="4" data-title="§4 Three audiences" data-notes="The product insight: teams build the engineer's view and bolt the other two on later. The user's view is the one that earns trust — it is how someone learns to stop watching.">
-  <div class="head"><span class="eyebrow">§4 · Seeing it</span><span class="clock">11:00 — 14:30</span></div>
+  <div class="head"><span class="eyebrow">§4 · Seeing it</span><span class="clock">11:30 — 14:30</span></div>
   <h2>The recording has three audiences. Teams build one.</h2>
   <div class="body">
     <div class="tablewrap"><table class="data">

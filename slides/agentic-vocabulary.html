@@ -236,8 +236,8 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
 </style>
 
 <script type="application/json" id="segments">[
- {"name":"Card","min":1},{"name":"§1 LLM","min":3},{"name":"§2 Agent","min":5},
- {"name":"§3 The trade","min":2.5},{"name":"§4 In the loop","min":4},{"name":"§5 Evals","min":3.5},
+ {"name":"Card","min":1},{"name":"§1 LLM","min":3},{"name":"§2 Agent","min":6},
+ {"name":"§3 The trade","min":2.5},{"name":"§4 In the loop","min":3.5},{"name":"§5 Evals","min":3},
  {"name":"Close","min":1}]</script>
 
 <div class="stage">
@@ -253,7 +253,8 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
     <span>02 <b>What an agent is</b></span>
     <span>03 <b>Why probabilistic ever wins</b></span>
     <span>04 <b>Human in the loop</b></span>
-    <span>05 <b>Evals</b></span>
+    <span>05 <b>Tools, skills, context</b></span>
+    <span>06 <b>Evals</b></span>
   </div>
 </article>
 
@@ -267,7 +268,8 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
       <div class="def"><dt>Human in the loop</dt><dd>Choosing the points where a person has to say yes before the system goes on.</dd></div>
       <div class="def"><dt>Evals</dt><dd>A set of test cases with known good answers, re-run on every change, so you can tell better from different.</dd></div>
       <div class="def next"><dt>Multi-agent system</dt><dd>Several agents, different jobs, one objective. <b>Next class.</b></dd></div>
-      <div class="def next"><dt>Observability</dt><dd>Being able to play back what the system actually did. <b>Next class.</b></dd></div>
+      <div class="def next"><dt>Harness &amp; orchestrator</dt><dd>What runs one agent, and what coordinates several. <b>Next class.</b></dd></div>
+      <div class="def next"><dt>RAG · Observability</dt><dd>Looking it up before answering; playing back what happened. <b>Next class.</b></dd></div>
       <div class="def next"><dt>Hybrid workforce</dt><dd>Allocating work across people and agents as one pool. <b>Next class.</b></dd></div>
     </dl>
   </div>
@@ -324,7 +326,7 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
 </article>
 
 <article class="slide dense" data-seg="2" data-title="§2 What an agent is" data-notes="Three load-bearing words: loop, chooses, stop. Point at the dashed line — an agent with no way to say 'I don't know' will invent its way past the uncertainty, because that is what the model underneath does.">
-  <div class="head"><span class="eyebrow">§2 · Agent</span><span class="clock">4:00 — 9:00</span></div>
+  <div class="head"><span class="eyebrow">§2 · Agent</span><span class="clock">4:00 — 10:00</span></div>
   <h2>An LLM in a loop: given a goal, it picks an action, sees what happened, and decides what to do next — including when to stop</h2>
   <div class="body">
     <div class="cols two">
@@ -364,7 +366,7 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
 </article>
 
 <article class="slide" data-seg="2" data-title="§2 Agent or workflow?" data-notes="Run these five fast, show of hands on each. The point is the line at the bottom, not the taxonomy — most production systems should be workflows with one agentic step.">
-  <div class="head"><span class="eyebrow">§2 · Agent</span><span class="clock">4:00 — 9:00</span></div>
+  <div class="head"><span class="eyebrow">§2 · Agent</span><span class="clock">4:00 — 10:00</span></div>
   <h2>Who decides the next step — you, when you built it, or the model, while it runs?</h2>
   <div class="body">
     <div class="tablewrap"><table class="data">
@@ -382,7 +384,7 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
 </article>
 
 <article class="slide" data-seg="2" data-title="§2 Agents in the wild" data-notes="Same model in every row. What differs is what it is allowed to touch — so the tools, not the model, are the product decision. Ask the room which of these they have actually used.">
-  <div class="head"><span class="eyebrow">§2 · Agent</span><span class="clock">4:00 — 9:00</span></div>
+  <div class="head"><span class="eyebrow">§2 · Agent</span><span class="clock">4:00 — 10:00</span></div>
   <h2>Five you can go and look at today</h2>
   <div class="body">
     <div class="tablewrap"><table class="data">
@@ -399,8 +401,29 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
   <p class="thesis">Every row can be the <b>same model</b>. What differs is what it is allowed to touch. <b>The tools are the product decision</b> — not the model.</p>
 </article>
 
+<article class="slide dense" data-seg="2" data-title="§2 Tools, skills, context" data-notes="The new-hire column is the one that lands. Tools are systems access, skills are the onboarding playbook, context is what is on their screen right now. Then the last line: the model is everyone's, these three are yours.">
+  <div class="head"><span class="eyebrow">§2 · Agent</span><span class="clock">4:00 — 10:00</span></div>
+  <h2>Tools, skills, context — what an agent is actually made of</h2>
+  <div class="body">
+    <div class="tablewrap"><table class="data">
+      <thead><tr><th>Part</th><th>What it is</th><th>If it were a new hire</th></tr></thead>
+      <tbody>
+        <tr><th>Tools</th><td><b>What it can do.</b> Each one is a function you expose to it with a name and a description — search, read a file, look up an order, issue a refund, send an email</td><td>The systems access you give them on day one</td></tr>
+        <tr><th>Skills</th><td><b>How you want it done.</b> Packaged instructions for a task — the procedure, the standard, the examples, the house style — loaded only when relevant</td><td>The onboarding docs and the way-we-do-it-here playbook</td></tr>
+        <tr><th>Context</th><td><b>What it knows right now.</b> The instructions, the conversation so far, whatever material was fetched for this task, and what the tools returned</td><td>What is on their screen at this moment</td></tr>
+      </tbody>
+    </table></div>
+    <div class="cols">
+      <div class="panel flag"><h3>Tools are permissions</h3><p>The list of tools <b>is</b> the blast radius. And the model never runs a tool itself — it <b>asks</b>, and the code around it decides whether to comply.</p></div>
+      <div class="panel mark"><h3>A skill is usually just a document</h3><p>Written instructions for how your company does a thing, plus a line saying when to use them. <b>No model training, no engineering.</b> Which makes "who writes it" an organisational question, not a technical one.</p></div>
+      <div class="panel"><h3>Context is finite, and fresh every turn</h3><p>It is rebuilt from scratch on every step, and it runs out. <b>More is not better</b> — a stuffed context makes the thing duller, not smarter.</p></div>
+    </div>
+  </div>
+  <p class="thesis">The model is everyone's — your competitor rents the same one. <b>Your tools, your skills and your context are not.</b></p>
+</article>
+
 <article class="slide" data-seg="2" data-title="§2 The autonomy ladder" data-notes="Hand them this as the classifier for anything they meet. Then kill the instinct to climb: the rung is set by what it costs to be wrong, not by how good the model got.">
-  <div class="head"><span class="eyebrow">§2 · Agent</span><span class="clock">4:00 — 9:00</span></div>
+  <div class="head"><span class="eyebrow">§2 · Agent</span><span class="clock">4:00 — 10:00</span></div>
   <h2>The autonomy ladder</h2>
   <div class="body">
     <div class="ladder">
@@ -416,7 +439,7 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
 </article>
 
 <article class="slide dense" data-seg="3" data-title="§3 Why probabilistic ever wins" data-notes="This is the answer to the obvious objection from slide 7 — why hand anything to something that is only 90 percent right. Land the empty-chair line and the 'could you write the rules' test; they are the two things worth remembering.">
-  <div class="head"><span class="eyebrow">§3 · The trade</span><span class="clock">9:00 — 11:30</span></div>
+  <div class="head"><span class="eyebrow">§3 · The trade</span><span class="clock">10:00 — 12:30</span></div>
   <h2>Why hand anything to a system that is wrong one time in ten?</h2>
   <div class="body">
     <div class="cols two">
@@ -446,7 +469,7 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
 </article>
 
 <article class="slide" data-seg="4" data-title="§4 Human in the loop" data-notes="Do not define it abstractly. Walk the refund example: one system, three postures, three thresholds, all running at once. Then the table falls out of it.">
-  <div class="head"><span class="eyebrow">§4 · Human in the loop</span><span class="clock">11:30 — 15:30</span></div>
+  <div class="head"><span class="eyebrow">§4 · Human in the loop</span><span class="clock">12:30 — 16:00</span></div>
   <h2>Deciding where a person has to say yes</h2>
   <p class="lede">"There's a human in the loop" is a reassurance, not a design. Here is one refund agent, with all three postures running at once:</p>
   <div class="body">
@@ -468,7 +491,7 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
 </article>
 
 <article class="slide" data-seg="4" data-title="§4 Where the gate goes" data-notes="Two axes only: can you undo it, and how far does the damage spread. Say plainly that model confidence is not on this grid — a confidence score is just more generated text.">
-  <div class="head"><span class="eyebrow">§4 · Human in the loop</span><span class="clock">11:30 — 15:30</span></div>
+  <div class="head"><span class="eyebrow">§4 · Human in the loop</span><span class="clock">12:30 — 16:00</span></div>
   <h2>Put the gate at the last moment you can still undo it</h2>
   <div class="body">
     <div class="matrix">
@@ -485,7 +508,7 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
 </article>
 
 <article class="slide" data-seg="4" data-title="§4 The gate nobody reads" data-notes="Automation bias — this is well documented in aviation and radiology, not an AI opinion. Then the undo-send reframe, which is the practical takeaway: the cheapest gate is often not an approval at all.">
-  <div class="head"><span class="eyebrow">§4 · Human in the loop</span><span class="clock">11:30 — 15:30</span></div>
+  <div class="head"><span class="eyebrow">§4 · Human in the loop</span><span class="clock">12:30 — 16:00</span></div>
   <h2>Ask someone to approve two hundred correct actions and they will approve the wrong one</h2>
   <p class="lede">This is well documented long before AI — aviation, radiology, freight. People do not stay sharp watching something that is nearly always right.</p>
   <div class="body">
@@ -499,7 +522,7 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
 </article>
 
 <article class="slide" data-seg="5" data-title="§5 What evals are" data-notes="Plainest possible framing: a question paper you keep and re-take. The score itself matters much less than the direction it moves.">
-  <div class="head"><span class="eyebrow">§5 · Evals</span><span class="clock">15:30 — 19:00</span></div>
+  <div class="head"><span class="eyebrow">§5 · Evals</span><span class="clock">16:00 — 19:00</span></div>
   <h2>A set of test cases with known good answers, re-run every time you change something</h2>
   <div class="body">
     <div class="cols two">
@@ -518,7 +541,7 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
 </article>
 
 <article class="slide" data-seg="5" data-title="§5 What an eval looks like" data-notes="This is the slide that makes it concrete. Point out that three of the five right answers are 'do not act' — most of an eval set is about restraint, and that is not what anyone builds first.">
-  <div class="head"><span class="eyebrow">§5 · Evals</span><span class="clock">15:30 — 19:00</span></div>
+  <div class="head"><span class="eyebrow">§5 · Evals</span><span class="clock">16:00 — 19:00</span></div>
   <h2>An actual eval set, for the refund agent</h2>
   <div class="body">
     <div class="tablewrap"><table class="data">
@@ -537,7 +560,7 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
 </article>
 
 <article class="slide" data-seg="5" data-title="§5 Right answer, wrong route" data-notes="For an assistant you grade a string; for an agent you grade the run. This is also the honest answer to 'when can we let it off the leash' — evals are how you earn a rung on the ladder.">
-  <div class="head"><span class="eyebrow">§5 · Evals</span><span class="clock">15:30 — 19:00</span></div>
+  <div class="head"><span class="eyebrow">§5 · Evals</span><span class="clock">16:00 — 19:00</span></div>
   <h2>For an agent, the right answer is not enough</h2>
   <div class="body">
     <div class="cols two">

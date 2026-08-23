@@ -6,8 +6,8 @@ twenty minutes without turning into a glossary.
 
 | | | Covers | Lands on |
 | --- | --- | --- | --- |
-| **Class 1** | *The agentic vocabulary* | §1 LLM · §2 Agent · §3 The trade · §4 Human in the loop · §5 Evals | Jobs whose rules nobody could write just became buildable — and the price was certainty |
-| **Class 2** | *Many agents, one job* | §6 Multi-agent · §7 Harness and orchestrator · §8 Observability · §9 Hybrid workforce · §10 Tie-back | For agents, anxiety and habit are the binding forces, and both are organisational |
+| **Class 1** | *The agentic vocabulary* | §1 LLM · §2 Agent, tools, skills, context · §3 The trade · §4 Human in the loop · §5 Evals | Jobs whose rules nobody could write just became buildable — and the price was certainty |
+| **Class 2** | *Many agents, one job* | §6 Multi-agent · §7 Harness, orchestrator, RAG · §8 Observability · §9 Hybrid workforce · §10 Tie-back | For agents, anxiety and habit are the binding forces, and both are organisational |
 
 **Class 1 is the product side** — one agent, one user, and why an unreliable
 system is ever the right answer. **Class 2 is the organisation side** — several
@@ -36,6 +36,7 @@ it up.
 | --- | --- |
 | **LLM** | A model that turns text into more text — it can **advise**, and it cannot **act**. |
 | **Agent** | An LLM put in a **loop** with tools and a goal, deciding for itself what to do next and when it is finished. |
+| **Tools · Skills · Context** | What it can **do** · how you want it **done** · what it **knows right now**. |
 | **Human in the loop** | Choosing the points where a person has to say yes before the system goes on. |
 | **Evals** | A set of test cases with known good answers, re-run on every change, so you can tell better from different. |
 
@@ -51,6 +52,7 @@ And the sentence that connects them:
 | **Multi-agent system** | Several agents with different contexts, tools or roles, coordinated toward a single objective. |
 | **Harness** | The code that turns a model into an agent — the loop, the tools, the limits, the record. |
 | **Orchestrator** | In a multi-agent system, the thing that decides which agent does what and merges the results. |
+| **RAG** | Fetch the relevant material first, put it in front of the model, *then* answer. |
 | **Observability** | Being able to play back what the system actually did on one run, and why. |
 | **Hybrid workforce** | An operating model that allocates **jobs** — not roles — across humans and agents as one pool of capacity. |
 
@@ -215,6 +217,38 @@ each is allowed to touch.
 > identical model ship agents of wildly different usefulness, and the gap is
 > which tools they exposed, how they described them, and what they refused to
 > expose.
+
+## 2.6 What an agent is made of — tools, skills, context
+
+Three words the room will meet constantly and rarely hear separated. They are
+easiest to teach as one triad:
+
+| Part | What it is | If it were a new hire |
+| --- | --- | --- |
+| **Tools** | **What it can do.** Each is a function you expose to the model with a name and a description — search, read a file, look up an order, issue a refund, send an email | The systems access you give them on day one |
+| **Skills** | **How you want it done.** Packaged instructions for a task — the procedure, the standard, the examples, the house style — loaded only when relevant | The onboarding docs and the way-we-do-it-here playbook |
+| **Context** | **What it knows right now.** The instructions, the conversation so far, whatever material was fetched for this task, and what the tools returned | What is on their screen at this moment |
+
+Three things worth saying out loud about them:
+
+- **Tools are permissions.** The list of tools *is* the blast radius, which is why
+  §4 and this slide are really the same conversation. And the model never runs a
+  tool itself — it **asks**, and the code around it (§7.1) decides whether to
+  comply. A tool's *description* is a prompt: badly named tools get used wrongly,
+  and that is a writing problem, not an engineering one.
+- **A skill is usually just a document.** Written instructions for how your
+  company does a thing, plus a line saying when to use them. No model training,
+  no engineering. Which makes *who writes it* an organisational question — and
+  puts it squarely in the "standard-setting stays human" row of §9.3.
+- **Context is finite and rebuilt every turn.** More is not better; a stuffed
+  context makes the thing duller, not smarter. Deciding what goes in is the
+  highest-leverage decision anyone on the team makes.
+
+> The model is everyone's — your competitor rents the same one.
+> **Your tools, your skills and your context are not.**
+
+That sentence is the class-1 half of the argument §7.1 finishes: what a team
+actually owns in this category is never the model.
 
 ---
 ---
@@ -633,7 +667,7 @@ fraction as much.
 ---
 ---
 
-# §7 — The harness and the orchestrator
+# §7 — The machinery: harness, orchestrator, retrieval
 
 Two words the room will meet everywhere and almost never hear defined. They are
 a pair: **the harness makes one agent run; the orchestrator makes several agents
@@ -696,6 +730,40 @@ That last responsibility is not administrative:
 
 > The orchestrator is the accountability point. **If nothing owns the merge,
 > nobody owns the answer.**
+
+## 7.3 RAG — how the context gets filled
+
+The third piece of machinery, and the one the room will be sold most often.
+
+> **RAG — retrieval-augmented generation — is three words for "look it up before
+> you answer."**
+
+The problem it solves: the model has never seen your documents, and they would
+not fit in the context even if it had. So before answering, the system searches
+your own content, takes the few most relevant passages, and puts them in front of
+the model along with the question.
+
+Why a product person should care:
+
+- It is how an answer becomes grounded in **your** material rather than the
+  internet's — and it is what makes a **citation** possible at all. Without
+  retrieval there is nothing to cite.
+- **In an agent, retrieval is usually just another tool** — "search the knowledge
+  base" — and the agent decides when to reach for it, rather than it happening
+  automatically before every answer. That is the modern shape, and it is worth
+  saying, because most explanations of RAG describe the 2023 shape.
+
+And the part vendors skip:
+
+> **If the right passage was not retrieved, no model can rescue the answer.**
+> Retrieval quality is the ceiling, not model quality. Most disappointing "AI
+> search" projects are search projects that failed, wearing a more fashionable
+> name.
+
+Which gives the diagnostic question for any RAG product: *when it gets something
+wrong, can you tell whether it retrieved the wrong thing or reasoned badly about
+the right thing?* If nobody can answer that, they have no observability (§8) and
+no way to improve.
 
 ---
 ---
@@ -1055,10 +1123,10 @@ the sections above is support for it.
 | --- | --- | --- |
 | 0–1 | **The card.** Four definitions, written down. Say that three more are next class. | An LLM produces language; an agent produces consequences |
 | 1–4 | **§1 LLM.** What it is, the three properties, which models exist, three confusions. | It can advise; it cannot act |
-| 4–9 | **§2 Agent.** The loop, the who-decides test, five real agents, the ladder. | Autonomy is priced by the cost of being wrong — and the tools, not the model, are the product decision |
-| 9–11½ | **§3 The trade.** Coverage versus certainty; the unspecifiable job; the test. | Against an empty chair, 90% is infinite improvement |
-| 11½–15½ | **§4 Human in the loop.** The refund thresholds, the grid, the always-approved gate. | The question is where the gate goes and who stands at it — never whether one exists |
-| 15½–19 | **§5 Evals.** The question paper, a real eval set, outcome versus route. | Grade only the outcome and you are training a system to be lucky |
+| 4–10 | **§2 Agent.** The loop, the who-decides test, five real agents, tools/skills/context, the ladder. | Autonomy is priced by the cost of being wrong — and your tools, skills and context are the only parts your competitor cannot rent |
+| 10–12½ | **§3 The trade.** Coverage versus certainty; the unspecifiable job; the test. | Against an empty chair, 90% is infinite improvement |
+| 12½–16 | **§4 Human in the loop.** The refund thresholds, the grid, the always-approved gate. | The question is where the gate goes and who stands at it — never whether one exists |
+| 16–19 | **§5 Evals.** The question paper, a real eval set, outcome versus route. | Grade only the outcome and you are training a system to be lucky |
 | 19–20 | **Close.** The unlock, the price, the craft. | The job of an AI product is not to be right — it is to make being wrong cheap |
 
 **If you are running behind**, compress §1 (families table only) and §5.4. **Never
@@ -1073,11 +1141,11 @@ glossary.
 
 | Min | Segment | Land this |
 | --- | --- | --- |
-| 0–1 | **Recap.** The four words from last time, and the trade we made. | The job of an AI product is to make being wrong cheap |
-| 1–4½ | **§6 Multi-agent.** The contract example both ways; the four shapes. | The multi-agent version trades one blindness for another — it is not the upgrade |
-| 4½–8 | **§7 Harness and orchestrator.** What actually runs an agent; who assigns the work. | The model is available to your competitor at the same price; the harness is not |
-| 8–11 | **§6.6–6.7 One or many.** The four reasons to split; what splitting costs; the rules of thumb. | Add an agent for context, permissions, judgement or speed. Those four. Nothing else |
-| 11–14½ | **§8 Observability.** Plain definition, a trace shown, three audiences. | The recording says what happened; the evals say whether it is getting better |
+| 0–2½ | **Recap, and today's five words.** Last class in five lines, then multi-agent / harness / orchestrator / RAG / observability defined up front. | RAG is not a kind of AI — it is "look it up first", and the looking up is the hard part |
+| 2½–5½ | **§6 Multi-agent.** The contract example both ways; the four shapes. | The multi-agent version trades one blindness for another — it is not the upgrade |
+| 5½–8½ | **§7 Harness and orchestrator.** What actually runs an agent; who assigns the work. | The model is available to your competitor at the same price; the harness is not |
+| 8½–11½ | **§6.6–6.7 One or many.** The four reasons to split; what splitting costs; the rules of thumb. | Add an agent for context, permissions, judgement or speed. Those four. Nothing else |
+| 11½–14½ | **§8 Observability.** Plain definition, a trace shown, three audiences. | The recording says what happened; the evals say whether it is getting better |
 | 14½–17 | **§9 Hybrid workforce.** Roles are bundles; automate / augment / **abandon**; what stays human. | Unbundle the role before asking whether AI replaces it |
 | 17–20 | **§10 Tie-back.** The four forces re-scored, the three eras, the seven questions. | For agents, anxiety and habit are binding, and both are organisational |
 
