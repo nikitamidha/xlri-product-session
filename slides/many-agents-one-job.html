@@ -11,7 +11,7 @@
   --brass:#8A6414; --brass-bright:#B4882A;
   --teal:#14625A; --brick:#94402F;
   --shadow:0 1px 0 rgba(14,26,25,.04), 0 18px 40px -28px rgba(14,26,25,.35);
-  font-size:clamp(12.5px, 0.60vw + 0.60vh, 20px);
+  font-size:clamp(15px, 0.82vw + 0.82vh, 28px);
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
@@ -46,7 +46,7 @@ body{margin:0; background:var(--paper); color:var(--ink);
   @keyframes rise{from{opacity:0; transform:translateY(6px)}to{opacity:1; transform:none}}
 }
 .head{display:flex; align-items:baseline; justify-content:space-between; gap:1rem; flex-wrap:wrap}
-.eyebrow{font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:.72rem; font-weight:500;
+.eyebrow{font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:.8rem; font-weight:500;
   letter-spacing:.16em; text-transform:uppercase; color:var(--brass)}
 .clock{font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:.7rem; letter-spacing:.1em;
   color:var(--ink-3); font-variant-numeric:tabular-nums}
@@ -70,8 +70,8 @@ h2{font-size:2.5rem; letter-spacing:-.012em}
 .tablewrap{overflow-x:auto}
 table.data{border-collapse:collapse; width:100%; font-size:.92rem}
 table.data th,table.data td{text-align:left; vertical-align:top; padding:.52rem .9rem .52rem 0; border-bottom:1px solid var(--rule)}
-table.data thead th{font-family:"IBM Plex Mono",ui-monospace,monospace; font-weight:500; font-size:.68rem;
-  letter-spacing:.13em; text-transform:uppercase; color:var(--ink-3);
+table.data thead th{font-family:"IBM Plex Mono",ui-monospace,monospace; font-weight:500; font-size:.75rem;
+  letter-spacing:.11em; text-transform:uppercase; color:var(--ink-3);
   border-bottom:1px solid var(--rule-strong); padding-bottom:.38rem; white-space:nowrap}
 table.data tbody th{font-weight:600; color:var(--ink); padding-right:1.4rem}
 table.data td{color:var(--ink-2)}
@@ -88,7 +88,7 @@ tr.now th,tr.now td{background:color-mix(in srgb,var(--brass) 11%,transparent)}
 .thesis.warn b{color:var(--brick)}
 
 .panel{background:var(--surface); border:1px solid var(--rule); border-radius:2px; padding:.9rem 1.05rem; box-shadow:var(--shadow)}
-.panel h3{margin:0 0 .42rem; font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:.68rem;
+.panel h3{margin:0 0 .42rem; font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:.75rem;
   letter-spacing:.13em; text-transform:uppercase; color:var(--ink-3); font-weight:500}
 .panel p{margin:0; color:var(--ink-2); font-size:.93rem}
 .panel p+p{margin-top:.45rem}
@@ -114,22 +114,22 @@ ul.plain.no li::before{content:"✕"; color:var(--brick)}
 .rung .r{font-family:"IBM Plex Mono",monospace; font-size:.82rem; color:var(--brass); font-variant-numeric:tabular-nums}
 .rung .n{font-weight:600; font-size:.95rem}
 .rung .d,.rung .e{color:var(--ink-2); font-size:.9rem}
-.rung .e{color:var(--ink-3); font-family:"IBM Plex Mono",monospace; font-size:.76rem}
+.rung .e{color:var(--ink-3); font-family:"IBM Plex Mono",monospace; font-size:.82rem}
 .rung.hi{background:linear-gradient(90deg,color-mix(in srgb,var(--brass) 12%,transparent),transparent 70%)}
 
 .matrix{display:grid; grid-template-columns:auto 1fr 1fr; gap:.5rem; align-items:stretch}
-.matrix .lbl{font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.12em;
+.matrix .lbl{font-family:"IBM Plex Mono",monospace; font-size:.75rem; letter-spacing:.12em;
   text-transform:uppercase; color:var(--ink-3); display:flex; align-items:center}
 .matrix .lbl.v{writing-mode:vertical-rl; transform:rotate(180deg); justify-content:center}
 .cell{background:var(--surface); border:1px solid var(--rule); border-radius:2px; padding:.75rem .85rem}
 .cell h4{margin:0 0 .28rem; font-size:.95rem; font-weight:600}
 .cell p{margin:0; font-size:.87rem; color:var(--ink-2)}
 .cell p+p{margin-top:.3rem}
-.cell .eg{font-family:"IBM Plex Mono",monospace; font-size:.74rem; color:var(--ink-3)}
+.cell .eg{font-family:"IBM Plex Mono",monospace; font-size:.8rem; color:var(--ink-3)}
 .cell.danger{border-color:var(--brick); border-width:1px 1px 1px 2px}
 .cell.calm{border-left:2px solid var(--teal)}
 
-.trace{font-family:"IBM Plex Mono",monospace; font-size:.8rem; line-height:1.75; background:var(--surface);
+.trace{font-family:"IBM Plex Mono",monospace; font-size:.86rem; line-height:1.75; background:var(--surface);
   border:1px solid var(--rule); border-left:2px solid var(--teal); border-radius:2px;
   padding:.8rem 1rem; overflow-x:auto; color:var(--ink-2)}
 .trace b{color:var(--ink); font-weight:500}
@@ -160,11 +160,11 @@ svg.fig .arrowr{fill:var(--brick)}
 svg.fig .band{fill:color-mix(in srgb,var(--teal) 18%,transparent); stroke:var(--teal); stroke-width:1}
 svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(--brass); stroke-width:1}
 
-.slide.dense h2{font-size:2.05rem}
-.slide.dense table.data{font-size:.85rem}
-.slide.dense .panel p,.slide.dense ol.steps,.slide.dense ul.plain{font-size:.86rem}
+.slide.dense h2{font-size:2.2rem}
+.slide.dense table.data{font-size:.9rem}
+.slide.dense .panel p,.slide.dense ol.steps,.slide.dense ul.plain{font-size:.9rem}
 .slide.dense .lede{font-size:.94rem}
-.slide.dense .thesis{font-size:1.22rem}
+.slide.dense .thesis{font-size:1.3rem}
 
 .title-slide{justify-content:center; gap:1.3rem}
 .title-slide h1{font-size:clamp(2.6rem,5.8vw,4.9rem); letter-spacing:-.022em}
@@ -178,10 +178,10 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
   font-family:"Archivo",sans-serif; letter-spacing:0}
 
 .rail{display:flex; gap:2px; padding:0 clamp(1.6rem,4.5vw,5.5rem) .45rem; align-items:flex-end}
-.seg{position:relative; height:2.15rem; display:flex; flex-direction:column; justify-content:flex-end; gap:.26rem;
+.seg{position:relative; height:1.9rem; display:flex; flex-direction:column; justify-content:flex-end; gap:.26rem;
   background:none; border:0; padding:0; cursor:pointer; font:inherit; color:inherit; text-align:left}
 .seg .bar{height:3px; background:var(--rule); border-radius:1px; transition:background .2s}
-.seg .tag{font-family:"IBM Plex Mono",monospace; font-size:.6rem; letter-spacing:.09em;
+.seg .tag{font-family:"IBM Plex Mono",monospace; font-size:.55rem; letter-spacing:.09em;
   text-transform:uppercase; color:var(--ink-3); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
 .seg.done .bar{background:var(--rule-strong)}
 .seg.active .bar{background:var(--brass)}
@@ -191,7 +191,7 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
 
 .foot{display:flex; align-items:center; justify-content:space-between; gap:1rem;
   padding:.3rem clamp(1.6rem,4.5vw,5.5rem) .75rem;
-  font-family:"IBM Plex Mono",monospace; font-size:.68rem; color:var(--ink-3); letter-spacing:.08em}
+  font-family:"IBM Plex Mono",monospace; font-size:.6rem; color:var(--ink-3); letter-spacing:.08em}
 .foot .keys{display:flex; gap:.9rem; flex-wrap:wrap}
 .foot kbd{font:inherit; color:var(--ink-2); border:1px solid var(--rule); border-radius:2px; padding:0 .3rem}
 .nav{display:flex; gap:.4rem; align-items:center}
