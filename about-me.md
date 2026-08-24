@@ -3,7 +3,7 @@
 <img src="assets/nikita.jpg" alt="Nikita Midha" width="150" align="right" />
 
 ### Nikita Midha
-Product Manager · Bangalore
+Product leadership roles · 14 years of industry experience · Bangalore
 
 **Certified Coach · UC Berkeley**
 
@@ -13,17 +13,17 @@ Product Manager · Bangalore
 
 | | |
 | --- | --- |
-| <img src="assets/logos/salesforce.svg" alt="Salesforce" height="22" /> | **Now** |
-| <img src="assets/logos/podrock.svg" alt="Podrock" height="22" /> | |
-| <img src="assets/logos/freshworks.svg" alt="Freshworks" height="22" /> | |
-| <img src="assets/logos/microsoft.svg" alt="Microsoft" height="22" /> | |
+| <img src="assets/logos/salesforce.svg" alt="" height="24" /> **Salesforce** | **Now** |
+| <img src="assets/logos/spotdraft.svg" alt="" height="24" /> **SpotDraft** | |
+| <img src="assets/logos/freshworks.svg" alt="" height="24" /> **Freshworks** | |
+| <img src="assets/logos/microsoft.svg" alt="" height="24" /> **Microsoft** | |
 
 ## Education
 
 | | |
 | --- | --- |
-| <img src="assets/logos/xlri.svg" alt="XLRI Jamshedpur" height="22" /> | Business Management · 2014–2016 |
-| <img src="assets/logos/bits.svg" alt="BITS Pilani" height="22" /> | |
+| <img src="assets/logos/xlri.svg" alt="" height="24" /> **XLRI Jamshedpur** | Business Management · 2014–2016 |
+| <img src="assets/logos/bits-pilani.svg" alt="" height="24" /> **BITS Pilani** | |
 
 ---
 

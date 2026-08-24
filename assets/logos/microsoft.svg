@@ -1,4 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 106 24" width="106" height="24" role="img" aria-label="Microsoft">
-  <rect x="0" y="0" width="11" height="11" fill="#F25022"/><rect x="12.5" y="0" width="11" height="11" fill="#7FBA00"/><rect x="0" y="12.5" width="11" height="11" fill="#00A4EF"/><rect x="12.5" y="12.5" width="11" height="11" fill="#FFB900"/>
-  <text x="32.5" y="17.3" font-family="Inter,Helvetica,Arial,sans-serif" font-size="16.5" font-weight="400" fill="#57534e">Microsoft</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-label="Microsoft">
+  <rect x="0"    y="0"    width="11" height="11" fill="#F25022"/>
+  <rect x="12.5" y="0"    width="11" height="11" fill="#7FBA00"/>
+  <rect x="0"    y="12.5" width="11" height="11" fill="#00A4EF"/>
+  <rect x="12.5" y="12.5" width="11" height="11" fill="#FFB900"/>
 </svg>
