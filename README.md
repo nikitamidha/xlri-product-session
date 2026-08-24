@@ -37,6 +37,8 @@ carries the cleanest single insight in the category:
 | [`candidates.md`](candidates.md) | The nineteen products screened before choosing Wispr, each with a one-paragraph synopsis and a single takeaway. Use it to swap the spine, or to source 90-second contrast cases. |
 | [`framework.md`](framework.md) | The three questions expanded into sixteen lenses. Written for a six-session course — at 20-minute scope, treat it as a menu, not a syllabus. |
 
+Who's teaching it: [`about-me.md`](about-me.md) (or [`about-me.html`](about-me.html) for the presentable version).
+
 ## Running the 20 minutes
 
 | Minutes | Segment |

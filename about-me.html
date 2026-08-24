@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nikita Midha</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg:        #faf8f5;
+    --surface:   #ffffff;
+    --ink:       #1c1917;
+    --ink-2:     #57534e;
+    --ink-3:     #8b857e;
+    --rule:      #e7e2da;
+    --accent:    #b45309;
+    --accent-bg: #fdf4e7;
+    --shadow:    0 1px 2px rgba(28,25,23,.05), 0 8px 24px -12px rgba(28,25,23,.18);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg:        #17150f;
+      --surface:   #201d17;
+      --ink:       #f5f1ea;
+      --ink-2:     #b8b1a6;
+      --ink-3:     #857e73;
+      --rule:      #332e26;
+      --accent:    #e8a33d;
+      --accent-bg: #2a2114;
+      --shadow:    0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg:        #17150f;
+    --surface:   #201d17;
+    --ink:       #f5f1ea;
+    --ink-2:     #b8b1a6;
+    --ink-3:     #857e73;
+    --rule:      #332e26;
+    --accent:    #e8a33d;
+    --accent-bg: #2a2114;
+    --shadow:    0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 940px; margin: 0 auto; padding: 72px 28px 96px; }
+
+  /* ---- masthead ---- */
+  .masthead {
+    display: grid;
+    grid-template-columns: 232px 1fr;
+    gap: 48px;
+    align-items: start;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .portrait {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--accent-bg);
+    box-shadow: var(--shadow);
+  }
+  .portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; display: block; }
+  .portrait .fallback {
+    position: absolute; inset: 0;
+    display: none;
+    align-items: center; justify-content: center;
+    flex-direction: column; gap: 6px;
+    font-family: Fraunces, Georgia, serif;
+    font-size: 52px; color: var(--accent); letter-spacing: .02em;
+  }
+  .portrait .fallback small {
+    font-family: Inter, sans-serif; font-size: 11px; line-height: 1.4;
+    color: var(--ink-3); letter-spacing: .04em; text-transform: uppercase;
+    text-align: center; padding: 0 16px;
+  }
+  .portrait.is-missing img { display: none; }
+  .portrait.is-missing .fallback { display: flex; }
+
+  .eyebrow {
+    font-size: 11.5px; font-weight: 600; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--accent); margin: 4px 0 14px;
+  }
+  h1 {
+    font-family: Fraunces, Georgia, serif;
+    font-weight: 600; font-size: clamp(38px, 5.5vw, 56px);
+    line-height: 1.05; letter-spacing: -.02em; margin: 0 0 18px;
+  }
+  .lede { font-size: 19px; color: var(--ink-2); margin: 0 0 20px; max-width: 46ch; }
+  .lede strong { color: var(--ink); font-weight: 600; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+  .chip {
+    font-size: 12.5px; font-weight: 500; color: var(--ink-2);
+    background: var(--surface); border: 1px solid var(--rule);
+    padding: 5px 11px; border-radius: 999px;
+  }
+
+  /* ---- sections ---- */
+  section { padding-top: 56px; }
+  h2 {
+    font-family: Fraunces, Georgia, serif;
+    font-size: 13px; font-weight: 600; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--ink-3);
+    margin: 0 0 32px; padding-bottom: 12px; border-bottom: 1px solid var(--rule);
+  }
+
+  /* ---- timeline ---- */
+  .timeline { position: relative; padding-left: 34px; }
+  .timeline::before {
+    content: ""; position: absolute; left: 5px; top: 8px; bottom: 8px;
+    width: 2px; background: var(--rule);
+  }
+  .role { position: relative; padding-bottom: 40px; }
+  .role:last-child { padding-bottom: 0; }
+  .role::before {
+    content: ""; position: absolute; left: -34px; top: 9px;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--bg); border: 2px solid var(--rule);
+  }
+  .role.current::before { background: var(--accent); border-color: var(--accent); }
+  .role h3 {
+    font-size: 20px; font-weight: 600; margin: 0 0 2px;
+    display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+  }
+  .role h3 .now {
+    font-size: 10.5px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--accent); background: var(--accent-bg);
+    border-radius: 4px; padding: 2px 7px;
+  }
+  .meta { font-size: 14px; color: var(--ink-3); margin: 0 0 12px; }
+  .role p { margin: 0 0 10px; color: var(--ink-2); }
+  .role ul { margin: 10px 0 0; padding-left: 18px; color: var(--ink-2); }
+  .role li { margin-bottom: 6px; }
+  .role .label { color: var(--ink); font-weight: 600; }
+
+  /* fill-me markers — delete the class once the text is real */
+  .fill {
+    background: var(--accent-bg); color: var(--accent);
+    border: 1px dashed var(--accent); border-radius: 4px;
+    padding: 1px 6px; font-size: 14px; font-style: italic;
+  }
+
+  /* ---- pull quote ---- */
+  .pull {
+    font-family: Fraunces, Georgia, serif;
+    font-size: 23px; line-height: 1.45; color: var(--ink);
+    border-left: 3px solid var(--accent);
+    padding: 4px 0 4px 24px; margin: 32px 0;
+  }
+
+  .prose p { color: var(--ink-2); max-width: 68ch; margin: 0 0 18px; }
+  .prose p strong { color: var(--ink); font-weight: 600; }
+  .prose em { color: var(--ink); }
+
+  /* ---- repo table ---- */
+  .files { width: 100%; border-collapse: collapse; font-size: 15px; }
+  .files td { padding: 12px 0; border-bottom: 1px solid var(--rule); vertical-align: top; color: var(--ink-2); }
+  .files tr:last-child td { border-bottom: none; }
+  .files td:first-child { width: 220px; padding-right: 24px; white-space: nowrap; }
+  .files a {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 13.5px; color: var(--accent); text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+  .files a:hover { border-bottom-color: var(--accent); }
+
+  footer {
+    margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--rule);
+    font-size: 13.5px; color: var(--ink-3);
+  }
+
+  @media (max-width: 720px) {
+    .wrap { padding: 44px 20px 72px; }
+    .masthead { grid-template-columns: 1fr; gap: 28px; }
+    .portrait { max-width: 200px; }
+    .files td:first-child { width: auto; white-space: normal; }
+    .files td { display: block; border-bottom: none; padding: 4px 0; }
+    .files tr { display: block; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="portrait" id="portrait">
+      <img src="assets/nikita.jpg" alt="Nikita Midha"
+           onerror="document.getElementById('portrait').classList.add('is-missing')" />
+      <div class="fallback">
+        NM
+        <small>drop your photo at<br />assets/nikita.jpg</small>
+      </div>
+    </div>
+
+    <div>
+      <p class="eyebrow">About me</p>
+      <h1>Nikita Midha</h1>
+      <p class="lede">
+        Twelve years in: two building software, ten deciding what software gets
+        built. Almost all of it <strong>B2B</strong> — enterprise SaaS, developer
+        tools, data and infrastructure, and now AI-native products.
+      </p>
+      <p class="lede">
+        Also a <strong>trained coach, certified through UC Berkeley</strong> —
+        which is the part of this page that explains the rest of it.
+      </p>
+      <div class="chips">
+        <span class="chip">Bangalore</span>
+        <span class="chip">B2B product</span>
+        <span class="chip">Jobs to be Done</span>
+        <span class="chip">Certified coach · UC Berkeley</span>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <h2>The work</h2>
+    <div class="timeline">
+
+      <article class="role current">
+        <h3>Salesforce <span class="now">Now</span></h3>
+        <p class="meta"><span class="fill">title</span> · since <span class="fill">month year</span> · Bangalore</p>
+        <p><span class="label">What I own:</span> <span class="fill">product surface, teams, scope</span></p>
+        <ul>
+          <li><span class="fill">outcome, with a number</span></li>
+          <li><span class="fill">outcome</span></li>
+        </ul>
+        <p style="margin-top:12px"><span class="label">The AI part:</span> <span class="fill">what you've shipped with AI, and what it actually changed</span></p>
+      </article>
+
+      <article class="role">
+        <h3>Podrock</h3>
+        <p class="meta"><span class="fill">title</span> · <span class="fill">dates</span></p>
+        <p><span class="label">What I owned:</span> <span class="fill">products, features, teams</span></p>
+        <ul>
+          <li><span class="fill">outcome</span></li>
+        </ul>
+        <p style="margin-top:12px"><span class="label">What a startup taught me that the other three couldn't:</span> <span class="fill">one honest line</span></p>
+      </article>
+
+      <article class="role">
+        <h3>Freshworks</h3>
+        <p class="meta"><span class="fill">title</span> · <span class="fill">dates</span></p>
+        <p><span class="label">What I owned:</span> <span class="fill">products, features, teams</span></p>
+        <ul>
+          <li><span class="fill">outcome</span></li>
+        </ul>
+      </article>
+
+      <article class="role">
+        <h3>Microsoft</h3>
+        <p class="meta"><span class="fill">title</span> · <span class="fill">dates</span></p>
+        <p><span class="label">What I owned:</span> <span class="fill">products, features, teams</span></p>
+        <ul>
+          <li><span class="fill">outcome</span></li>
+        </ul>
+      </article>
+
+      <article class="role">
+        <h3>Before product — two years in engineering</h3>
+        <p class="meta"><span class="fill">dates</span> · <span class="fill">backend / full-stack / etc.</span></p>
+        <p>
+          I don't lead with this, but it shows up constantly. Being able to sit
+          with an engineer and argue about feasibility directly — rather than
+          relaying the argument between two rooms — is most of what technical
+          credibility actually means.
+        </p>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="prose">
+    <h2>Coaching</h2>
+    <p>
+      I'm a <strong>trained coach, certified through UC Berkeley</strong> —
+      <span class="fill">exact programme name and year</span>.
+    </p>
+    <p>
+      I went in expecting a credential and came out with a working habit:
+      <strong>ask one more question before offering the answer.</strong>
+      Coaching training is mostly unlearning the reflex to solve. You learn to
+      sit inside someone else's framing long enough to find the thing they
+      haven't said yet — which is, almost always, the actual problem.
+    </p>
+    <p>
+      That turns out to be the same muscle product management runs on. A user
+      interview and a coaching conversation fail for identical reasons: you heard
+      a request and treated it as a requirement. You solved the sentence instead
+      of the situation. Jobs to be Done is, read one way, just coaching
+      discipline applied to a market — <em>don't take the stated want at face
+      value; find what they're actually trying to get done.</em>
+    </p>
+    <p>
+      So it isn't a side interest sitting next to the product work. It's the
+      thing underneath it.
+    </p>
+  </section>
+
+  <section class="prose">
+    <h2>A small insight about me</h2>
+    <p>
+      I'm most useful at the point where a team has agreed on <strong>what</strong>
+      to build and nobody has said out loud <strong>why anyone would hire it.</strong>
+      That gap is where almost all wasted quarters live, and it's rarely a
+      strategy failure — it's a listening failure. Everyone heard the request.
+      Nobody stayed in the room long enough to hear the job.
+    </p>
+    <p>
+      Which is why I teach it the way I do: not as a framework to apply, but as a
+      question to stay inside of a little longer than is comfortable.
+    </p>
+  </section>
+
+  <section>
+    <h2>The work this repo is for</h2>
+    <div class="prose">
+      <p>
+        This repository is the material for a <strong>20-minute XLRI session on
+        product management in the AI-native world</strong> — three questions, one
+        product held under them properly.
+      </p>
+    </div>
+    <table class="files">
+      <tr><td><a href="README.md">README.md</a></td><td>The session in brief, and how to run the 20 minutes</td></tr>
+      <tr><td><a href="jtbd-framing.md">jtbd-framing.md</a></td><td>The analytical spine — what gen AI does and doesn't change about JTBD</td></tr>
+      <tr><td><a href="wispr-jobs.md">wispr-jobs.md</a></td><td>Thirteen Wispr Flow jobs, before and after gen AI</td></tr>
+      <tr><td><a href="wispr-flow-deep-dive.md">wispr-flow-deep-dive.md</a></td><td>The session itself, minute by minute</td></tr>
+      <tr><td><a href="candidates.md">candidates.md</a></td><td>The nineteen products screened before choosing Wispr</td></tr>
+      <tr><td><a href="framework.md">framework.md</a></td><td>The three questions expanded into sixteen lenses</td></tr>
+    </table>
+    <p class="pull">
+      Before generative AI, the user had to meet the machine's standard.<br />
+      After generative AI, the machine meets the user's standard.
+    </p>
+  </section>
+
+  <footer>
+    A Markdown version of this page — which renders inline on GitHub — is at
+    <a href="about-me.md" style="color:var(--accent);text-decoration:none">about-me.md</a>.
+  </footer>
+
+</div>
+</body>
+</html>
