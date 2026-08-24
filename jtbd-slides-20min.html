@@ -1,4 +1,4 @@
-<title>The Switch</title>
+<title>Jobs to Be Done</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
@@ -60,7 +60,7 @@ body{
 
 /* ---------- type ---------- */
 h1,h2,h3,.eyebrow,.chip,.num,.mono,th,.tag{font-family:Archivo,"Helvetica Neue",Arial,sans-serif}
-h1{font-size:clamp(38px,6.2vw,86px); font-weight:700; letter-spacing:-.028em; line-height:.98; margin:0; text-wrap:balance}
+h1{font-size:clamp(32px,5vw,68px); font-weight:700; letter-spacing:-.028em; line-height:.98; margin:0; text-wrap:balance}
 h2{font-size:clamp(24px,2.8vw,38px); font-weight:700; letter-spacing:-.022em; line-height:1.06; margin:0 0 .42em; text-wrap:balance}
 h3{font-size:clamp(16px,1.3vw,21px); font-weight:600; letter-spacing:-.008em; margin:0 0 .35em}
 p{margin:0 0 .85em; max-width:70ch}
@@ -93,6 +93,15 @@ strong{font-weight:600}
 .card{background:var(--surface); border:1px solid var(--rule-soft); border-radius:3px; padding:clamp(11px,1.15vw,16px); box-shadow:var(--shadow)}
 .card p:last-child{margin:0}
 .cards.g3{grid-template-columns:repeat(3,1fr)}
+/* ---------- worked-example panels ---------- */
+.exam{background:var(--surface); border:1px solid var(--rule-soft); border-radius:3px; padding:clamp(14px,1.5vw,22px); box-shadow:var(--shadow)}
+.examhead{display:flex; align-items:center; gap:.75em; margin-bottom:.7em; padding-bottom:.7em; border-bottom:1px solid var(--rule-soft)}
+.examhead svg{flex:0 0 auto; color:var(--brass)}
+.examname{display:block; font-family:Archivo,sans-serif; font-weight:600; font-size:1.06em; letter-spacing:-.01em; line-height:1.2}
+.examsub{display:block; font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.13em; text-transform:uppercase; color:var(--ink-3); margin-top:.3em}
+.exam p{max-width:none}
+.exampoint{margin:0; padding-top:.6em; border-top:1px solid var(--rule-soft); color:var(--ink)}
+.light3 p{border-top:1px solid var(--rule); padding-top:.55em; margin:0; font-size:.92em; max-width:none}
 @media (max-width:920px){ .cards.g3{grid-template-columns:repeat(auto-fit,minmax(255px,1fr))} }
 .card .num{display:block; font-size:11px; font-weight:600; letter-spacing:.14em; color:var(--ink-3); margin-bottom:.5em}
 .stack{display:flex; flex-direction:column; gap:clamp(8px,.95vw,13px)}
@@ -211,8 +220,8 @@ figcaption{font-family:"IBM Plex Mono",monospace; font-size:11.5px; line-height:
 <section class="slide cover" data-toc="Cover">
   <div class="wrap">
     <p class="eyebrow">Software Product Management</p>
-    <h1>The switch.</h1>
-    <p class="lede" style="margin-top:1em"><strong>Jobs to Be Done.</strong> Nobody wants your product. They want the progress it makes possible &mdash; and they will fire it the moment something else makes that progress cheaper.</p>
+    <h1>Jobs to Be Done<br>Framework</h1>
+    <p class="lede" style="margin-top:1em">Nobody wants your product. They want the progress it makes possible &mdash; and they will fire it the moment something else makes that progress cheaper.</p>
     <div class="marks">
       <span class="mk">Christensen &middot; the theory</span>
       <span class="mk">Moesta &amp; Spiek &middot; the method</span>
@@ -225,28 +234,44 @@ figcaption{font-family:"IBM Plex Mono",monospace; font-size:11.5px; line-height:
   <div class="wrap">
     <p class="eyebrow">01 &middot; The one idea</p>
     <h2>People don&rsquo;t buy products. They hire them.</h2>
+    <div class="claim"><p>A <strong>job to be done</strong> is the progress a person is trying to make in a particular circumstance &mdash; functionally, emotionally and socially.</p></div>
     <div class="two">
-      <div>
-        <p>McDonald&rsquo;s asked milkshake buyers what would make a better milkshake &mdash; thicker, cheaper, chunkier &mdash; shipped all of it, and sales did not move.</p>
-        <p>Then someone asked what job the milkshake was being <em>hired</em> to do. Nearly half were sold before 8am, to solo drivers, taken away. The job: <span class="said">&ldquo;make my boring commute less boring, with one hand, no crumbs on my suit, and keep me full until 11.&rdquo;</span></p>
-        <p>The real competitors were a banana, a bagel and a doughnut. <strong>Not other milkshakes.</strong></p>
-      </div>
-      <div>
-        <div class="claim"><p>A <strong>job to be done</strong> is the progress a person is trying to make in a particular circumstance &mdash; functionally, emotionally and socially.</p></div>
-        <div class="stack">
-          <div class="card"><span class="num">CONSEQUENCE 01</span><p><strong>Your competitor set changes.</strong> It includes bananas. It includes doing nothing at all &mdash; which is the biggest competitor most products have.</p></div>
-          <div class="card"><span class="num">CONSEQUENCE 02</span><p><strong>Your unit of analysis changes.</strong> Not a customer &mdash; a <em>circumstance</em>. The same person hires different things at 7am and at 4pm.</p></div>
-          <div class="card"><span class="num">CONSEQUENCE 03</span><p><strong>Every hire is a fire.</strong> Something got displaced. If you cannot name what, you have not found a job.</p></div>
+      <div class="exam">
+        <div class="examhead">
+          <svg viewBox="0 0 40 48" width="32" height="38" role="img" aria-label="Takeaway milkshake cup">
+            <path d="M11 18 L14 44 H26 L29 18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/>
+            <rect x="8.5" y="13" width="23" height="5" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.7"/>
+            <path d="M13 13 C14.5 7.5 25.5 7.5 27 13" fill="none" stroke="currentColor" stroke-width="1.7"/>
+            <line x1="24" y1="11" x2="30" y2="3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+          </svg>
+          <span><span class="examname">The milkshake</span><span class="examsub">McDonald&rsquo;s</span></span>
         </div>
+        <p>They asked milkshake buyers what would make a better milkshake &mdash; thicker, cheaper, chunkier &mdash; shipped all of it, and sales did not move.</p>
+        <p>Then someone asked what job it was being <em>hired</em> to do. Nearly half were sold before 8am, to solo drivers, taken away.</p>
+        <p class="said">&ldquo;Make my boring commute less boring, with one hand, no crumbs on my suit, and keep me full until 11.&rdquo;</p>
+        <p class="exampoint"><strong>The competitors were a banana, a bagel and a doughnut.</strong> Not other milkshakes.</p>
+      </div>
+      <div class="exam">
+        <div class="examhead">
+          <svg viewBox="0 0 48 40" width="36" height="30" role="img" aria-label="Wrapped chocolate bar">
+            <rect x="12" y="13.5" width="24" height="13" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.7"/>
+            <path d="M12 15.5 L5.5 11.5 L7 20 L4 28 L12 24.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+            <path d="M36 15.5 L42.5 11.5 L41 20 L44 28 L36 24.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+            <line x1="20" y1="13.5" x2="20" y2="26.5" stroke="currentColor" stroke-width="1.2" style="opacity:.5"/>
+            <line x1="28" y1="13.5" x2="28" y2="26.5" stroke="currentColor" stroke-width="1.2" style="opacity:.5"/>
+          </svg>
+          <span><span class="examname">Snickers vs Milky Way</span><span class="examsub">Same shelf, same company</span></span>
+        </div>
+        <p><strong>Snickers</strong> is hired to shut hunger up until dinner. It is eaten standing, between things, by someone who skipped lunch.</p>
+        <p><strong>Milky Way</strong> is hired to reward you. It is eaten sitting down, slowly, by someone who has finished something.</p>
+        <p class="said">&ldquo;I need to get to 8pm&rdquo; is a different sentence from &ldquo;I&rsquo;ve earned this.&rdquo;</p>
+        <p class="exampoint"><strong>Snickers competes with a banana and a samosa. Milky Way competes with ice cream.</strong> Neither competes with the other, though they sit six inches apart.</p>
       </div>
     </div>
-    <div class="wild">
-      <span class="wlabel">In the wild</span>
-      <div class="witems">
-        <p><strong>Snickers vs Milky Way</strong>Same shelf, same company, different jobs. Snickers is hired to shut hunger up until dinner, so it competes with a banana and a samosa. Milky Way is hired to reward you, so it competes with ice cream.</p>
-        <p><strong>Zerodha</strong>The competitor was never another broker. For most Indian households the incumbent was a fixed deposit, gold, or not investing at all &mdash; <em>non-consumption</em>, which appears on no market map.</p>
-        <p><strong>Netflix by post</strong>What got fired was not the video store&rsquo;s catalogue. It was the drive back to return the disc, and the late fee waiting if you didn&rsquo;t.</p>
-      </div>
+    <div class="three light3" style="margin-top:clamp(12px,1.5vw,20px)">
+      <p><strong>Your competitor set changes.</strong> It includes bananas &mdash; and doing nothing at all, which is the largest competitor most products have and appears on no market map.</p>
+      <p><strong>Your unit of analysis changes.</strong> Not a customer &mdash; a <em>circumstance</em>. The same person hires different things at 7am and at 4pm.</p>
+      <p><strong>Every hire is a fire.</strong> Something got displaced. If you cannot name what, you have not found a job.</p>
     </div>
   </div>
 </section>
@@ -274,19 +299,11 @@ figcaption{font-family:"IBM Plex Mono",monospace; font-size:11.5px; line-height:
       </div>
     </div>
     <div class="three" style="margin-top:1.2em">
-      <div class="card"><span class="num">LAYER 01 &middot; FUNCTIONAL</span><p>Move the exact amount from me to them.</p></div>
-      <div class="card"><span class="num">LAYER 02 &middot; EMOTIONAL</span><p>Not feel cheated over &#8377;7 &mdash; and not feel like the person making a fuss over &#8377;7.</p></div>
-      <div class="card" style="border-color:var(--brass)"><span class="num" style="color:var(--brass)">LAYER 03 &middot; SOCIAL</span><p><strong>Not be the customer holding up the queue.</strong> On the vendor&rsquo;s side: not be the shop that turns people away for want of change.</p></div>
+      <div class="card"><span class="num">LAYER 1 &middot; FUNCTIONAL</span><p>Move the exact amount from me to them.</p></div>
+      <div class="card"><span class="num">LAYER 2 &middot; EMOTIONAL</span><p>Not feel cheated over &#8377;7 &mdash; and not feel like the person making a fuss over &#8377;7.</p></div>
+      <div class="card"><span class="num">LAYER 3 &middot; SOCIAL</span><p><strong>Not be the customer holding up the queue.</strong> On the vendor&rsquo;s side: not be the shop that turns people away for want of change.</p></div>
     </div>
     <p class="note" style="margin-top:.9em">Strike every product name and it still holds &mdash; and would have held in 1985. That is the <strong>strike test</strong> and the <strong>age test</strong> passing together. Jobs are old; solutions are new.</p>
-    <div class="wild">
-      <span class="wlabel">The social layer, elsewhere</span>
-      <div class="witems">
-        <p><strong>LinkedIn Premium</strong>Functionally it is InMail and who-viewed-your-profile. Socially it is looking like someone in demand rather than someone looking &mdash; which is why the badge is public and the search history is not.</p>
-        <p><strong>CRED</strong>The functional job &mdash; paying a credit card bill &mdash; was already free and boring. What was sold was membership: visible proof you belong to the set that pays in full.</p>
-        <p><strong>The wedding photographer</strong>Functionally, photographs. Socially, evidence for a specific set of relatives that the thing was done properly. Nobody prices it as a camera rental.</p>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -316,8 +333,7 @@ figcaption{font-family:"IBM Plex Mono",monospace; font-size:11.5px; line-height:
         <div class="claim"><p><strong>Does the statement kill anything on your roadmap?</strong> A job statement that rules nothing out is doing no work.</p></div>
         <p><strong>Weak:</strong> <span class="said">&ldquo;Field sales want a better CRM.&rdquo;</span> Kills nothing &mdash; the dashboard, the redesign and the reports module all survive.</p>
         <p><strong>Strong:</strong> <span class="said">&ldquo;When I&rsquo;m walking out of one client meeting to the next, I want what just happened recorded before I forget it, so I&rsquo;m not reconstructing my week on Friday night.&rdquo;</span></p>
-        <p class="note">Kills the desktop-first redesign, the analytics module and mandatory-field validation. Funds two-tap capture, an offline queue, and pre-filling from the calendar entry. <strong>The constraints in the circumstance do the killing</strong> &mdash; not sharper wording.</p>
-      </div>
+          </div>
     </div>
     <div class="wild">
       <span class="wlabel">Statements that killed something</span>
@@ -365,14 +381,6 @@ figcaption{font-family:"IBM Plex Mono",monospace; font-size:11.5px; line-height:
           </table>
         </div>
         <p class="note"><strong>Unserved rows are the roadmap. The &ldquo;made worse&rdquo; row is the business.</strong> NPS, DAU and MRR are <em>your</em> outcomes; the user has never heard of them.</p>
-      </div>
-    </div>
-    <div class="wild">
-      <span class="wlabel">In the wild</span>
-      <div class="witems">
-        <p><strong>Tatkal on IRCTC</strong>The context is a forty-second window against lakhs of people at 10am. That kills &ldquo;make the booking form nicer&rdquo; and funds saved passenger lists and a payment method already loaded before the window opens.</p>
-        <p><strong>A delivery rider&rsquo;s app</strong>Helmet on, one hand, sun on the screen, engine running. Constraints that kill dense dashboards and fund enormous tap targets, audio callouts, and a screen readable at a glance.</p>
-        <p><strong>Amazon returns</strong>&ldquo;Minimise the likelihood I&rsquo;m stuck with something that doesn&rsquo;t fit&rdquo; is an outcome, not a feature request. Free returns is one answer to it; so is a better size chart. The outcome names the bar, not the build.</p>
       </div>
     </div>
   </div>
@@ -465,20 +473,13 @@ figcaption{font-family:"IBM Plex Mono",monospace; font-size:11.5px; line-height:
       </div>
       <div class="card" style="border-top:3px solid var(--resist)">
         <span class="num" style="color:var(--resist)">ANXIETY &middot; THEIR IMAGINATION</span>
-        <p>It does not have to be true to block the sale. <strong>Benefits do not answer fear.</strong> Evidence, reversibility and a small first step do.</p>
+        <p>It does not have to be true to block the sale. <strong>Benefits do not answer fear.</strong> Evidence, reversibility and a small first step do. And it splits in two: <em>in choice</em> blocks the purchase, <em>in use</em> blocks the second one &mdash; that half is your churn.</p>
         <p class="note" style="margin-top:.6em"><strong>Ola and Uber</strong> put the driver&rsquo;s name, photo, number plate and a shareable live trip on the screen. None of it makes the ride better. All of it makes getting into a stranger&rsquo;s car survivable.</p>
       </div>
       <div class="card" style="border-top:3px solid var(--resist)">
         <span class="num" style="color:var(--resist)">HABIT &middot; THEIR PAST</span>
         <p>Not loyalty &mdash; people are held by habits they dislike. Two moves: <strong>fit the old groove</strong>, or <strong>catch a habit already broken</strong> &mdash; new job, new city, new phone, new baby.</p>
         <p class="note" style="margin-top:.6em"><strong>Google Sheets</strong> opens and saves .xlsx. <strong>Apple</strong> ships Migration Assistant. Neither asks you to change; both remove the cost of arriving.</p>
-      </div>
-    </div>
-    <div class="wild">
-      <span class="wlabel">Two consequences</span>
-      <div class="witems">
-        <p><strong>Anxiety and habit are the only two levers you actually hold</strong>Push belongs to their situation and pull runs out of road. Almost every roadmap works on pull anyway, because it is the one the team controls.</p>
-        <p><strong>Anxiety splits in two, and the split is the useful part</strong><em>In choice</em> &mdash; &ldquo;will this work for me?&rdquo; &mdash; blocks the purchase, so it is a conversion problem. <em>In use</em> &mdash; &ldquo;will it let me down at a bad moment?&rdquo; &mdash; blocks the second purchase. That one is your churn.</p>
       </div>
     </div>
   </div>
@@ -569,22 +570,22 @@ figcaption{font-family:"IBM Plex Mono",monospace; font-size:11.5px; line-height:
     <p class="eyebrow">08 &middot; Gotchas</p>
     <h2 style="margin-bottom:.28em">Six ways to run this and learn nothing.</h2>
     <div class="cards g3">
-      <div class="card"><span class="num">GOTCHA 01</span><h3>The job is a solution</h3>
+      <div class="card"><span class="num">GOTCHA 1</span><h3>The job is a solution</h3>
         <p><strong>Tell:</strong> strike the product noun and the sentence dies.<br><strong>Fix:</strong> ask &ldquo;so they can <em>what</em>?&rdquo; until you reach progress.</p>
         <p class="note" style="margin-top:.5em">Levitt: nobody wants a quarter-inch drill, they want a quarter-inch hole. Push again: they want the shelf up before the in-laws arrive.</p></div>
-      <div class="card"><span class="num">GOTCHA 02</span><h3>A persona in the &ldquo;when&rdquo;</h3>
+      <div class="card"><span class="num">GOTCHA 2</span><h3>A persona in the &ldquo;when&rdquo;</h3>
         <p><strong>Tell:</strong> &ldquo;When a busy mid-market sales manager&hellip;&rdquo;<br><strong>Fix:</strong> replace the <em>person</em> with a <em>moment</em>.</p>
         <p class="note" style="margin-top:.5em">King Charles III and Ozzy Osbourne: both born in Britain in 1948, both married twice, both wealthy, both famous, both lived in castles. Identical on every field on your persona slide. They never hired the same thing.</p></div>
-      <div class="card"><span class="num">GOTCHA 03</span><h3>Altitude sickness</h3>
+      <div class="card"><span class="num">GOTCHA 3</span><h3>Altitude sickness</h3>
         <p><strong>Tell:</strong> it rules nothing out.<br><strong>Fix:</strong> run it against your real roadmap. If it kills less than a third, it is decoration.</p>
         <p class="note" style="margin-top:.5em">&ldquo;Improve the customer experience&rdquo; has been a quarterly objective almost everywhere, and has never once killed a feature.</p></div>
-      <div class="card"><span class="num">GOTCHA 04</span><h3>Functional only</h3>
+      <div class="card"><span class="num">GOTCHA 4</span><h3>Functional only</h3>
         <p><strong>Tell:</strong> the roadmap is entirely speed and cost.<br><strong>Fix:</strong> write the emotional and social layers down.</p>
         <p class="note" style="margin-top:.5em">Google Glass worked &mdash; photographs, directions, answers. It died on the social layer, and there is no functional fix for being the person wearing it.</p></div>
-      <div class="card"><span class="num">GOTCHA 05</span><h3>Asking, not reconstructing</h3>
+      <div class="card"><span class="num">GOTCHA 5</span><h3>Asking, not reconstructing</h3>
         <p><strong>Tell:</strong> your research is in the future tense.<br><strong>Fix:</strong> past tense, one real event, one real date.</p>
         <p class="note" style="margin-top:.5em">Roughly 200,000 people preferred New Coke in blind tests. It launched on 23 April 1985 and was withdrawn 79 days later. The tests asked about a sip. Nobody asked what Coke was hired for.</p></div>
-      <div class="card"><span class="num">GOTCHA 06</span><h3>Answering anxiety with pull</h3>
+      <div class="card"><span class="num">GOTCHA 6</span><h3>Answering anxiety with pull</h3>
         <p><strong>Tell:</strong> the reply to &ldquo;what if it doesn&rsquo;t work for me?&rdquo; is another benefit, louder.<br><strong>Fix:</strong> evidence, reversibility, a small first step.</p>
         <p class="note" style="margin-top:.5em">Electric cars answered range anxiety with acceleration figures for a decade. What moved it was charger maps, battery warranties and an honest range readout.</p></div>
     </div>
