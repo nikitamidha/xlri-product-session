@@ -398,22 +398,6 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
   <p class="thesis">The model is everyone's — your competitor rents the same one. <b>Your tools, your skills and your context are not.</b></p>
 </article>
 
-<article class="slide" data-seg="2" data-title="The autonomy ladder" data-notes="Hand them this as the classifier for anything they meet. Then kill the instinct to climb: the rung is set by what it costs to be wrong, not by how good the model got.">
-  <div class="head"><span class="eyebrow">Agent</span></div>
-  <h2>The autonomy ladder</h2>
-  <div class="body">
-    <div class="ladder">
-      <div class="rung"><span class="r">0</span><span class="n">Suggestion</span><span class="d">Person does everything except type the words</span><span class="e">autocomplete</span></div>
-      <div class="rung"><span class="r">1</span><span class="n">Assistant</span><span class="d">Person asks, then does the work with the answer</span><span class="e">ChatGPT, Perplexity</span></div>
-      <div class="rung"><span class="r">2</span><span class="n">Workflow</span><span class="d">Person designed the pipeline, checks the output</span><span class="e">document processing</span></div>
-      <div class="rung hi"><span class="r">3</span><span class="n">Agent, watched</span><span class="d">Person approves each action and reviews the result</span><span class="e">Cursor, Claude Code</span></div>
-      <div class="rung hi"><span class="r">4</span><span class="n">Agent, unwatched</span><span class="d">Person sets the goal and the fences, audits later</span><span class="e">nightly research, opens a PR</span></div>
-      <div class="rung"><span class="r">5</span><span class="n">Agent system</span><span class="d">Person sets objectives, budget, escalation policy</span><span class="e">mostly still being sold, not shipped</span></div>
-    </div>
-  </div>
-  <p class="thesis">Autonomy is not a level to climb. <b>It is a purchase, and the price is the cost of being wrong.</b> The rung is set by how reversible the action is and how far the damage spreads — never by how capable the model has become.</p>
-</article>
-
 <article class="slide dense" data-seg="3" data-title="Why probabilistic ever wins" data-notes="This is the answer to the obvious objection from slide 7 — why hand anything to something that is only 90 percent right. Land the empty-chair line and the 'could you write the rules' test; they are the two things worth remembering.">
   <div class="head"><span class="eyebrow">The trade</span></div>
   <h2>Why hand anything to a system that is wrong one time in ten?</h2>
@@ -441,29 +425,6 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
       </div>
     </div>
   </div>
-  <p class="thesis">Against working software, 90% is a downgrade. Against <b>an empty chair</b>, it is infinite improvement — and the current answer for these jobs is "nobody does that", "I do it badly at 11pm", or "we hire someone".</p>
-</article>
-
-<article class="slide" data-seg="4" data-title="Human in the loop" data-notes="Do not define it abstractly. Walk the refund example: one system, three postures, three thresholds, all running at once. Then the table falls out of it.">
-  <div class="head"><span class="eyebrow">Human in the loop</span></div>
-  <h2>Deciding where a person has to say yes</h2>
-  <p class="lede">"There's a human in the loop" is a reassurance, not a design. Here is one refund agent, with all three postures running at once:</p>
-  <div class="body">
-    <div class="cols">
-      <div class="panel good"><h3>Under ₹500 — after the loop</h3><p>It just refunds. Nobody is asked. <b>Fifty are sampled and audited on Friday.</b></p></div>
-      <div class="panel mark"><h3>₹500 to ₹5,000 — on the loop</h3><p>It refunds immediately; the team lead watches a live feed and <b>can reverse it within the hour</b>.</p></div>
-      <div class="panel flag"><h3>Over ₹5,000 — in the loop</h3><p>It stops. <b>A named person approves before the money moves.</b></p></div>
-    </div>
-    <div class="tablewrap"><table class="data">
-      <thead><tr><th>Posture</th><th>What it costs you</th></tr></thead>
-      <tbody>
-        <tr><th><b>In</b> the loop — it cannot proceed without a yes</th><td><em>Throughput.</em> Every gate is a queue, and someone has to stand in it</td></tr>
-        <tr><th><b>On</b> the loop — it proceeds, a person can stop it</th><td><em>Vigilance.</em> Nobody watches a quiet feed for long</td></tr>
-        <tr><th><b>After</b> the loop — it acts, you audit a sample</th><td><em>Exposure.</em> You find out afterwards</td></tr>
-      </tbody>
-    </table></div>
-  </div>
-  <p class="thesis">The question is never <b>whether</b> there is a human in the loop. It is <b>where, in which posture, and who.</b></p>
 </article>
 
 <article class="slide" data-seg="4" data-title="Where the gate goes" data-notes="Two axes only: can you undo it, and how far does the damage spread. Say plainly that model confidence is not on this grid — a confidence score is just more generated text.">
@@ -535,7 +496,7 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
   <p class="thesis">Fifty cases, forty-three pass. <b>The number is not the point — the direction it moves is.</b> And case fifty-one is whatever it got wrong in production yesterday.</p>
 </article>
 
-<article class="slide" data-seg="5" data-title="Right answer, wrong route" data-notes="For an assistant you grade a string; for an agent you grade the run. This is also the honest answer to 'when can we let it off the leash' — evals are how you earn a rung on the ladder.">
+<article class="slide" data-seg="5" data-title="Right answer, wrong route" data-notes="For an assistant you grade a string; for an agent you grade the run. This is also the honest answer to 'when can we let it off the leash' — evals are how you earn the right to stop watching.">
   <div class="head"><span class="eyebrow">Evals</span></div>
   <h2>For an agent, the right answer is not enough</h2>
   <div class="body">
@@ -543,8 +504,8 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
       <div class="panel good"><h3>Outcome — did it end up right?</h3><p>The refund is correct. ₹1,240, to the right customer, with the right reason recorded.</p></div>
       <div class="panel flag"><h3>Route — would you accept how it got there?</h3><p>It read <b>every</b> customer record to decide, took forty steps, spent ₹900 in model calls doing it, and never escalated the one case it should have.</p></div>
     </div>
-    <div class="panel mark"><h3>And this is how a team earns a rung on the ladder</h3>
-      <p>You do not move an agent from watched to unwatched because the demo went well. You move it because <b>the pass rate on your own cases, for that kind of task, is high enough that the failures left are ones you can afford.</b></p></div>
+    <div class="panel mark"><h3>And this is how a team earns the right to stop watching</h3>
+      <p>You do not let an agent run unsupervised because the demo went well. You let it because <b>the pass rate on your own cases, for that kind of task, is high enough that the failures left are ones you can afford.</b></p></div>
   </div>
   <p class="thesis">Grade only the outcome and you are <b>training a system to be lucky</b>. You don't ship an agent because it worked — you ship it because it stopped failing where it used to, and you can show the number.</p>
 </article>
