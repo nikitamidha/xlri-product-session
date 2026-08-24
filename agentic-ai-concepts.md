@@ -6,7 +6,7 @@ twenty minutes without turning into a glossary.
 
 | | | Covers | Lands on |
 | --- | --- | --- | --- |
-| **Class 1** | *The agentic vocabulary* | §1 LLM · §2 Agent, tools, skills, context · §3 The trade · §4 Human in the loop · §5 Evals | Jobs whose rules nobody could write just became buildable — and the price was certainty |
+| **Class 1** | *Introduction to Agentic AI* | §1 LLM · §2 Agent, tools, skills, context · §3 The trade · §4 Human in the loop · §5 Evals | Jobs whose rules nobody could write just became buildable — and the price was certainty |
 | **Class 2** | *Many agents, one job* | §6 Multi-agent · §7 Harness, orchestrator, RAG · §8 Observability · §9 Hybrid workforce · §10 Tie-back | For agents, anxiety and habit are the binding forces, and both are organisational |
 
 **Class 1 is the product side** — one agent, one user, and why an unreliable

@@ -11,7 +11,7 @@ that go with them, and the tie back to Jobs to be Done. Vocabulary first, becaus
 you cannot analyse a market whose central nouns you cannot define. **Both have
 slide decks** — see below.
 
-- **Class 1, *The agentic vocabulary*.** LLM · agent · tools, skills and context ·
+- **Class 1, *Introduction to Agentic AI*.** LLM · agent · tools, skills and context ·
   why a probabilistic system ever beats a workflow · human in the loop · evals.
   The product side.
 - **Class 2, *Many agents, one job*.** Multi-agent systems · the harness and the
@@ -59,7 +59,7 @@ drawn to scale.
 | [`candidates.md`](candidates.md) | The nineteen products screened before choosing Wispr, each with a one-paragraph synopsis and a single takeaway. Use it to swap the spine, or to source 90-second contrast cases. |
 | [`framework.md`](framework.md) | The three questions expanded into sixteen lenses. Written for a six-session course — at 20-minute scope, treat it as a menu, not a syllabus. |
 
-## Running class 1 — the agentic vocabulary
+## Running class 1 — introduction to agentic AI
 
 | Minutes | Segment |
 | --- | --- |
