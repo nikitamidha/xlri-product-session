@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nikita Midha</title>
+<meta name="description" content="Nikita Midha — product leadership, 14 years of industry experience. Bangalore." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg:#fbfaf8; --ink:#1c1917; --ink-2:#6b6560; --ink-3:#a19a92;
+    --rule:#eae5dd; --accent:#b45309; --accent-bg:#fdf4e7;
+    --shadow:0 1px 2px rgba(28,25,23,.05), 0 10px 30px -14px rgba(28,25,23,.22);
+  }
+  * { box-sizing:border-box; }
+  html { color-scheme:light; }
+  body {
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  .wrap { max-width:640px; margin:0 auto; padding:80px 28px 88px; }
+
+  .head { display:flex; align-items:center; gap:28px; }
+  .portrait {
+    position:relative; flex:0 0 136px; width:136px; aspect-ratio:4/5;
+    border-radius:12px; overflow:hidden; background:var(--accent-bg); box-shadow:var(--shadow);
+  }
+  .portrait img { width:100%; height:100%; object-fit:cover; object-position:50% 18%; display:block; }
+  .portrait .fb {
+    position:absolute; inset:0; display:none; flex-direction:column;
+    align-items:center; justify-content:center;
+    font-size:34px; font-weight:600; color:var(--accent); letter-spacing:.02em;
+  }
+  .portrait.missing img { display:none; }
+  .portrait.missing .fb  { display:flex; }
+
+  h1 { font-size:32px; font-weight:600; letter-spacing:-.02em; margin:0 0 8px; }
+  .sub { color:var(--ink-2); font-size:15px; margin:0; max-width:34ch; }
+  .badge {
+    display:inline-block; margin-top:14px; font-size:12.5px; font-weight:500;
+    color:var(--accent); background:var(--accent-bg);
+    border:1px solid rgba(180,83,9,.22); border-radius:999px; padding:4px 12px;
+  }
+
+  h2 {
+    font-size:11px; font-weight:600; letter-spacing:.15em; text-transform:uppercase;
+    color:var(--ink-3); margin:56px 0 4px;
+  }
+
+  .row { display:flex; align-items:center; padding:15px 2px; border-bottom:1px solid var(--rule); }
+  .row:last-child { border-bottom:none; }
+  .mark { flex:0 0 40px; height:28px; display:flex; align-items:center; }
+  .mark img { max-height:28px; max-width:36px; width:auto; height:auto; display:block; }
+  .name { font-size:16px; font-weight:500; }
+  .now {
+    margin-left:12px; font-size:10px; font-weight:600; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--accent); background:var(--accent-bg);
+    border-radius:4px; padding:2px 7px;
+  }
+  .meta { margin-left:auto; font-size:13.5px; color:var(--ink-3); text-align:right; }
+
+  @media (max-width:560px) {
+    .wrap { padding:48px 20px 64px; }
+    .head { flex-direction:column; align-items:flex-start; gap:20px; }
+    .meta { flex-basis:100%; margin:6px 0 0 40px; text-align:left; }
+    .row { flex-wrap:wrap; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="head">
+    <div class="portrait" id="p">
+      <img src="assets/nikita.jpg" alt="Nikita Midha"
+           onerror="document.getElementById('p').classList.add('missing')" />
+      <div class="fb">NM</div>
+    </div>
+    <div>
+      <h1>Nikita Midha</h1>
+      <p class="sub">Product leadership roles · 14 years of industry experience · Bangalore</p>
+      <span class="badge">Certified Coach · UC Berkeley</span>
+    </div>
+  </header>
+
+  <h2>Experience</h2>
+  <div>
+    <div class="row">
+      <span class="mark"><img src="assets/logos/salesforce.svg" alt="" /></span>
+      <span class="name">Salesforce</span><span class="now">Now</span>
+    </div>
+    <div class="row">
+      <span class="mark"><img src="assets/logos/spotdraft.svg" alt="" /></span>
+      <span class="name">SpotDraft</span>
+    </div>
+    <div class="row">
+      <span class="mark"><img src="assets/logos/freshworks.svg" alt="" /></span>
+      <span class="name">Freshworks</span>
+    </div>
+    <div class="row">
+      <span class="mark"><img src="assets/logos/microsoft.svg" alt="" /></span>
+      <span class="name">Microsoft</span>
+    </div>
+  </div>
+
+  <h2>Education</h2>
+  <div>
+    <div class="row">
+      <span class="mark"><img src="assets/logos/xlri.svg" alt="" /></span>
+      <span class="name">XLRI Jamshedpur</span>
+      <span class="meta">Business Management · 2014–2016</span>
+    </div>
+    <div class="row">
+      <span class="mark"><img src="assets/logos/bits-pilani.svg" alt="" /></span>
+      <span class="name">BITS Pilani</span>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
