@@ -1,0 +1,51 @@
+name: Publish About Me to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # about-me.html is the single source; the site is assembled from it so
+      # there is no second copy to keep in sync.
+      - name: Assemble site
+        run: |
+          mkdir -p _site
+          cp about-me.html _site/index.html
+          cp -r assets _site/assets
+          # assets/README.md is contributor notes, not part of the site
+          rm -f _site/assets/README.md
+
+      # enablement: true turns Pages on via the API on the first run, so no
+      # manual Settings -> Pages step is needed
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
