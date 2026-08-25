@@ -237,7 +237,8 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
 
 <script type="application/json" id="segments">[
  {"name":"Terms","min":1},{"name":"LLM","min":3},{"name":"Agent","min":6},
- {"name":"In the loop","min":3.5},{"name":"Evals","min":3}]</script>
+ {"name":"In the loop","min":3.5},{"name":"Evals","min":3},
+ {"name":"If time","min":3}]</script>
 
 <div class="stage">
 <div class="deck" id="deck">
@@ -461,7 +462,63 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
   <p class="thesis">Grade only the outcome and you are <b>training a system to be lucky</b>. You don't ship an agent because it worked — you ship it because it stopped failing where it used to, and you can show the number.</p>
 </article>
 
+<article class="slide" data-seg="5" data-title="Why SDLC breaks" data-notes="Only if time permits. Don't teach all four — teach the first and the last; the middle two are there so the slide reads complete. The line to say out loud, which is deliberately not on the slide: every ceremony in Agile is risk management around one expensive, irreversible act, and that act just got cheap.">
+  <h2>Agile assumed four things. <em>All four stopped being true.</em></h2>
+  <div class="body">
+    <div class="tablewrap">
+      <table class="data">
+        <thead><tr><th>SDLC assumed</th><th>What is true now</th></tr></thead>
+        <tbody>
+          <tr class="now"><th>Producing code is the expensive step</th><td>An attempt costs <b>almost nothing</b> — and is disposable</td></tr>
+          <tr><th>Code is the artifact of record</th><td>The <b>spec</b> is. Code is a regenerable output</td></tr>
+          <tr><th>Same input, same output</th><td><b>The same input can give a different answer.</b> A bug has a <em>rate</em>, not a reliable way to reproduce it</td></tr>
+          <tr class="now"><th>However much got written, someone could read it all</th><td>One human, <b>several agents</b>, each faster than you read</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <p class="thesis">Every ceremony in Agile protects you from <b>committing to the wrong code</b>. That was the expensive act. It isn't any more.</p>
+</article>
+
+<article class="slide" data-seg="5" data-title="Two questions" data-notes="Close by tying back to evals — verification being the bottleneck is exactly why we spent the last segment there. Then the handover: if machines ever verify machines, the last bottleneck standing is knowing what should exist, and that is a product skill, not an engineering one. That is where the next class starts.">
+  <h2>Two questions to take back</h2>
+  <div class="body">
+    <div class="cols two">
+      <div class="panel mark"><h3>The artifact test</h3>
+        <p>Delete the code, keep the specs — <b>could you rebuild?</b></p>
+        <p>Delete the specs, keep the code — could you?</p>
+        <p><em>Whichever answer is yes tells you which lifecycle you are actually running.</em></p></div>
+      <div class="panel"><h3>The bottleneck test</h3>
+        <p>Name where your team's time actually goes.</p>
+        <p>Still writing code? <b>The tools changed and the process didn't.</b></p>
+        <p><em>Reviewing and verifying? Then that is where the investment belongs.</em></p></div>
+    </div>
+    <div class="panel good"><h3>Which is why the last twenty minutes were about evals</h3>
+      <p>Verification is the new bottleneck, and it is a <b>human</b> one — it does not fall with the next model release. Evals are how you buy it back.</p></div>
+  </div>
+  <p class="thesis">If machines ever verify machines, the last bottleneck standing is <b>knowing precisely what should exist</b> — and that was never an engineering skill.</p>
+</article>
+
 </div>
+
+<div class="notes" id="notes"><b>Speaker note</b><span id="notestext"></span></div>
+<div class="rail" id="rail"></div>
+<div class="foot">
+  <span class="keys">
+    <span><kbd>←</kbd> <kbd>→</kbd> move</span><span><kbd>N</kbd> notes</span>
+    <span><kbd>O</kbd> overview</span><span><kbd>T</kbd> timer</span><span><kbd>F</kbd> full screen</span>
+  </span>
+  <span class="pace off" id="pace"></span>
+  <span class="nav"><span class="count" id="count"></span>
+    <button type="button" id="prev" aria-label="Previous slide">‹</button>
+    <button type="button" id="next" aria-label="Next slide">›</button></span>
+</div>
+</div>
+<div class="overview" id="overview" role="dialog" aria-label="Slide overview">
+  <h3>Overview — click a slide, or press O to close</h3>
+  <div class="ovgrid" id="ovgrid"></div>
+</div>
+
 
 <div class="notes" id="notes"><b>Speaker note</b><span id="notestext"></span></div>
 <div class="rail" id="rail"></div>
