@@ -45,7 +45,7 @@ carries the cleanest single insight in the category:
 
 | File | What it is |
 | --- | --- |
-| [`slides/agentic-vocabulary.html`](slides/agentic-vocabulary.html) | **Class 1 deck (20 min, 18 slides).** LLM, agent, tools/skills/context, the trade, human in the loop, evals. Presentable as-is. |
+| [`slides/agentic-vocabulary.html`](slides/agentic-vocabulary.html) | **Class 1 deck — *Introduction to Agentic AI* (12 slides).** LLM, agent, tools/skills/context, gates, evals. Presentable as-is. The filename is historical; the deck's name is the one in its title slide. |
 | [`slides/many-agents-one-job.html`](slides/many-agents-one-job.html) | **Class 2 deck (20 min, 19 slides).** Multi-agent systems, the harness and the orchestrator, RAG, one-or-many, observability, hybrid workforce, and the four forces re-scored. |
 | [`agentic-ai-concepts.md`](agentic-ai-concepts.md) | **The notes behind both decks.** Ten sections, split across the two classes — everything the decks assert, argued out, with the run sheet for each class at the end. |
 
