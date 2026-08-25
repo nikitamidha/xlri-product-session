@@ -61,7 +61,7 @@ is solved. Read top to bottom — it's the order a real user meets them in.
 ---
 ---
 
-# Block 1 — Talking to technology
+# Talking to technology
 ### Two circumstances that did not exist in 2021, and one the product created for itself.
 
 | The job | The feature that solves it | Pre-gen-AI context | Post-gen-AI context |
@@ -95,7 +95,7 @@ is solved. Read top to bottom — it's the order a real user meets them in.
 ---
 ---
 
-# Block 2 — Talking the way people actually talk
+# Talking the way people actually talk
 ### Six circumstances identical to 1995. The last human step moved from the user to the product.
 
 | The job | The feature that solves it | Pre-gen-AI context | Post-gen-AI context |
@@ -110,7 +110,7 @@ is solved. Read top to bottom — it's the order a real user meets them in.
 ---
 ---
 
-# Block 3 — Paying for it
+# Paying for it
 
 | The job | The feature that solves it | Pre-gen-AI context | Post-gen-AI context |
 | --- | --- | --- | --- |
@@ -135,8 +135,8 @@ moves a few percent a year.
 moved. Those are forty-year-old outcomes finally being served, which is why they
 converted so quickly — **no demand to create, only a last step to take on.**
 
-**4. Read Block 2's pre-gen-AI column and the pattern is additive, not
-corrective.** The earlier tools had already solved their hard parts — reliable
+**4. Read the human-directed rows' pre-gen-AI column and the pattern is
+additive, not corrective.** The earlier tools had already solved their hard parts — reliable
 transcription, good grammar checking, free translation, working dictionaries.
 Each one left **the last human step with the user**: the finished sentence, the
 tidy-up, the written source, the profile built up front. Wispr's contribution is
@@ -159,7 +159,7 @@ It is almost never why anybody stays.**
 
 # Running it in class
 
-Take **three jobs**, one per block:
+Take **three jobs**, one from each group:
 
 | Job | Why this one |
 | --- | --- |
