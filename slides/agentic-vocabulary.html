@@ -243,7 +243,7 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
 <div class="stage">
 <div class="deck" id="deck">
 
-<article class="slide title-slide" data-seg="0" data-title="Title" data-notes="Class one of two. Today: what these things are, and why an unreliable system is ever the right answer. Next time: what happens when there are many of them and an organisation has to run them.">
+<article class="slide title-slide" data-seg="0" data-title="Title" data-notes="What these things are, and why a system that is wrong one time in ten is ever the right answer to build on.">
   <span class="kicker">XLRI · Product management in the AI-native world</span>
   <h1>Introduction to<br><em>Agentic AI</em></h1>
   <p class="lede" style="font-size:1.15rem;max-width:58ch">Building in the AI-native world means building on <strong>probabilistic natural language systems</strong> — machines you instruct in plain English, that are right most of the time. Four words for the parts, the framework that goes with each, and why that trade is ever worth making. Twenty minutes.</p>
@@ -258,7 +258,7 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
   </div>
 </article>
 
-<article class="slide" data-seg="0" data-title="Introduction and terms" data-notes="Make them write these four down, and say out loud that the greyed rows are next class so nobody thinks we skipped them. Then say the line that is deliberately not on the slide: an LLM produces language, an agent produces consequences — everything else on this list exists because of that second word.">
+<article class="slide" data-seg="0" data-title="Introduction and terms" data-notes="Make them write these four down. Then say the line that is deliberately not on the slide: an LLM produces language, an agent produces consequences — everything else on this list exists because of that second word.">
   <h2>Introduction and Terms</h2>
   <div class="body">
     <dl class="defs">
@@ -266,10 +266,7 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
       <div class="def"><dt>Agent</dt><dd>An LLM put in a <b>loop</b> with tools and a goal, deciding for itself what to do next and when it is finished.</dd></div>
       <div class="def"><dt>Human in the loop</dt><dd>Choosing the points where a person has to say yes before the system goes on.</dd></div>
       <div class="def"><dt>Evals</dt><dd>A set of test cases with known good answers, re-run on every change, so you can tell better from different.</dd></div>
-      <div class="def next"><dt>Multi-agent system</dt><dd>Several agents, different jobs, one objective. <b>Next class.</b></dd></div>
-      <div class="def next"><dt>Harness &amp; orchestrator</dt><dd>What runs one agent, and what coordinates several. <b>Next class.</b></dd></div>
-      <div class="def next"><dt>RAG · Observability</dt><dd>Looking it up before answering; playing back what happened. <b>Next class.</b></dd></div>
-      <div class="def next"><dt>Hybrid workforce</dt><dd>Allocating work across people and agents as one pool. <b>Next class.</b></dd></div>
+
     </dl>
   </div>
 </article>
@@ -286,24 +283,6 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
     </div>
   </div>
   <p class="thesis">It can <b>advise</b>. It cannot <b>act</b>.</p>
-</article>
-
-<article class="slide" data-seg="1" data-title="Which models" data-notes="Deliberately no version numbers except Claude's, because they change every few months. What does not change is the three axes at the bottom — capability, cost and where it runs.">
-  <div class="head"><span class="eyebrow">LLM</span></div>
-  <h2>The ones you will actually meet</h2>
-  <div class="body">
-    <div class="tablewrap"><table class="data">
-      <thead><tr><th>Family</th><th>Made by</th><th>Worth knowing</th></tr></thead>
-      <tbody>
-        <tr><th>Claude</th><td>Anthropic</td><td>Opus, Sonnet, Haiku — the same family in <b>large / balanced / fast</b> sizes. Widely used for coding and agents</td></tr>
-        <tr><th>GPT</th><td>OpenAI</td><td>The most widely recognised; consumer default</td></tr>
-        <tr><th>Gemini</th><td>Google</td><td>Deeply wired into Google's own products</td></tr>
-        <tr><th>Llama</th><td>Meta</td><td><b>Open weights</b> — you can download and run it on your own machines</td></tr>
-        <tr><th>Mistral</th><td>Mistral AI</td><td>Open weights, European, popular where data must stay in-region</td></tr>
-        <tr><th>DeepSeek, Qwen</th><td>DeepSeek, Alibaba</td><td>Open weights, very cheap, strong on reasoning and code</td></tr>
-      </tbody>
-    </table></div>
-  </div>
 </article>
 
 <article class="slide" data-seg="1" data-title="Three confusions" data-notes="Ninety seconds. The middle one is the important one — a wrong answer is the mechanism working normally, not a bug. That is why grounding and citations exist.">
@@ -480,7 +459,7 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
   <p class="thesis">Every ceremony in Agile protects you from <b>committing to the wrong code</b>. That was the expensive act. It isn't any more.</p>
 </article>
 
-<article class="slide" data-seg="5" data-title="Two questions" data-notes="Close by tying back to evals — verification being the bottleneck is exactly why we spent the last segment there. Then the handover: if machines ever verify machines, the last bottleneck standing is knowing what should exist, and that is a product skill, not an engineering one. That is where the next class starts.">
+<article class="slide" data-seg="5" data-title="Two questions" data-notes="Close by tying back to evals — verification being the bottleneck is exactly why we spent the last segment there. Then close on it: if machines ever verify machines, the last bottleneck standing is knowing what should exist — and that is a product skill, not an engineering one.">
   <h2>Two questions to take back</h2>
   <div class="body">
     <div class="cols two">
