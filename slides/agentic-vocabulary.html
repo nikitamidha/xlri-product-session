@@ -238,7 +238,7 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
 <script type="application/json" id="segments">[
  {"name":"Terms","min":1},{"name":"LLM","min":3},{"name":"Agent","min":6},
  {"name":"In the loop","min":3.5},{"name":"Evals","min":3},
- {"name":"If time","min":3}]</script>
+ {"name":"ADLC","min":3}]</script>
 
 <div class="stage">
 <div class="deck" id="deck">
@@ -441,12 +441,12 @@ svg.fig .band2{fill:color-mix(in srgb,var(--brass) 16%,transparent); stroke:var(
   <p class="thesis">Grade only the outcome and you are <b>training a system to be lucky</b>. You don't ship an agent because it worked — you ship it because it stopped failing where it used to, and you can show the number.</p>
 </article>
 
-<article class="slide" data-seg="5" data-title="Why SDLC breaks" data-notes="Don't teach all four — teach the first and the last; the middle two are there so the slide reads complete. The last row in plain words: code used to be written by hand, so a team could only produce as much as it could also read — reviewing never fell behind writing, and nobody designed around it. One person driving several agents breaks that: the writing is now faster than the reading, and review becomes the queue. The line to say out loud, which is deliberately not on the slide: every ceremony in Agile is risk management around one expensive, irreversible act, and that act just got cheap.">
+<article class="slide" data-seg="5" data-title="Why ADLC breaks" data-notes="Don't teach all four — teach the first and the last; the middle two are there so the slide reads complete. The last row in plain words: code used to be written by hand, so a team could only produce as much as it could also read — reviewing never fell behind writing, and nobody designed around it. One person driving several agents breaks that: the writing is now faster than the reading, and review becomes the queue. The line to say out loud, which is deliberately not on the slide: every ceremony in Agile is risk management around one expensive, irreversible act, and that act just got cheap.">
   <h2>Agile assumed four things. <em>All four stopped being true.</em></h2>
   <div class="body">
     <div class="tablewrap">
       <table class="data">
-        <thead><tr><th>SDLC assumed</th><th>What is true now</th></tr></thead>
+        <thead><tr><th>ADLC assumed</th><th>What is true now</th></tr></thead>
         <tbody>
           <tr class="now"><th>Producing code is the expensive step</th><td>An attempt costs <b>almost nothing</b> — and is disposable</td></tr>
           <tr><th>Code is the artifact of record</th><td>The <b>spec</b> is. Code is a regenerable output</td></tr>
