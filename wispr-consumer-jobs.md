@@ -72,13 +72,13 @@ is solved. Read top to bottom — it's the order a real user meets them in.
 
 ---
 
-> ## From here on, it has to sound human
+> ## It has to interact like a human
 >
 > Everything above is aimed at a machine. Nobody else reads it, so rough speech
 > is fine.
 >
-> Everything below is aimed at a person — and that is the harder problem, because
-> of **how people actually talk.** Nobody speaks in finished sentences. You start
+> Everything below is aimed at a person, which means the product has to handle the
+> exchange the way another person would — because of **how people actually talk.** Nobody speaks in finished sentences. You start
 > before the idea is fully formed. You say "um" and "sort of". You circle back and
 > correct yourself halfway through. That isn't sloppiness; it's what thinking out
 > loud sounds like.
